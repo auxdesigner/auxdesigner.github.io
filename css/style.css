@@ -5,10 +5,16 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    display: block;
+}.card a {
+    margin-right:0;
 }
 .src-icon {
     width: 24px; height: 24px; vertical-align: bottom;
 }
+@media only screen and (min-width: 600px)  {
+    .intro {
+      font-size: 1.4rem; padding-top: 160px; } }
 .hero {
 width: 100%;
 margin: 0 auto; color: #fff;
