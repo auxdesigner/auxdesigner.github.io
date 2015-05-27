@@ -12,9 +12,7 @@ body {
 .src-icon {
     width: 24px; height: 24px; vertical-align: bottom;
 }
-@media only screen and (min-width: 600px)  {
-    .intro {
-      font-size: 1.4rem; padding-top: 160px; } }
+
 .hero {
 width: 100%;
 margin: 0 auto; color: #fff;
@@ -25,16 +23,29 @@ width: 66.66%; margin: 0 auto; text-shadow: 1px 1px #000;
  text-align:center;
 font-weight: 100; max-width: 1000px;
 }
+
+@media only screen and (min-width: 100px)  {
+    .intro {
+      font-size: 1.4rem; padding-top: 160px; } }
+
 @media only screen and (min-width: 400px) {
     .intro {
       font-size: 1.4rem; padding-top: 160px; } }
+
+@media only screen and (min-width: 600px)  {
+    .intro {
+      font-size: 1.4rem; padding-top: 160px; } }
+
 @media only screen and (min-width: 740px) {
     .intro {
       font-size: 1.6rem;  padding-top: 170px;} }
 
+
+
 @media only screen and (min-width: 960px) {
     .intro {
       font-size: 2.0rem; padding-top: 160px; } }
+
 @media only screen and (min-width: 1140px) {
     .intro {
       font-size: 2.4rem; padding-top: 160px; } }
