@@ -1,5 +1,5 @@
 var initParticleCount = Math.floor(document.body.clientWidth / 4),
-maxParticleCount = Math.ceil(1.2 * initParticleCount),
+maxParticleCount = Math.ceil(9.2 * initParticleCount),
 particleCount = initParticleCount;
 /* config dom id (optional) + config particles params */
 particlesJS('particles-js', {
@@ -18,7 +18,8 @@ particlesJS('particles-js', {
     },
     size: 2,
     size_random: true,
-    nb: initParticleCount,
+    nb: 322,
+    //nb: initParticleCount,
     line_linked: {
         enable_auto: true,
         distance: 250,

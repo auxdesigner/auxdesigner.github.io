@@ -12,7 +12,13 @@ body {
 .src-icon {
     width: 24px; height: 24px; vertical-align: bottom;
 }
-
+.principle
+{
+    padding-top: 0 !important
+}
+#work {
+    padding-bottom: 4rem !important
+}
 .hero {
 width: 100%;
 margin: 0 auto; color: #fff;
