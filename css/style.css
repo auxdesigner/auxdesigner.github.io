@@ -14,7 +14,7 @@ body {
 }
 .principle
 {
-    padding-top: 0 !important
+    padding-top: 0 !important;
 }
 #work {
     padding-bottom: 4rem !important
@@ -62,7 +62,7 @@ font-size: 14px; text-align: center;
 font-weight: 100; max-width: 1000px; 
 }
 #particles-js {
-height: 380px; background: #32343f;  width: 3000px; overflow:hidden;
+height: 380px; background: #32343f;  width: 4000px; overflow:hidden;
 }
 
 li {
