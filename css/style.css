@@ -1,6 +1,12 @@
 body {
     overflow-x: hidden
 }
+.projects {
+    margin-top: 0;
+}
+.projects-grid {
+    padding: 0 1.6rem;
+}
 .card-title {
     overflow: hidden;
     white-space: nowrap;
@@ -17,7 +23,7 @@ body {
     padding-top: 0 !important;
 }
 #work {
-    padding-bottom: 4rem !important
+    padding-bottom: 3rem !important
 }
 .hero {
 width: 100%;
