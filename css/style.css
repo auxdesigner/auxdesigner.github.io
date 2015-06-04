@@ -1,6 +1,9 @@
 body {
     overflow-x: hidden
 }
+.particles-container {
+    overflow:hidden;
+}
 #particles-js {
 height: 380px; background: #32343f;  width: 4000px; overflow:hidden;
 overflow-x: hidden;
