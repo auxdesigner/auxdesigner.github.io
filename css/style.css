@@ -1,6 +1,13 @@
 body {
     overflow-x: hidden
 }
+#particles-js {
+height: 380px; background: #32343f;  width: 4000px; overflow:hidden;
+overflow-x: hidden;
+}
+#particles-js canvas {
+overflow:hidden;
+}
 .projects {
     margin-top: 0;
 }
@@ -67,9 +74,7 @@ width: 66.66%; margin: 0 auto; height: 48px;
 font-size: 14px; text-align: center;
 font-weight: 100; max-width: 1000px; 
 }
-#particles-js {
-height: 380px; background: #32343f;  width: 4000px; overflow:hidden;
-}
+
 
 li {
 list-style: none;
