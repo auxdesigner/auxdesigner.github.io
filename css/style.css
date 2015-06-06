@@ -56,24 +56,32 @@ width: 66.66%; margin: 0 auto; text-shadow: 1px 1px #000;
 font-weight: 100; max-width: 1000px;
 }
 
-@media only screen and (min-width: 100px)  {
+@media only screen and (max-width: 402px)  {
     .intro {
-      font-size: 2rem; padding-top: 110px; } }
+      font-size: 2rem; padding-top: 120px; } }
+
+@media only screen and (min-width: 403px)  {
+    .intro {
+      font-size: 2rem; padding-top: 140px; } }
 
 @media only screen and (min-width: 520px) {
     .intro {
-      font-size: 2rem; padding-top: 130px; } }
+      font-size: 2rem; padding-top: 140px; } }
 
 
 @media only screen and (min-width: 600px)  {
     .intro {
-      font-size: 2rem; padding-top: 120px; } }
+      font-size: 2rem; padding-top: 140px; } }
 
 @media only screen and (min-width: 740px) {
     .intro {
         font-size: 2rem; padding-top: 140px;} }
 
-@media only screen and (min-width: 980px) {
+@media only screen and (min-width: 781px) {
+    .intro {
+        font-size: 2rem; padding-top: 150px;} }
+
+@media only screen and (min-width: 979px) {
     .intro {
       font-size: 2.2rem; padding-top: 160px; } }
 
