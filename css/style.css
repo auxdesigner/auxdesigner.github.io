@@ -25,11 +25,18 @@ overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     display: block;
-}.card a {
+}
+.card-content p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+}
+.card a {
     margin-right:0;
 }
 .src-icon {
-    width: 24px; height: 24px; vertical-align: bottom;
+    width: 24px; height: 24px; vertical-align: bottom; margin-right: 2px;
 }
 .principle
 {

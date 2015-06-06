@@ -4704,16 +4704,13 @@ span.badge {
   padding: 0 1.5rem;
   margin: 0 auto;
   max-width: 1280px;
-  width: 90%; }
+  width: 100%; }
 
-@media only screen and (min-width : 601px) {
-  .container {
-    width: 85%; }
- }
+
 
 @media only screen and (min-width : 993px) {
   .container {
-    width: 70%; }
+    width: 80%; }
  }
 
 .container .row {
@@ -4809,7 +4806,7 @@ span.badge {
       margin-left: 91.66667%; }
     .row .col.offset-s12 {
       margin-left: 100%; }
-    @media only screen and (min-width : 701px) {
+    @media only screen and (min-width : 601px) {
       .row .col.m1 {
         width: 8.33333%;
         margin-left: 0; }
@@ -5121,10 +5118,10 @@ html {
   color: rgba(0, 0, 0, 0.87); }
   @media only screen and (min-width: 0) {
     html {
-      font-size: 18px; } }
+      font-size: 14px; } }
   @media only screen and (min-width: 992px) {
     html {
-      font-size: 14.5px; } }
+      font-size: 15px; } }
   @media only screen and (min-width: 1200px) {
     html {
       font-size: 15px; } }
