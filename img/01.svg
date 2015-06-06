@@ -6,15 +6,15 @@
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
         <g id="01" sketch:type="MSArtboardGroup" fill="#9E9E9E">
-            <rect id="Rectangle-1" fill-opacity="0.25" sketch:type="MSShapeGroup" x="105.143536" y="45.1435363" width="63.2376425" height="63.2376425"></rect>
-            <rect id="Rectangle-1-Copy-3" fill-opacity="0.2" sketch:type="MSShapeGroup" x="105.143536" y="108.381179" width="63.2376425" height="63.2376425"></rect>
-            <rect id="Rectangle-1-Copy-6" fill-opacity="0.1" sketch:type="MSShapeGroup" x="105.143536" y="171.618821" width="63.2376425" height="63.2376425"></rect>
-            <rect id="Rectangle-1-Copy" fill-opacity="0.35" sketch:type="MSShapeGroup" x="168.381179" y="45.1435363" width="63.2376425" height="63.2376425"></rect>
-            <rect id="Rectangle-1-Copy-4" fill-opacity="0.45" sketch:type="MSShapeGroup" x="168.381179" y="108.381179" width="63.2376425" height="63.2376425"></rect>
-            <rect id="Rectangle-1-Copy-7" fill-opacity="0.55" sketch:type="MSShapeGroup" x="168.381179" y="171.618821" width="63.2376425" height="63.2376425"></rect>
-            <rect id="Rectangle-1-Copy-2" fill-opacity="0.8" sketch:type="MSShapeGroup" x="241.618821" y="35.1435363" width="63.2376425" height="63.2376425"></rect>
-            <rect id="Rectangle-1-Copy-5" fill-opacity="0.7" sketch:type="MSShapeGroup" x="231.618821" y="108.381179" width="63.2376425" height="63.2376425"></rect>
-            <rect id="Rectangle-1-Copy-8" fill-opacity="0.6" sketch:type="MSShapeGroup" x="231.618821" y="171.618821" width="63.2376425" height="63.2376425"></rect>
+            <rect id="Rectangle-1" fill-opacity="0.25" sketch:type="MSShapeGroup" x="104" y="44" width="64" height="64"></rect>
+            <rect id="Rectangle-1-Copy-3" fill-opacity="0.2" sketch:type="MSShapeGroup" x="104" y="108" width="64" height="64"></rect>
+            <rect id="Rectangle-1-Copy-5" fill-opacity="0.1" sketch:type="MSShapeGroup" x="104" y="172" width="64" height="64"></rect>
+            <rect id="Rectangle-1-Copy" fill-opacity="0.35" sketch:type="MSShapeGroup" x="168" y="44" width="64" height="64"></rect>
+            <rect id="Rectangle-1-Copy-4" fill-opacity="0.45" sketch:type="MSShapeGroup" x="168" y="108" width="64" height="64"></rect>
+            <rect id="Rectangle-1-Copy-7" fill-opacity="0.7" sketch:type="MSShapeGroup" x="232" y="108" width="64" height="64"></rect>
+            <rect id="Rectangle-1-Copy-6" fill-opacity="0.55" sketch:type="MSShapeGroup" x="168" y="172" width="64" height="64"></rect>
+            <rect id="Rectangle-1-Copy-8" fill-opacity="0.6" sketch:type="MSShapeGroup" x="232" y="172" width="64" height="64"></rect>
+            <rect id="Rectangle-1-Copy-2" fill-opacity="0.8" sketch:type="MSShapeGroup" x="242" y="34" width="64" height="64"></rect>
         </g>
     </g>
 </svg>

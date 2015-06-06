@@ -1,6 +1,9 @@
 body {
     overflow-x: hidden
 }
+.last {
+    margin-right:0;
+}
 .particles-container {
     overflow:hidden;
 }
