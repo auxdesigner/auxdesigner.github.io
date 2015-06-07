@@ -6,16 +6,14 @@
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
         <g id="02" sketch:type="MSArtboardGroup">
-            <g id="Group" sketch:type="MSLayerGroup" transform="translate(98.000000, 46.000000)">
-                <path d="M105.311111,0.766216216 L35.0333333,0.766216216 L65.9555556,48.0162162 L105.311111,0.766216216 Z" id="Shape" fill="#9EF1D4" sketch:type="MSShapeGroup"></path>
-                <path d="M35.0333333,0.766216216 L0.277777778,48.0162162 L65.9555556,48.0162162 L35.0333333,0.766216216 Z" id="Shape" fill="#72D7B3" sketch:type="MSShapeGroup"></path>
-                <path d="M105.311111,0.766216216 L175.333333,0.766216216 L139.555556,48.0162162 L105.311111,0.766216216 Z" id="Shape" fill="#9EF1D4" sketch:type="MSShapeGroup"></path>
-                <path d="M175.588889,0.766216216 L204.722222,48.0162162 L139.555556,48.0162162 L175.588889,0.766216216 Z" id="Shape" fill="#72D7B3" sketch:type="MSShapeGroup"></path>
-                <path d="M105.311111,0.766216216 L65.9555556,48.0162162 L139.3,48.0162162 L105.311111,0.766216216 Z" id="Shape" fill="#C7FEEC" sketch:type="MSShapeGroup"></path>
-                <path d="M136.488889,48.0162162 L68.5111111,48.0162162 L65.7,48.0162162 L102.5,187.212162 L139.3,48.0162162 L136.488889,48.0162162 Z" id="Shape" fill="#72D7B3" sketch:type="MSShapeGroup"></path>
-                <path d="M65.7,48.0162162 L0.277777778,48.0162162 L102.5,187.212162 L65.7,48.0162162 Z" id="Shape" fill="#C7FEEC" sketch:type="MSShapeGroup"></path>
-                <path d="M139.3,48.0162162 L102.5,187.212162 L204.722222,48.0162162 L139.3,48.0162162 Z" id="Shape" fill="#4EC098" sketch:type="MSShapeGroup"></path>
-            </g>
+            <path d="M200,51.846 L135.590333,51.846 L165.108667,96.759 L200,51.846" id="Fill-1" fill="#9EF1D4" sketch:type="MSShapeGroup"></path>
+            <path d="M135.590333,51.846 L102.401556,95.846 L165.108667,95.846 L135.590333,51.846" id="Fill-2" fill="#72D7B3" sketch:type="MSShapeGroup"></path>
+            <path d="M234.891333,96.759 L264.409667,51.846 L200,51.846 L234.891333,96.759" id="Fill-3" fill="#9EF1D4" sketch:type="MSShapeGroup"></path>
+            <path d="M234.891333,95.846 L297.598444,95.846 L264.409667,51.846 L234.891333,95.846" id="Fill-4" fill="#72D7B3" sketch:type="MSShapeGroup"></path>
+            <path d="M200,51.846 L164.987056,95.846 L235.012944,95.846 L200,51.846" id="Fill-5" fill="#C7FEEC" sketch:type="MSShapeGroup"></path>
+            <path d="M232.448056,95.846 L164.865444,95.846 L200,228.154 L235.134556,95.846 L232.448056,95.846" id="Fill-6" fill="#72D7B3" sketch:type="MSShapeGroup"></path>
+            <path d="M164.865444,95.846 L102.401556,95.846 L200,228.154 L164.865444,95.846" id="Fill-7" fill="#C7FEEC" sketch:type="MSShapeGroup"></path>
+            <path d="M235.134556,95.846 L200,228.154 L297.598444,95.846 L235.134556,95.846" id="Fill-8" fill="#4EC098" sketch:type="MSShapeGroup"></path>
         </g>
     </g>
 </svg>
