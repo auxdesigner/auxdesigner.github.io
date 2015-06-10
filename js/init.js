@@ -4,9 +4,6 @@
     //$('.button-collapse').sideNav();
 	//$('.scrollspy').scrollSpy();
 
-    
-
-    
 
 	//$('.button-collapse').sideNav({menuWidth: 240, activationWidth: 70});
 	//$('.parallax').parallax();
@@ -67,6 +64,7 @@
 	    } while (el = el.parentNode);
 	}
 
+	
 	function scaleCard(e) {
 		var el = closest(e);
 		var target = el,
@@ -94,6 +92,7 @@
 	 	});
 	}
 
+	/*
 	function onPopupClick(card, popup) {
 		popup.addEventListener('click', function toggleVisibility(e) {
 		  	var size = getDifference(popup, card);
@@ -110,6 +109,7 @@
 		e.target.style['visibility'] = 'hidden';
 		e.target.style['zIndex'] = 2;
 	}
+	*/
 
 	// [].forEach.call(card, function(card) {
 	// 	card.addEventListener('click', scaleCard, false);
