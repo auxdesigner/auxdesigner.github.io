@@ -9,17 +9,12 @@ particlesJS('particles-js', {
     shape: 'circle',
     opacity: {
         opacity: .5
-        /*anim: {
-            enable: false,
-            speed: 0.8,
-            opacity_min: .1,
-            sync: false
-        }*/
+        
     },
     size: 2,
     size_random: true,
     nb: 322,
-    //nb: initParticleCount,
+   
     line_linked: {
         enable_auto: true,
         distance: 250,
@@ -35,5 +30,5 @@ particlesJS('particles-js', {
   interactivity: {
     mode: false // "grab" or false
   },
-  retina_detect: true
+  retina_detect: false
 });
