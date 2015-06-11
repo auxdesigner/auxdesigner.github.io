@@ -375,7 +375,7 @@ h2+p+.gridded {
 }
 @media only screen and (max-width: 768px) {
     .principle {
-        margin-top: -48px !important;
+        margin-top: -20px !important;
         
 
     }
@@ -452,10 +452,10 @@ div#contact{
     margin-right: 24px;
 }
 .last {
-    margin-right: 0
+    margin-right: 0 !important
 }
 .links {
-width: 66.66%; margin: 0 auto; height: 80px;
+width: 100%; margin: 0 auto; height: 80px;
 font-size: 16px; text-align: center;
 font-weight: 300; max-width: 1000px; 
 }
