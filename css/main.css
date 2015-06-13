@@ -411,21 +411,26 @@ h2+p+.gridded {
 }
 @media only screen and (max-width: 402px) {
     .intro {
-        font-size: 28px;
-        padding-top: 120px;
+        font-size: 32px;
+        padding-top: 150px;
     }
 }
 @media only screen and (min-width: 403px) {
     .intro {
-        font-size: 28px;
+        font-size: 36px;
         padding-top: 140px;
     }
 }
-
+@media only screen and (min-width: 780px) {
+    .intro {
+        font-size: 36px;
+        padding-top: 160px;
+    }
+}
 
 @media only screen and (min-width: 979px) {
     .intro {
-        font-size: 30px;
+        font-size: 36px;
         padding-top: 160px;
     }
 }
@@ -433,7 +438,7 @@ h2+p+.gridded {
 
 @media only screen and (min-width: 1140px) {
     .intro {
-        font-size: 32px;
+        font-size: 36px;
         padding-top: 160px;
     }
 }
