@@ -51,8 +51,8 @@ function generate() {
 
   // Grab the original text
   var original = textInput.val();
-  // Make it to lower case
-  var txt = original.toLowerCase() + ' ';
+  
+  var txt = original + ' ';
   //console.log(txt);
   $('.chatSection').append('<div class="myMsg">' + txt + '</div>');
 
@@ -60,7 +60,7 @@ function generate() {
   setTimeout(function(){ 
       $('.chatSection').append('<div class="botMsg">OK. Let me think...</div>');
       scroll();
-  }, 300);
+  }, 500);
   
   msg = $('#textInput').val();
 
@@ -68,13 +68,13 @@ function generate() {
 
   setTimeout(function(){ 
     newText(msg); 
-  }, 400);
+  }, 600);
  
   
 }
 
 function newText(e) {
- 
+  //let txt = e;
   let txt = e.toLowerCase();
   if (txt.length > 0) {
     // This is what the LSTM generator needs
