@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Gundam Avatar</title>
+<link rel="icon" type="image/png" href="../images/favicon_3.png">
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/Cubexy.js"></script>
+<script src="js/html2canvas.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <div class="col-md-12 text-center">
+      <canvas width="256" height="256" id="canvas">No Canvas support</canvas>
+      <div>
+        <a id="randomize" class="btn btn-primary">Randomize</a>
+        <a id="download" class="btn btn-success">Download</a>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title"> 
+            <div id="menu" class="">
+              <span class="tab-active" data-tab='bg'/>Background</span>
+              <span class="" data-tab='horn'/>Horn</span>
+              <span class="" data-tab='chin'/>Chin</span>
+              <span class="" data-tab='eye'/>Eye</span>
+              <span class="" data-tab='face'/>Face</span>    
+            </div>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div id="avatar">   
+              <div id="bg">
+                <img class="img-thumbnail bg-item white-bg" src="1_bg/0.png"/>
+                <img class="img-thumbnail bg-item" src="1_bg/1.png"/>
+                <img class="img-thumbnail bg-item" src="1_bg/2.png"/>
+                <img class="img-thumbnail bg-item" src="1_bg/3.png"/>
+                <img class="img-thumbnail bg-item" src="1_bg/4.png"/>
+                <img class="img-thumbnail bg-item" src="1_bg/5.png"/>
+              </div>
+
+              <div id="face" >
+                <img class="img-thumbnail face-item" src="5_face/1.png"/>
+                <img class="img-thumbnail face-item" src="5_face/2.png"/>
+                <img class="img-thumbnail face-item" src="5_face/3.png"/>
+                <img class="img-thumbnail face-item" src="5_face/4.png"/>
+                <img class="img-thumbnail face-item" src="5_face/5.png"/>
+              </div>
+
+              <div id="horn" >
+                <img class="img-thumbnail horn-item" src="2_horn/1.png"/>
+                <img class="img-thumbnail horn-item" src="2_horn/2.png"/>
+                <img class="img-thumbnail horn-item" src="2_horn/3.png"/>
+                <img class="img-thumbnail horn-item" src="2_horn/4.png"/> 
+                <img class="img-thumbnail horn-item" src="2_horn/5.png"/> 
+              </div>
+
+              <div id="chin" >
+                <img class="img-thumbnail chin-item" src="3_chin/1.png"/>
+                <img class="img-thumbnail chin-item" src="3_chin/2.png"/>
+                <img class="img-thumbnail chin-item" src="3_chin/3.png"/>
+                <img class="img-thumbnail chin-item" src="3_chin/4.png"/>
+                <img class="img-thumbnail chin-item" src="3_chin/5.png"/> 
+              </div>
+
+             <div id="eye" >
+                <img class="img-thumbnail eye-item" src="4_eye/1.png"/>
+                <img class="img-thumbnail eye-item" src="4_eye/2.png"/>
+                <img class="img-thumbnail eye-item" src="4_eye/3.png"/>
+                <img class="img-thumbnail eye-item" src="4_eye/4.png"/>
+                <img class="img-thumbnail eye-item" src="4_eye/5.png"/>
+              </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+  <script>
+    $('#avatar').Cubexy();
+    $('#avatar >div').hide();
+    $('#avatar >div#bg').show();
+    $('#randomize').click();
+  </script>
+</body>
+<footer>
+    <a href="https://github.com/auxdesigner/gundam-avatar" target="_blank">Github repo</a>
+
+</footer>
+</html>
