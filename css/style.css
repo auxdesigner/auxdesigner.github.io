@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Google+Sans");
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=Lato");
 
 
 html {
@@ -88,7 +87,7 @@ h2 {
   font-weight: 400; color: #222;
 }
 .hero h1 {
-  font-size: 24px; font-family: "Google Sans"; font-weight: normal;
+  font-size: 24px; font-weight: normal;
 }
 .hero p {
   font-size: 32px;
@@ -130,7 +129,7 @@ h2.expanded__title {
 
 
 html {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 15px;
   color: #555;
   line-height: 1.7;
@@ -394,7 +393,7 @@ button, .button {
   margin-bottom: 100px
 }
 .quote h2 {
-  font-family: "Open Sans"; margin-bottom: 20px;
+   margin-bottom: 20px;
   font-size: 18px;
 }
 @media (max-width: 600px) {
@@ -437,7 +436,7 @@ button, .button {
   text-align: left; font-size: 14px; color: #444; margin-top: 8px; margin-left: 2px;
 }
 .home .hero__text {
-  text-align: left; font-size: 20px; font-family: "Google Sans"; padding-top: 8px;
+  text-align: left; font-size: 20px;  padding-top: 8px;
 
 }
 .home h1 {
@@ -450,10 +449,10 @@ button {
   margin-bottom: 80px; margin-top: 80px;
 }
 .title p {
-   font-size: 32px; font-family: "Google Sans"; text-align: center; line-height: 1.2;
+   font-size: 32px;  text-align: center; line-height: 1.2;
 }
 .home h2 {
-  margin-bottom: 20px; font-family: "Google Sans";
+  margin-bottom: 20px; 
 }
 .header {
   margin-top: 80px;
@@ -549,7 +548,7 @@ h5 {
     text-align: left; font-size: 12px; color: #666; margin-top: 8px; margin-left: 2px;
   }
   .home .hero__text {
-    text-align: left; font-size: 16px; font-family: "Google Sans"; padding-top: 8px;
+    text-align: left; font-size: 16px;  padding-top: 8px;
 
   }
   .home .hero__overlay--gradient {
