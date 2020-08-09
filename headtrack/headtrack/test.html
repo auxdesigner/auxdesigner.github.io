@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ink</title>
+    <script src="headtrackr.js"></script>
+</head>
+
+<body>
+    <button id="start" onclick="start()">start</button>
+    <button id="stop" onclick="stop()">stop</button>
+    <canvas id="inputCanvas" width="320" height="240"></canvas>
+    <video id="inputVideo" autoplay loop></video>
+    <script type="text/javascript">
+        var videoInput = document.getElementById('inputVideo');
+        var canvasInput = document.getElementById('inputCanvas');
+        var htracker = new headtrackr.Tracker();
+
+        function start() {
+            htracker.init(videoInput, canvasInput);
+            htracker.start();
+        }
+
+        function stop() {
+            htracker.stopStream();
+            htracker.stop();
+        }
+    </script>
+
+    <script>
+        document.addEventListener('facetrackingEvent', function(event) {
+            console.log("fx: " + event.x + ", fy:" + event.y)
+
+        });
+    </script>
+</body>
+
+
+</html>

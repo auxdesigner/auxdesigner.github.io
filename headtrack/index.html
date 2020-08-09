@@ -1,0 +1,52 @@
+<!DOCTYPE html lang="en">
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Headtracking animations</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="headtrackr.js"></script>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="frame"></div>
+        <div id="tile">
+            <div class="bird" data-offset="10">
+                <div class="left-wing">
+                    <span></span>
+                </div>
+                <div class="right-wing">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="layer-0" data-offset="-40"></div>
+            <div class="layer-1" data-offset="-25"></div>
+            <div class="layer-2" data-offset="-10"></div>
+            <div class="layer-3" data-offset="5"></div>
+            <div class="layer-4" data-offset="20"></div>
+            <div class="layer-5" data-offset="35"></div>
+            <div class="layer-6" data-offset="50"></div>
+        </div>
+        <div class="shadow">
+            <div id="shadow-clip"></div>
+        </div>
+    </div>
+    <div class="control">
+        <span id="headtrackerMessage">&nbsp;</span>
+        <button class="change">Change scene</button>
+        <button class="start">Turn on camera</button>
+        <button class="stop">Turn off camera</button>
+
+    </div>
+    <canvas id="inputCanvas" width="320" height="240"></canvas>
+    <video id="inputVideo" autoplay loop></video>
+</body>
+<script src="script.js"></script>
+
+
+</html>
