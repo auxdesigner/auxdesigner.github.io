@@ -1,5 +1,4 @@
-$(location).attr('href', 'https://auxdesigner.github.io/headtrack/')
-    // var
+// var
 var $body = $('body'),
     $tile = $('#tile'),
     $layer = $('div[class*="layer-"]'),
