@@ -413,8 +413,8 @@ button, .button {
   color: #333; border-radius: 16px; overflow: hidden;
 }
 .item:hover {
-  border: 1px solid rgba(0,0,0,.16);
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,.08), 0 1px 4px 0 rgba(0,0,0,.12);
+  border: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 0 12px 0 rgba(0,0,0,.08), 0 0 16px 0 rgba(0,0,0,.08);
 }
 
 .home .hero__content__inner {
