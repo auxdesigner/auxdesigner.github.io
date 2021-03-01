@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta class="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Yell Some Confetti</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon_3.png">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.3/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            text-align: center;
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            box-sizing: border-box;
+        }
+        
+        #container {
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            width: 1024px;
+        }
+        
+        #button-container {
+            margin: 0 auto;
+        }
+        
+        button {
+            border: 0;
+            font-size: 20px;
+            padding: 12px 24px;
+            cursor: pointer;
+            outline: none;
+            border-radius: 50px;
+            font-weight: bold;
+            width: 180px;
+            display: block;
+            margin: 0 auto;
+            background-size: 300% 100%;
+        }
+        
+        .start-btn {
+            color: #fff;
+            background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+            box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+        }
+        
+        .start-btn:hover {
+            box-shadow: 0 4px 20px 0 rgba(65, 132, 234, 0.95);
+            background-position: 100% 0;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+        
+        .stop-btn {
+            color: #2c353f;
+            background: #fff;
+            box-shadow: 0px 0px 0px 1px #556679 inset;
+        }
+        
+        .stop-btn:hover {
+            background: #f0f1f1;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+        
+        h1 {
+            margin: 40px;
+            color: #2c353f;
+        }
+        
+        #meter {
+            width: 180px;
+            height: 10px;
+            background: #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            opacity: 0;
+        }
+        
+        #bar {
+            background: #00cd00;
+            width: 0px;
+            height: 10px;
+        }
+        
+        #stop {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1 id="main-text">Yell for some confetti!</h1>
+        <div id="meter">
+            <div id="bar"></div>
+        </div>
+        <div id="button-container">
+            <button id="start" class="start-btn">Start</button>
+            <button id="stop" class="stop-btn">Stop</button>
+        </div>
+    </div>
+</body>
+<script>
+</script>
+<script>
+    window.onload = function() {
+        function run(count) {
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+            confetti({
+                angle: randomInRange(0, 360),
+                spread: count,
+                particleCount: count,
+                origin: {
+                    y: 0.5
+                }
+            });
+        }
+        var meter = document.getElementById("meter");
+        var bar = document.getElementById("bar");
+        var text = document.getElementById("main-text");
+        var start = document.getElementById("start");
+        var stop = document.getElementById("stop");
+        var times = 0;
+        var duration = 0;
+        start.onclick = function() {
+            text.innerHTML = "Getting mic permission...";
+            start.style.visibility = "hidden";
+            navigator.getUserMedia = navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia;
+            if (navigator.getUserMedia) {
+                navigator.getUserMedia({
+                        audio: true
+                    },
+                    function(stream) {
+                        start.style.display = "none";
+                        start.style.visibility = "visible";
+                        stop.style.display = "block";
+                        meter.style.opacity = 1;
+                        window.localStream = stream;
+                        audioContext = new AudioContext();
+                        analyser = audioContext.createAnalyser();
+                        microphone = audioContext.createMediaStreamSource(stream);
+                        javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+                        analyser.smoothingTimeConstant = 0.8;
+                        analyser.fftSize = 1024;
+                        microphone.connect(analyser);
+                        analyser.connect(javascriptNode);
+                        javascriptNode.connect(audioContext.destination);
+                        javascriptNode.onaudioprocess = function() {
+                            var array = new Uint8Array(analyser.frequencyBinCount);
+                            analyser.getByteFrequencyData(array);
+                            var values = 0;
+                            var length = array.length;
+                            for (var i = 0; i < length; i++) {
+                                if (!stream.active) {
+                                    return;
+                                } else {
+                                    values += (array[i]);
+                                }
+                            }
+                            var average = values / length;
+                            runConfetti = setTimeout(checkVol, 200);
+
+                            function checkVol() {
+                                if (average > 30) {
+                                    run(average);
+                                    times += 1;
+                                }
+                            }
+                            text.innerHTML = Math.round(average) + "db";
+                            bar.style.width = average * 6 + "px";
+                        }
+                    },
+                    function(err) {
+                        console.log("The following error occured: " + err.name)
+                    });
+            } else {
+                console.log("getUserMedia not supported");
+            }
+        }
+
+        document.getElementById('stop').onclick = function() {
+            start.style.display = "block";
+            stop.style.display = "none";
+            meter.style.opacity = 0;
+            bar.style.width = 0 + "px";
+            localStream.getTracks().forEach((track) => {
+                track.stop();
+            });
+            clearTimeout(runConfetti);
+            text.innerHTML = "You yelled " + times + " confetti!";
+            times = 0;
+            duration = 0;
+        };
+    };
+</script>
+
+</html>
