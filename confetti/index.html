@@ -117,99 +117,105 @@
 <script>
 </script>
 <script>
-    window.onload = function() {
-        function run(count) {
-            function randomInRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
-            confetti({
-                angle: randomInRange(0, 360),
-                spread: count,
-                particleCount: count,
-                origin: {
-                    y: 0.5
-                }
-            });
-        }
-        var meter = document.getElementById("meter");
-        var bar = document.getElementById("bar");
-        var text = document.getElementById("main-text");
-        var start = document.getElementById("start");
-        var stop = document.getElementById("stop");
-        var times = 0;
-        var duration = 0;
-        start.onclick = function() {
-            text.innerHTML = "Getting mic permission...";
-            start.style.visibility = "hidden";
-            navigator.getUserMedia = navigator.getUserMedia ||
-                navigator.webkitGetUserMedia ||
-                navigator.mozGetUserMedia;
-            if (navigator.getUserMedia) {
-                navigator.getUserMedia({
-                        audio: true
-                    },
-                    function(stream) {
-                        start.style.display = "none";
-                        start.style.visibility = "visible";
-                        stop.style.display = "block";
-                        meter.style.opacity = 1;
-                        window.localStream = stream;
-                        audioContext = new AudioContext();
-                        analyser = audioContext.createAnalyser();
-                        microphone = audioContext.createMediaStreamSource(stream);
-                        javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
-                        analyser.smoothingTimeConstant = 0.8;
-                        analyser.fftSize = 1024;
-                        microphone.connect(analyser);
-                        analyser.connect(javascriptNode);
-                        javascriptNode.connect(audioContext.destination);
-                        javascriptNode.onaudioprocess = function() {
-                            var array = new Uint8Array(analyser.frequencyBinCount);
-                            analyser.getByteFrequencyData(array);
-                            var values = 0;
-                            var length = array.length;
-                            for (var i = 0; i < length; i++) {
-                                if (!stream.active) {
-                                    return;
-                                } else {
-                                    values += (array[i]);
-                                }
-                            }
-                            var average = values / length;
-                            runConfetti = setTimeout(checkVol, 200);
+    let audioContext,
+        meter = document.getElementById("meter"),
+        bar = document.getElementById("bar"),
+        text = document.getElementById("main-text"),
+        start_btn = document.getElementById("start"),
+        stop_btn = document.getElementById("stop"),
+        times = 0;
 
-                            function checkVol() {
-                                if (average > 30) {
-                                    run(average);
-                                    times += 1;
-                                }
-                            }
-                            text.innerHTML = Math.round(average) + "db";
-                            bar.style.width = average * 6 + "px";
-                        }
-                    },
-                    function(err) {
-                        console.log("The following error occured: " + err.name)
-                    });
-            } else {
-                console.log("getUserMedia not supported");
+    document.getElementById('start').addEventListener('click', function() {
+        text.innerHTML = "Getting mic permission...";
+        start_btn.style.visibility = "hidden";
+        start();
+    });
+
+    document.getElementById('stop').addEventListener('click', function() {
+        stop();
+    });
+
+    function start() {
+        try {
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+            navigator.getUserMedia({
+                    audio: true,
+                    video: false
+                },
+                onMicrophoneGranted,
+                onMicrophoneDenied
+            );
+        } catch (e) {
+            text.innerHTML = e;
+        }
+    }
+
+    function stop() {
+        audioContext.suspend();
+        start_btn.style.display = "block";
+        stop_btn.style.display = "none";
+        meter.style.opacity = 0;
+        bar.style.width = 0 + "px";
+        // localStream.getTracks().forEach((track) => {
+        //     track.stop();
+        // });
+        clearTimeout(runConfetti);
+        text.innerHTML = "You yelled " + times + " confetti!";
+        times = 0;
+    }
+
+    async function onMicrophoneGranted(stream) {
+        start_btn.style.display = "none";
+        start_btn.style.visibility = "visible";
+        stop_btn.style.display = "block";
+        meter.style.opacity = 1;
+
+        audioContext = new AudioContext();
+        await audioContext.audioWorklet.addModule('mod.js');
+        let microphone = audioContext.createMediaStreamSource(stream);
+
+        const node = new AudioWorkletNode(audioContext, 'vumeter');
+        node.port.onmessage = event => {
+            let _volume = 0;
+            if (event.data.volume)
+                _volume = event.data.volume;
+            translate(_volume * 100);
+        }
+        microphone.connect(node).connect(audioContext.destination);
+    }
+
+    function onMicrophoneDenied() {
+        console.log("getUserMedia not supported");
+    }
+
+    function translate(vol) {
+        runConfetti = setTimeout(checkVol, 200);
+
+        function checkVol() {
+            if (vol > 30) {
+                run(vol);
+                times += 1;
             }
         }
+        text.innerHTML = Math.round(vol) + " db";
+        bar.style.width = vol * 6 + "px";
+    }
 
-        document.getElementById('stop').onclick = function() {
-            start.style.display = "block";
-            stop.style.display = "none";
-            meter.style.opacity = 0;
-            bar.style.width = 0 + "px";
-            localStream.getTracks().forEach((track) => {
-                track.stop();
-            });
-            clearTimeout(runConfetti);
-            text.innerHTML = "You yelled " + times + " confetti!";
-            times = 0;
-            duration = 0;
-        };
-    };
+
+    function run(count) {
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        confetti({
+            angle: randomInRange(0, 360),
+            spread: count,
+            particleCount: count,
+            origin: {
+                y: 0.5
+            }
+        });
+    }
 </script>
 
 </html>
