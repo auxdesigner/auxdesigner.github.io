@@ -56,7 +56,7 @@
         .start-btn:hover {
             box-shadow: 0 4px 20px 0 rgba(49, 196, 190, .75);
             background-position: 100% 0;
-            moz-transition: all .4s ease-in-out;
+            -moz-transition: all .4s ease-in-out;
             -o-transition: all .4s ease-in-out;
             -webkit-transition: all .4s ease-in-out;
             transition: all .4s ease-in-out;
@@ -70,7 +70,7 @@
         
         .stop-btn:hover {
             background: #f0f1f1;
-            moz-transition: all .4s ease-in-out;
+            -moz-transition: all .4s ease-in-out;
             -o-transition: all .4s ease-in-out;
             -webkit-transition: all .4s ease-in-out;
             transition: all .4s ease-in-out;
@@ -133,15 +133,18 @@
                 }
             });
         }
+
         var meter = document.getElementById("meter");
         var bar = document.getElementById("bar");
         var text = document.getElementById("main-text");
         var start = document.getElementById("start");
         var stop = document.getElementById("stop");
         var times = 0;
+
         start.onclick = function() {
             text.innerHTML = "Getting mic permission...";
             start.style.visibility = "hidden";
+
             navigator.getUserMedia = navigator.getUserMedia ||
                 navigator.webkitGetUserMedia ||
                 navigator.mozGetUserMedia;
@@ -155,6 +158,7 @@
                         stop.style.display = "block";
                         meter.style.opacity = 1;
                         text.innerHTML = "Keep yelling!";
+
                         window.localStream = stream;
                         audioContext = new AudioContext();
                         analyser = audioContext.createAnalyser();
@@ -177,6 +181,7 @@
                                     values += (array[i]);
                                 }
                             }
+
                             var average = values / length;
                             runConfetti = setTimeout(checkVol, 200);
 
@@ -212,6 +217,7 @@
             stop.style.display = "none";
             meter.style.opacity = 0;
             bar.style.width = 0 + "px";
+
             localStream.getTracks().forEach((track) => {
                 track.stop();
             });
@@ -219,7 +225,6 @@
             setTimeout(function() {
                 text.innerHTML = "You made " + times + " confetti!";
             }, 200);
-
         };
     };
 </script>
