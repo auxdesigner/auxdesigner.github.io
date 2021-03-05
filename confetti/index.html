@@ -62,29 +62,13 @@
             transition: all .4s ease-in-out;
         }
         
-        .stop-btn {
-            color: #2c353f;
-            background: #fff;
-            box-shadow: 0px 0px 0px 1px #556679 inset;
-        }
-        
-        .stop-btn:hover {
-            background: #f0f1f1;
-            -moz-transition: all .4s ease-in-out;
-            -o-transition: all .4s ease-in-out;
-            -webkit-transition: all .4s ease-in-out;
-            transition: all .4s ease-in-out;
-        }
-        
         h1 {
             margin-bottom: 20px;
-            color: #2c353f;
         }
         
         #meter {
             width: 180px;
             height: 10px;
-            background: #ddd;
             border-radius: 8px;
             overflow: hidden;
             margin: 0 auto;
@@ -100,6 +84,54 @@
         
         #stop {
             display: none;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #2c353f;
+            }
+            h1 {
+                color: #fff;
+            }
+            #meter {
+                background: #eee;
+            }
+            .stop-btn {
+                color: #fff;
+                background: rgba(255, 255, 255, 0.05);
+                box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.1);
+            }
+            .stop-btn:hover {
+                background: rgba(255, 255, 255, 0.1);
+                -moz-transition: all .4s ease-in-out;
+                -o-transition: all .4s ease-in-out;
+                -webkit-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+        }
+        
+        @media (prefers-color-scheme: light) {
+            body {
+                background: #fff;
+            }
+            h1 {
+                color: #2c353f;
+            }
+            #meter {
+                background: #ddd;
+            }
+            .stop-btn {
+                color: #2c353f;
+                background: #fff;
+                box-shadow: 0px 0px 0px 1px #ddd inset;
+            }
+            .stop-btn:hover {
+                background: #fafafa;
+                -moz-transition: all .4s ease-in-out;
+                -o-transition: all .4s ease-in-out;
+                -webkit-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
         }
     </style>
 </head>
@@ -119,113 +151,119 @@
 <script>
 </script>
 <script>
-    window.onload = function() {
-        function run(count) {
-            function randomInRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
-            confetti({
-                angle: randomInRange(0, 360),
-                spread: count,
-                particleCount: count,
-                origin: {
-                    y: 0.5
-                }
-            });
+    // if (location.protocol !== 'https:') {
+    //     location.replace(`https:${location.href.substring(location.protocol.length)}`);
+    // }
+
+    function run(count) {
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
         }
+        confetti({
+            angle: randomInRange(0, 360),
+            spread: count,
+            particleCount: count,
+            origin: {
+                y: 0.5
+            }
+        });
+    }
 
-        var meter = document.getElementById("meter");
-        var bar = document.getElementById("bar");
-        var text = document.getElementById("main-text");
-        var start = document.getElementById("start");
-        var stop = document.getElementById("stop");
-        var times = 0;
+    var meter = document.getElementById("meter");
+    var bar = document.getElementById("bar");
+    var text = document.getElementById("main-text");
+    var start = document.getElementById("start");
+    var stop = document.getElementById("stop");
+    var times = 0;
 
-        start.onclick = function() {
-            text.innerHTML = "Getting mic permission...";
-            start.style.visibility = "hidden";
+    start.onclick = function() {
+        text.innerHTML = "Getting mic permission...";
+        start.style.visibility = "hidden";
 
-            navigator.getUserMedia = navigator.getUserMedia ||
-                navigator.webkitGetUserMedia ||
-                navigator.mozGetUserMedia;
-            if (navigator.getUserMedia) {
-                navigator.getUserMedia({
-                        audio: true
-                    },
-                    function(stream) {
-                        start.style.display = "none";
-                        start.style.visibility = "visible";
-                        stop.style.display = "block";
-                        meter.style.opacity = 1;
-                        text.innerHTML = "Keep yelling!";
+        navigator.getUserMedia = navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia;
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({
+                    audio: true
+                },
+                function(stream) {
+                    start.style.display = "none";
+                    start.style.visibility = "visible";
+                    stop.style.display = "block";
+                    meter.style.opacity = 1;
+                    text.innerHTML = "Keep yelling!";
 
-                        window.localStream = stream;
-                        audioContext = new AudioContext();
-                        analyser = audioContext.createAnalyser();
-                        microphone = audioContext.createMediaStreamSource(stream);
-                        javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
-                        analyser.smoothingTimeConstant = 0.8;
-                        analyser.fftSize = 1024;
-                        microphone.connect(analyser);
-                        analyser.connect(javascriptNode);
-                        javascriptNode.connect(audioContext.destination);
-                        javascriptNode.onaudioprocess = function() {
-                            var array = new Uint8Array(analyser.frequencyBinCount);
-                            analyser.getByteFrequencyData(array);
-                            var values = 0;
-                            var length = array.length;
-                            for (var i = 0; i < length; i++) {
-                                if (!stream.active) {
-                                    return;
-                                } else {
-                                    values += (array[i]);
-                                }
+                    window.localStream = stream;
+                    audioContext = new AudioContext();
+                    analyser = audioContext.createAnalyser();
+                    microphone = audioContext.createMediaStreamSource(stream);
+                    javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+                    analyser.smoothingTimeConstant = 0.8;
+                    analyser.fftSize = 1024;
+                    microphone.connect(analyser);
+                    analyser.connect(javascriptNode);
+                    javascriptNode.connect(audioContext.destination);
+                    javascriptNode.onaudioprocess = function() {
+                        var array = new Uint8Array(analyser.frequencyBinCount);
+                        analyser.getByteFrequencyData(array);
+                        var values = 0;
+                        var length = array.length;
+                        for (var i = 0; i < length; i++) {
+                            if (!stream.active) {
+                                return;
+                            } else {
+                                values += (array[i]);
                             }
-
-                            var average = values / length;
-                            runConfetti = setTimeout(checkVol, 200);
-
-                            function checkVol() {
-                                if (average > 30) {
-                                    run(average);
-                                    times += 1;
-                                    seconds += 0.2;
-                                    if (seconds > 1) {
-                                        text.innerHTML = "Woohoo!";
-                                        console.log("woo");
-                                    }
-                                } else {
-                                    seconds = 0;
-                                    text.innerHTML = "Keep yelling!";
-                                    console.log("keep");
-                                }
-                            }
-                            //text.innerHTML = Math.round(average) + " db";
-                            bar.style.width = average * 6 + "px";
                         }
-                    },
-                    function(err) {
-                        text.innerHTML = "Mic permission denied...";
-                    });
-            } else {
-                text.innerHTML = "Your browser is not supported...";
-            }
+
+                        var average = values / length;
+                        runConfetti = setTimeout(checkVol, 200);
+
+                        function checkVol() {
+                            var active = 0,
+                                inactive = 0;
+                            if (average > 30) {
+                                run(average);
+                                times += 1;
+                                inactive = 0;
+                                active += 0.2;
+                                if (active > 2) {
+                                    text.innerHTML = "Woohoo!";
+                                }
+                            } else {
+                                active = 0;
+                                inactive += 0.2;
+                                if (inactive > 2) {
+                                    text.innerHTML = "Keep yelling!";
+                                }
+                            }
+                        }
+                        //text.innerHTML = Math.round(average) + " db";
+                        bar.style.width = average * 6 + "px";
+                    }
+                },
+                function(err) {
+                    text.innerHTML = "Mic permission denied...";
+                });
+        } else {
+            text.innerHTML = "Oops! Try HTTPS in Google Chrome...";
         }
+    }
 
-        document.getElementById('stop').onclick = function() {
-            start.style.display = "block";
-            stop.style.display = "none";
-            meter.style.opacity = 0;
-            bar.style.width = 0 + "px";
+    document.getElementById('stop').onclick = function() {
+        start.style.display = "block";
+        stop.style.display = "none";
+        meter.style.opacity = 0;
+        bar.style.width = 0 + "px";
 
-            localStream.getTracks().forEach((track) => {
-                track.stop();
-            });
-            clearTimeout(runConfetti);
-            setTimeout(function() {
-                text.innerHTML = "You made " + times + " confetti!";
-            }, 200);
-        };
+        localStream.getTracks().forEach((track) => {
+            track.stop();
+        });
+        clearTimeout(runConfetti);
+        setTimeout(function() {
+            text.innerHTML = "You made " + times + " confetti!";
+        }, 200);
     };
 </script>
 
