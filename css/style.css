@@ -114,15 +114,6 @@ footer {
     .item {
         width: 80%;
     }
-    .name {
-        font-size: 16px;
-    }
-    .desc {
-        font-size: 12px;
-    }
-    .date {
-        font-size: 10px;
-    }
 }
 
 @media (max-width: 640px) {
