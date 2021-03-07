@@ -181,7 +181,7 @@
     start.onclick = function() {
         text.innerHTML = "Getting mic permission...";
         start.style.visibility = "hidden";
-
+        /*https://stackoverflow.com/questions/62725857/how-to-get-volume-level-using-javascript*/
         navigator.getUserMedia = navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia;
