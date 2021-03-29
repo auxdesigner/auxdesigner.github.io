@@ -243,7 +243,7 @@ button {
     border-radius: 8px;
     cursor: pointer;
     outline: none;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 18px;
     z-index: 2;
     position: relative;
@@ -288,6 +288,7 @@ a:hover {
 
 #attribution {
     font-size: 12px;
+    font-weight: 600;
     margin-top: 20px;
     color: #444;
 }
