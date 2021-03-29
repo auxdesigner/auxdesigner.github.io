@@ -67,8 +67,6 @@ for (i = 0; i < stats.length; i++) {
     createSlider(stats[i]);
 }
 
-var sliderArray = [];
-
 function createSlider(name) {
 
     var sliderID = name + '-slider';
@@ -107,14 +105,4 @@ save.addEventListener('click', function() {
         .then(function(blob) {
             window.saveAs(blob, 'card.png');
         });
-});
-
-
-// Randomize
-var randomize = document.getElementById('randomize');
-randomize.addEventListener('click', function() {
-    randomImage();
-    for (i = 0; i < stats.length; i++) {
-
-    }
 });
