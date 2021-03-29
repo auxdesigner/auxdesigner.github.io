@@ -98,7 +98,7 @@ function createSlider(name) {
 
 
 // Image download
-var node = document.getElementById('card');
+var node = document.getElementById('card-container');
 var save = document.getElementById('save');
 save.addEventListener('click', function() {
     domtoimage.toBlob(node)
