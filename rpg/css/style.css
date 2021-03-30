@@ -307,14 +307,14 @@ label {
 
 button {
     font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
-    margin-top: 30px;
+    margin-top: 10px;
     padding: 12px;
     border: none;
-    border-radius: 8px;
+    border-radius: 56px;
     cursor: pointer;
     outline: none;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     z-index: 2;
     position: relative;
     -webkit-box-flex: 1;
@@ -361,14 +361,15 @@ a:hover {
     font-weight: 600;
     margin-top: 20px;
     color: #444;
+    text-align: center;
 }
 
 @media (max-width: 480px) {
     #card {
-        width: 80%;
+        width: 320px;
     }
     #ui {
-        width: 80%;
+        width: 320px;
     }
     button {
         font-size: 14px;
