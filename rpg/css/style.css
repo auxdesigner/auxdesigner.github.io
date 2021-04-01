@@ -95,13 +95,16 @@ body {
 
 #card {
     border-radius: 16px;
-    -webkit-box-shadow: 0px 0px 36px rgba(0, 0, 0, .12);
-    box-shadow: 0px 0px 36px rgba(0, 0, 0, .12);
     width: 360px;
     padding: 20px 20px 0px 20px;
     background: #fff;
     position: relative;
     z-index: 9;
+}
+
+#card-shadow {
+    -webkit-box-shadow: 0px 0px 36px rgba(0, 0, 0, .08);
+    box-shadow: 0px 0px 36px rgba(0, 0, 0, .08);
 }
 
 #photo {
