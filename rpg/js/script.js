@@ -51,14 +51,19 @@ var imgArray = [
     "049-wizard",
     "050-unicorn"
 ];
+var imageDOM = document.getElementById('random-photo');
+var randomize = document.getElementById('randomize');
 
 function randomImage() {
-    var imageDOM = document.getElementById('random-photo');
     var randomImage = imgArray[Math.floor(Math.random() * imgArray.length)];
     imageDOM.src = "svg/" + randomImage + ".svg";
+    console.log(randomImage);
 }
 randomImage();
 
+randomize.addEventListener('click', function() {
+    randomImage();
+});
 
 // Create sliders
 var stats = ['str', 'dex', 'const', 'int', 'wis', 'char'];
@@ -68,13 +73,10 @@ for (i = 0; i < stats.length; i++) {
 }
 
 function createSlider(name) {
-
     var sliderID = name + '-slider';
     var sliderValueID = name + '-val';
     var sliderValueDOM = document.getElementById(sliderValueID);
     var sliderObj = document.getElementById(sliderID);
-    var randomize = document.getElementById('randomize');
-
 
     noUiSlider.create(sliderObj, {
         start: Math.floor(Math.random() * 100),
@@ -91,7 +93,6 @@ function createSlider(name) {
     });
 
     randomize.addEventListener('click', function() {
-        randomImage();
         sliderObj.noUiSlider.set(Math.floor(Math.random() * 100));
     });
 }
