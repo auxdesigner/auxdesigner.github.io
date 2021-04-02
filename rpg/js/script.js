@@ -57,7 +57,6 @@ var randomize = document.getElementById('randomize');
 function randomImage() {
     var randomImage = imgArray[Math.floor(Math.random() * imgArray.length)];
     imageDOM.src = "svg/" + randomImage + ".svg";
-    console.log(randomImage);
 }
 randomImage();
 
