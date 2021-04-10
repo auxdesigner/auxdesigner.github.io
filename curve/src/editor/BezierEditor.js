@@ -206,8 +206,7 @@ export default class BezierEditor extends Component {
       yTo: y(1),
     };
 
-    // eslint-disable-next-line react/forbid-foreign-prop-types
-    const cursor = { ...BezierEditor.propTypes.pointers, ...pointers };
+    const cursor = { ...pointers };
 
     const styles = {
       background,

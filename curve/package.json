@@ -1,6 +1,7 @@
 {
   "name": "curve",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "devDependencies": {
     "babel-cli": "^6.18.0",
