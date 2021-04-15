@@ -70,7 +70,7 @@ export default class BezierEditor extends Component {
     handleStroke: 2,
     textStyle: {
       fontSize: "10px",
-      fill: "#6d6d6d"
+      fill: "#9d9d9d"
     },
     pointers: {
       down: "none",
