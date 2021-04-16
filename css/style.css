@@ -78,11 +78,11 @@ a {
 }
 
 .logo {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     vertical-align: middle;
     margin-right: 8px;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 
 .name {
