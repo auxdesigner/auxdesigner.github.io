@@ -32,9 +32,14 @@ class App extends Component {
   }
 
   field = (index) => (e) => {
-    let { value } = this.state;
-    value[index] = e.target.value;
-    this.setState({ value });
+    // let { value } = this.state;
+    // value[index] = e.target.value;
+    // this.setState({ value });
+    this.setState((prevState) => ({
+      value: prevState.value.map((val, i) =>
+        i === index ? e.target.value : val
+      )
+    }));
   };
 
   ease = () => {
