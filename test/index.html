@@ -31,27 +31,61 @@
         #slide4 {
             background: blue;
         }
+        #clear {
+            position: absolute;
+            top: 50px;
+        }
     </style>
-    <script>
-    </script>
+    
 </head>
 
-<body>
+<body id="body">
+    
     <div class="slide" id="slide1">
         slide 1<br>
-        <a href="#slide2" class="button">Next</a>
+        <a href="#slide2" class="button" id="button1">Next</a><br>
+
     </div>
     <div class="slide" id="slide2">
         slide 2<br>
-        <a href="#slide3" class="button">Next</a>
+        <a href="#slide3" class="button" id="button2">Next</a><br>
+
     </div>
     <div class="slide" id="slide3">
         slide 3<br>
-        <a href="#slide4" class="button">Next</a>
+        <a href="#slide4" class="button" id="button3">Next</a><br>
+        
     </div>
     <div class="slide" id="slide4">
         slide 4<br>
-        <a href="#slide1" class="button">Next</a>
+        <a href="#slide1" class="button" id="button4">Next</a><br>
+        
     </div>
+    <button id="clear">clear</button>
+    
 </body>
+
+<script>
+    // always check on load
+    (function() {
+        console.log(localStorage.getItem("button1Clicked"));
+        if (localStorage.getItem("button1Clicked") === "yes") {
+            window.location.hash = '#slide2';
+        }
+    })();
+
+    // fire when click
+    document.getElementById("button1").addEventListener("click", function(){
+        localStorage.setItem("button1Clicked", "yes");
+        console.log(localStorage.getItem("button1Clicked"));
+    });
+
+    document.getElementById("clear").addEventListener("click", function(){
+        localStorage.clear();
+    });
+
+    
+    
+</script>
+
 </html>
