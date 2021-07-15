@@ -8,84 +8,118 @@
     <!-- <link rel='stylesheet' href='css/style.css' />
     <link rel="icon" type="image/png" href="images/favicon_3.png"> -->
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
+        
         .slide {
             width: 100%;
             height: 100%;
             color: #000;
         }
+        
         #slide1 {
             background: yellow;
         }
+        
         #slide2 {
             background: red;
         }
+        
         #slide3 {
             background: pink;
         }
+        
         #slide4 {
             background: blue;
         }
+        
         #clear {
             position: absolute;
             top: 50px;
         }
     </style>
-    
+
 </head>
 
 <body id="body">
-    
+
     <div class="slide" id="slide1">
         slide 1<br>
-        <a href="#slide2" class="button" id="button1">Next</a><br>
+        <a href="#slide2" class="levelButton" id="button1">Next</a><br>
 
     </div>
     <div class="slide" id="slide2">
         slide 2<br>
-        <a href="#slide3" class="button" id="button2">Next</a><br>
+        <a href="#slide3" class="levelButton" id="button2">Next</a><br>
 
     </div>
     <div class="slide" id="slide3">
         slide 3<br>
-        <a href="#slide4" class="button" id="button3">Next</a><br>
-        
+        <a href="#slide4" class="levelButton" id="button3">Next</a><br>
+
     </div>
     <div class="slide" id="slide4">
         slide 4<br>
-        <a href="#slide1" class="button" id="button4">Next</a><br>
-        
+        <a href="#slide1" class="levelButton" id="button4">Next</a><br>
+
     </div>
     <button id="clear">clear</button>
-    
+
 </body>
 
 <script>
     // always check on load
     (function() {
-        console.log(localStorage.getItem("button1Clicked"));
-        if (localStorage.getItem("button1Clicked") === "yes") {
-            window.location.hash = '#slide2';
+        console.log(localStorage.getItem("progress"));
+        if (localStorage.getItem("progress") !== null) {
+            window.location.hash = '#slide' + localStorage.getItem("progress");
         }
+
+
+        /* switch (localStorage.getItem("progress")) {
+            case "1":
+                window.location.hash = '#slide2';
+                break;
+            case "2":
+                window.location.hash = '#slide3';
+                break;
+            case "3":
+                window.location.hash = '#slide4';
+                break;
+            case "4":
+                window.location.hash = '#slide4';
+                break;
+        } */
     })();
 
-    // fire when click
-    document.getElementById("button1").addEventListener("click", function(){
-        localStorage.setItem("button1Clicked", "yes");
-        console.log(localStorage.getItem("button1Clicked"));
+
+    // click events
+    // get buttons and then make an iterable array out of them        
+    this.levelButtons = document.querySelectorAll('a.levelButton');
+    this.levelButtonItems = [].slice.call(this.levelButtons);
+
+    // add event
+    this.levelButtonItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+
+            setTimeout(function() {
+                    var progress = window.location.hash.slice(6) // remove "slide", result should be 1,2,...
+                    console.log(window.location.hash);
+                    localStorage.setItem("progress", progress);
+                },
+                10);
+        });
     });
 
-    document.getElementById("clear").addEventListener("click", function(){
+    // clear storage
+    document.getElementById("clear").addEventListener("click", function() {
         localStorage.clear();
     });
-
-    
-    
 </script>
 
 </html>
