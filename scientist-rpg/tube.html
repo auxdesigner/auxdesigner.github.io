@@ -4,7 +4,7 @@
 <head>
     <meta class="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Desktop</title>
+    <title>Tube</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
@@ -35,15 +35,13 @@
             border: 1px solid #ccc;
         }
         
-        .email-success,
-        .calendar-success {
+        .inventory-success {
             color: #0BCAB5;
             display: none;
             font-size: 24px;
         }
         
-        .email,
-        .calendar {
+        .inventory {
             margin-top: 30px;
             padding: 5px 15px;
             cursor: pointer;
@@ -60,12 +58,11 @@
 <body id="body">
 
     <div class="slide" id="slide1">
-        <h1>Desktop PC</h1><br>
-        <img src="img/windows.png"><br>
-        <button class="email">Check email</button>
-        <button class="calendar">Check Benchling Calendar</button>
-        <p class="email-success">You don't have new emails. Woohoo!</p>
-        <p class="calendar-success">Your job today is to start the MTT assay for cell growth.<br> Head over to the lab and warm up some media! You got this!</p>
+        <h1>Add cells in tube and pellet cells</h1><br>
+        <img src="img/tube1.png"><br>
+        <button class="inventory">Add cells and use centrifuge</button>
+
+        <p class="inventory-success">You added cells in the tube and spinned them down in centrifuge to pellet cells. <br>Looking like a pro!</p>
     </div>
 
 
@@ -74,17 +71,9 @@
 
 <script>
     // show email
-    document.querySelector('.email').addEventListener('click', function() {
-        document.querySelector('.email-success').style.display = 'block';
-        document.querySelector('.calendar-success').style.display = 'none';
-    });
-
-    // show calendar, hide email
-    document.querySelector('.calendar').addEventListener('click', function() {
-        document.querySelector('img').src = 'img/calendar.png';
-        document.querySelector('.calendar-success').style.display = 'block';
-        document.querySelector('.email-success').style.display = 'none';
-        // localStorage.setItem('seenCalendar', 'yes');
+    document.querySelector('.inventory').addEventListener('click', function() {
+        document.querySelector('.inventory-success').style.display = 'block';
+        document.querySelector('img').src = 'img/tube2.png';
     });
 </script>
 

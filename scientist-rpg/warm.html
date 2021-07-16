@@ -64,22 +64,7 @@
         <!-- <a href="#slide2" class="levelButton" id="button1">Next</a><br> -->
 
     </div>
-    <div class="slide" id="slide2">
-        slide 2<br>
-        <a href="#slide3" class="levelButton" id="button2">Next</a><br>
 
-    </div>
-    <div class="slide" id="slide3">
-        slide 3<br>
-        <a href="#slide4" class="levelButton" id="button3">Next</a><br>
-
-    </div>
-    <div class="slide" id="slide4">
-        slide 4<br>
-        <a href="#slide1" class="levelButton" id="button4">Next</a><br>
-
-    </div>
-    <!-- <button id="clear">clear</button> -->
 
 </body>
 
@@ -116,6 +101,7 @@
         item.addEventListener('click', function() {
             document.querySelector('.success').style.display = 'block';
             document.querySelector('.fulfill').style.display = 'none';
+            document.querySelector('img').src = 'img/warming.png';
         });
     });
 
@@ -126,25 +112,6 @@
         localStorage.clear();
     });
     */
-
-    var stepsArray = ["step1", "step2", "step3"];
-    stepsArray.forEach(function(element) {
-        element.Status = "false";
-    });
-
-    console.log(stepsArray[1].Status);
-
-
-    // check if previous step is done
-    function checkIfReady(step) {
-        if ((previousStep.Status) === "done") {
-            console.log("proceed");
-        } else {
-            console.log("not ready");
-        }
-    }
-
-    checkIfReady(2);
 </script>
 
 </html>
