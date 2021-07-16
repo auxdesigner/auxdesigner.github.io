@@ -5,6 +5,9 @@
     <meta class="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <!-- <link rel='stylesheet' href='css/style.css' />
     <link rel="icon" type="image/png" href="images/favicon_3.png"> -->
     <style>
@@ -14,6 +17,8 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
+            text-align: center;
+            font-family: 'VT323';
         }
         
         .slide {
@@ -22,20 +27,19 @@
             color: #000;
         }
         
-        #slide1 {
-            background: yellow;
+        h1 {
+            font-size: 32px;
+            font-weight: normal;
         }
         
-        #slide2 {
-            background: red;
+        .success {
+            color: #0BCAB5;
+            display: none;
+            font-size: 24px;
         }
         
-        #slide3 {
-            background: pink;
-        }
-        
-        #slide4 {
-            background: blue;
+        .fulfill {
+            margin-top: 20px;
         }
         
         #clear {
@@ -49,8 +53,11 @@
 <body id="body">
 
     <div class="slide" id="slide1">
-        slide 1<br>
-        <a href="#slide2" class="levelButton" id="button1">Next</a><br>
+        <h1>Warm up media in 37* liquid water bath</h1><br>
+        <img src="img/warm.jpg"><br>
+        <button class="fulfill">Start</button>
+        <p class="success">Done! Now get some ice from the fridge to thaw cells!</p>
+        <!-- <a href="#slide2" class="levelButton" id="button1">Next</a><br> -->
 
     </div>
     <div class="slide" id="slide2">
@@ -68,7 +75,7 @@
         <a href="#slide1" class="levelButton" id="button4">Next</a><br>
 
     </div>
-    <button id="clear">clear</button>
+    <!-- <button id="clear">clear</button> -->
 
 </body>
 
@@ -99,11 +106,21 @@
 
 
     // click events
+    this.fulfillButtons = document.querySelectorAll('.fulfill');
+    this.fulfillButtonItems = [].slice.call(this.fulfillButtons);
+    this.fulfillButtonItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+            document.querySelector('.success').style.display = 'block';
+            document.querySelector('.fulfill').style.display = 'none';
+        });
+    });
+
     // get buttons and then make an iterable array out of them        
-    this.levelButtons = document.querySelectorAll('a.levelButton');
-    this.levelButtonItems = [].slice.call(this.levelButtons);
+    // this.levelButtons = document.querySelectorAll('a.levelButton');
+    // this.levelButtonItems = [].slice.call(this.levelButtons);
 
     // add event
+    /*
     this.levelButtonItems.forEach(function(item) {
         item.addEventListener('click', function() {
 
@@ -115,11 +132,14 @@
                 10);
         });
     });
+    */
 
     // clear storage
+    /*
     document.getElementById("clear").addEventListener("click", function() {
         localStorage.clear();
     });
+    */
 </script>
 
 </html>
