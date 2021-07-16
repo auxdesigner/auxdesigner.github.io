@@ -4,12 +4,10 @@
 <head>
     <meta class="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Test</title>
+    <title>Warm</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <!-- <link rel='stylesheet' href='css/style.css' />
-    <link rel="icon" type="image/png" href="images/favicon_3.png"> -->
     <style>
         html,
         body {
@@ -32,6 +30,10 @@
             font-weight: normal;
         }
         
+        img {
+            border-radius: 8px;
+        }
+        
         .success {
             color: #0BCAB5;
             display: none;
@@ -39,7 +41,9 @@
         }
         
         .fulfill {
-            margin-top: 20px;
+            margin-top: 30px;
+            padding: 5px 15px;
+            cursor: pointer;
         }
         
         #clear {
@@ -122,6 +126,25 @@
         localStorage.clear();
     });
     */
+
+    var stepsArray = ["step1", "step2", "step3"];
+    stepsArray.forEach(function(element) {
+        element.Status = "false";
+    });
+
+    console.log(stepsArray[1].Status);
+
+
+    // check if previous step is done
+    function checkIfReady(step) {
+        if ((previousStep.Status) === "done") {
+            console.log("proceed");
+        } else {
+            console.log("not ready");
+        }
+    }
+
+    checkIfReady(2);
 </script>
 
 </html>
