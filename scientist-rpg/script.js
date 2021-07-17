@@ -18,7 +18,7 @@ function hide(ele) {
     DOM(ele).style.display = 'none';
 }
 
-// change img
+// change img src
 function changeImg(img, newSrc) {
     DOM(img).src = newSrc;
 }
@@ -48,6 +48,11 @@ function fadeIn(el, display) {
     })();
 };
 
+// gray out btn
+function grayOut(elm) {
+    elm.classList.add("clicked");
+}
+
 // file name
 function fileName() {
     var string = window.location.pathname.split("/").pop(); // get filename.html
@@ -57,16 +62,10 @@ function fileName() {
 // logic
 function addLogic() {
     document.querySelectorAll('.btn').forEach((btn, index) => {
-
-        // change image
-        function changeImgBasedOnIndex() {
-            adjIndex = index + 1; // by default, index is 0, make it 1 for file name
-            changeImg("img", "img/" + fileName() + adjIndex + ".png") // show cell1.png
-        }
+        
 
         // for each button, add a click event
         btn.addEventListener('click', event => {
-
             // fade effect if skip
             if(event.target.classList.contains('skip')) {
                 // message
@@ -75,7 +74,6 @@ function addLogic() {
                     fadeIn(DOM('.slide'));
                     fadeIn(DOM('.msg'));
                     DOM('.msg').innerHTML = msgArray[index]; // get msg string
-
                     // image 
                     changeImgBasedOnIndex();
                 }, 1000);            
@@ -84,17 +82,69 @@ function addLogic() {
                 // message
                 show('.msg'); // show msg div
                 DOM('.msg').innerHTML = msgArray[index]; // get msg string
-
                 // image
                 changeImgBasedOnIndex();
             }
+            // gray out clicked button
+            grayOut(event.target);
 
+            // add event to local storage
+            addToLocalStorage();
             
-        })
-    })
-};
+        });
 
-// clear localStorage
-document.querySelector('a').addEventListener("click", function() {
-    localStorage.clear();
-});
+        var adjIndex = index + 1; // by default, index is 0, make it 1
+        var itemName = fileName() + '-btn' + adjIndex;
+
+        // if button is clicked, gray it out
+        function checkIfClicked(btn) {
+            //var btnName = fileName() + '-btn' + adjIndex;
+            if (localStorage.getItem(itemName) === 'yes') {
+                grayOut(btn);
+            }
+        }
+        checkIfClicked(btn);
+        
+        // add to local storage 
+        function addToLocalStorage() {
+            localStorage.setItem(itemName, 'yes');
+            console.log(itemName);
+        }
+
+        // change to the right image
+        function changeImgBasedOnIndex() {
+            changeImg("img", "img/" + fileName() + adjIndex + ".png") // show cell1.png
+        }
+
+        
+
+        function renderBtn(array) {
+            // for each item in array, render a button in div
+            // add btn, and btn[i] class
+            // 
+        }
+    })
+}
+
+// keyboard shortcut to clear storage
+function doc_keyUp(e) {
+    if (e.ctrlKey && e.key === 'ArrowDown') {
+        localStorage.clear();
+    }
+}
+document.addEventListener('keyup', doc_keyUp, false);
+
+// return all localStorage
+function returnAllStorage() {
+    var archive = [],
+        keys = Object.keys(localStorage),
+        i = 0, key;
+
+    for (; key = keys[i]; i++) {
+        archive.push( key + '=' + localStorage.getItem(key));
+    }
+
+    console.log(archive);
+}
+
+returnAllStorage();
