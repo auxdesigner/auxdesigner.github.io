@@ -16,6 +16,7 @@
 
     <div class="slide" id="slide1">
         <h1>🖥️ Desktop PC</h1><br>
+        <h2 class="time"></h2>
         <img src="img/desktop0.png"><br>
         <button class="btn btn1">📧 Check email</button>
         <button class="btn btn2">📅 Check Benchling Calendar</button>
@@ -30,7 +31,12 @@
 <script>
     var msgArray = [
         "You don't have any new emails. Woohoo!", 
-        "Todo: MTT assay for cell growth. <br> Head over to the lab and warm up some media! You got this!"
+        "Todo: MTT assay for cell growth. <br> Head over to the lab and <b>warm up some media</b>! You got this!"
+    ];
+
+    var timeArray = [
+        "8:45 am", 
+        "9:00 am"
     ];
 
     addLogic();

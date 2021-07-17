@@ -16,6 +16,7 @@
 
     <div class="slide" id="slide1">
         <h1>💡 Cells workstation</h1><br>
+        <h2 class="time"></h2>
         <img src="img/tube0.png"><br>
         <button class="btn btn1">🧪 Add cells and use centrifuge</button>
         <button class="btn btn2">🧫 Seed cells into microplates</button>
@@ -31,10 +32,15 @@
 <script src="script.js"></script>
 <script>
     var msgArray = [
-        "You added cells in the tube and spinned the centrifuge to pellet them like a pro! Now let's seed cells into microplates.",
-        "Nicely done!<br> Now let's incubate the cell cultures for 4 days.",
-        "Perfect! You should capture the plate size and concentrations in Benchling!"
-    ]
+        "You added cells in the tube and spinned the centrifuge to pellet them like a pro!<br> Now let's seed cells into microplates.",
+        "Nicely done!<br> Now let's <b>incubate</b> the cell cultures for 4 days.",
+        "Perfect! You should capture the plate size and concentrations in <b>Benchling</b>!"
+    ];
+    var timeArray = [
+        "9:20 am",
+        "9:25 am",
+        "9:30 am"
+    ];
     addLogic();
 </script>
 

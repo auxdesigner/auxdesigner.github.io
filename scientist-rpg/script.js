@@ -61,9 +61,16 @@ function fileName() {
 
 // logic
 function addLogic() {
-    document.querySelectorAll('.btn').forEach((btn, index) => {
-        
+    // init time
+    function getTime() {
+        if (!localStorage.getItem('time')) {
+            localStorage.setItem('time', "8:30 am");
+        }
+        DOM('.time').innerHTML = localStorage.getItem('time');
+    }
+    getTime();
 
+    document.querySelectorAll('.btn').forEach((btn, index) => {
         // for each button, add a click event
         btn.addEventListener('click', event => {
             // fade effect if skip
@@ -74,14 +81,17 @@ function addLogic() {
                     fadeIn(DOM('.slide'));
                     fadeIn(DOM('.msg'));
                     DOM('.msg').innerHTML = msgArray[index]; // get msg string
+                    updateTime();
                     // image 
                     changeImgBasedOnIndex();
                 }, 1000);            
             }
+            // no fade effet if not skip
             else {
                 // message
                 show('.msg'); // show msg div
                 DOM('.msg').innerHTML = msgArray[index]; // get msg string
+                updateTime();
                 // image
                 changeImgBasedOnIndex();
             }
@@ -108,7 +118,7 @@ function addLogic() {
         // add to local storage 
         function addToLocalStorage() {
             localStorage.setItem(itemName, 'yes');
-            console.log(itemName);
+            // console.log(itemName);
         }
 
         // change to the right image
@@ -116,13 +126,13 @@ function addLogic() {
             changeImg("img", "img/" + fileName() + adjIndex + ".png") // show cell1.png
         }
 
-        
-
-        function renderBtn(array) {
-            // for each item in array, render a button in div
-            // add btn, and btn[i] class
-            // 
+        // update time
+        function updateTime() {
+            localStorage.setItem('time', timeArray[index]);
+            DOM('.time').innerHTML = localStorage.getItem('time');
         }
+
+
     })
 }
 

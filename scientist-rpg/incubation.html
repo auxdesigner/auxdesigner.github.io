@@ -17,7 +17,9 @@
 
     <div class="slide" id="slide1">
         <h1>❤️ Incubator</h1><br>
+        <h2 class="time"></h2>
         <img src="img/incubation0.png"><br>
+        
         <div>
         <button class="btn1 btn">🕵️ Check OD</button>
         <button class="btn2 btn">🧪 Add solubilization solution</button>
@@ -36,11 +38,17 @@
 <script src="script.js"></script>
 <script>
     var msgArray = [
-        "You handsomely measured the OD of cells. Don't forget to capture them in Benchling!",
-        "Solutions added! Allow the plate to stand overnight and check back tomorrow!",
-        "Another day of exciting lab work! Check the cells and note your observations in Benchling.",
-        "Cells are looking cute! Make sure to write down your notes."
-    ]
+        "You handsomely measured the OD of cells. Don't forget to capture them in <b>Benchling</b>!",
+        "Solutions added! Allow the plate to stand overnight and check back <b>tomorrow</b>!",
+        "Another day of exciting lab work! Check the cells and note your observations in <b>Benchling</b>.",
+        "Cells are looking cute! Make sure to write down your notes in <b>Benchling</b>."
+    ];
+    var timeArray = [
+        "Day 4 - 9:00 am",
+        "Day 4 - 1:30 pm",
+        "Day 5 - 9:00 am",
+        "Day 5 - 9:10 am"
+    ];
     addLogic();
 </script>
 
