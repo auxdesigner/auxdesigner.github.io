@@ -4,7 +4,7 @@
 <head>
     <meta class="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Tube</title>
+    <title>Microscope</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
@@ -17,18 +17,6 @@
             overflow: hidden;
             text-align: center;
             font-family: 'VT323';
-        }
-        
-        br {
-            height: 0;
-            margin: 0;
-            padding: 0;
-            display: block;
-            content: "";
-        }
-        
-        p {
-            margin: 0 auto;
         }
         
         .slide {
@@ -48,7 +36,6 @@
         }
         
         .inventory-success,
-        .culture-success,
         .incubate-success {
             color: #0BCAB5;
             display: none;
@@ -59,13 +46,6 @@
             margin: 30px auto;
             padding: 5px 15px;
             cursor: pointer;
-        }
-        
-        .culture {
-            margin: 30px auto;
-            padding: 5px 15px;
-            cursor: pointer;
-            display: none;
         }
         
         .incubate {
@@ -79,6 +59,14 @@
             position: absolute;
             top: 50px;
         }
+        
+        br {
+            height: 0;
+            margin: 0;
+            padding: 0;
+            display: block;
+            content: "";
+        }
     </style>
 
 </head>
@@ -86,15 +74,13 @@
 <body id="body">
 
     <div class="slide" id="slide1">
-        <h1>Incubate cell cultures</h1><br>
-        <img src="img/tube1.png"><br>
-        <button class="inventory">Add cells and use centrifuge</button><br>
-        <button class="culture">Seed cells into microplates</button><br>
-        <button class="incubate">Put in incubator</button>
+        <h1>Check cells under microscope</h1><br>
+        <img src="img/microscope.png"><br>
+        <button class="inventory">Add MTT labeling reagent</button><br>
+        <button class="incubate">Put back into incubator</button>
 
-        <p class="inventory-success">You added cells in the tube and spinned them down in centrifuge to pellet cells. <br>Looking like a pro! Now let's seed cells into microplates</p>
-        <p class="culture-success">Nicely done! Now let's incubate the cell cultures for 4 days.</p>
-        <p class="incubate-success">Perfect! You should capture the concentrations in Benchling!</p>
+        <p class="inventory-success">Looking good! Let's put them back into the incubator.</p>
+        <p class="incubate-success">Nice! Com back in 4 hours and add solubilization solutions!</p>
     </div>
 
 
@@ -105,27 +91,16 @@
     // show email
     document.querySelector('.inventory').addEventListener('click', function() {
         document.querySelector('.inventory-success').style.display = 'block';
-        document.querySelector('img').src = 'img/tube2.png';
+        document.querySelector('img').src = 'img/reagent.png';
 
         document.querySelector('.inventory').style.display = 'none';
-        document.querySelector('.culture').style.display = 'block';
-    });
-
-    document.querySelector('.culture').addEventListener('click', function() {
-        document.querySelector('.inventory-success').style.display = 'none';
-        document.querySelector('.culture-success').style.display = 'block';
-        document.querySelector('img').src = 'img/tube3.png';
-
-        document.querySelector('.culture').style.display = 'none';
         document.querySelector('.incubate').style.display = 'block';
     });
 
     document.querySelector('.incubate').addEventListener('click', function() {
-        document.querySelector('.culture-success').style.display = 'none';
+        document.querySelector('.inventory-success').style.display = 'none';
         document.querySelector('.incubate-success').style.display = 'block';
         document.querySelector('img').src = 'img/tube4.png';
-
-
     });
 </script>
 
