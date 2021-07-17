@@ -106,14 +106,19 @@ function addLogic() {
         var adjIndex = index + 1; // by default, index is 0, make it 1
         var itemName = fileName() + '-btn' + adjIndex;
 
-        // if button is clicked, gray it out
-        function checkIfClicked(btn) {
-            //var btnName = fileName() + '-btn' + adjIndex;
+        // if item is clicked or dependency is not met, gray it out
+        function checkIfGrayOut(btn) {
+            // if item is clicked
             if (localStorage.getItem(itemName) === 'yes') {
                 grayOut(btn);
             }
+            // if item has data-depend and it's not met
+            if (btn.hasAttribute("data-depend") && localStorage.getItem(btn.getAttribute('data-depend')) != 'yes') {
+                grayOut(btn);
+            }
         }
-        checkIfClicked(btn);
+        // check clicked buttons on load
+        checkIfGrayOut(btn);
         
         // add to local storage 
         function addToLocalStorage() {

@@ -25,7 +25,7 @@
             <button class="btn btn3 skip">✨ Skip to 4 days later</button><br>
             <button class="btn btn4">📝 Record OD in Benchling</button>
             <button class="btn btn5">📝 Capture observations in Benchling</button>
-            <button class="btn btn5 final">📝 Record final results in Benchling</button>
+            <button class="btn btn5 final" data-depend="elisa-btn1">📝 Record final results in Benchling</button>
         </div>
         <p class="msg"></p>
 
@@ -36,6 +36,8 @@
 </body>
 
 <script src="script.js"></script>
+<script src="confetti.browser.min.js"></script>
+
 <script>
     var msgArray = [
         "You used Benchling to locate the cells in the inventory.<br>Grab them from the <b>liquid nitrogen tank</b>!",
@@ -54,6 +56,10 @@
         "Day 5 - 9:40 am",
     ];
     addLogic();
+
+    click('.final', function(){
+        startConfetti();
+    });
 </script>
 
 </html>
