@@ -8,50 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            text-align: center;
-            font-family: 'VT323';
-        }
-        
-        .slide {
-            width: 100%;
-            height: 100%;
-            color: #000;
-        }
-        
-        h1 {
-            font-size: 32px;
-            font-weight: normal;
-        }
-        
-        img {
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-        
-        .inventory-success {
-            color: #0BCAB5;
-            display: none;
-            font-size: 24px;
-        }
-        
-        .inventory {
-            margin-top: 30px;
-            padding: 5px 15px;
-            cursor: pointer;
-        }
-        
-        #clear {
-            position: absolute;
-            top: 50px;
-        }
-    </style>
+    <link href="style.css" rel="stylesheet">
 
 </head>
 
@@ -59,22 +16,20 @@
 
     <div class="slide" id="slide1">
         <h1>ELISA reader</h1><br>
-        <img src="img/elisa.png"><br>
-        <button class="inventory">Measure colorimetric absorbance</button>
+        <img src="img/elisa0.png"><br>
+        <button class="btn btn1">Measure colorimetric absorbance</button>
 
-        <p class="inventory-success">Boom! You got the final results! Time to upload them in Benchling!</p>
+        <p class="msg"></p>
     </div>
 
 
 
 </body>
 
+<script src="script.js"></script>
 <script>
-    // show email
-    document.querySelector('.inventory').addEventListener('click', function() {
-        document.querySelector('.inventory-success').style.display = 'block';
-        document.querySelector('img').src = 'img/elisa2.png';
-    });
+    var msgArray = ["Boom! You got the final results! Time to upload them in Benchling!"]
+    addLogic();
 </script>
 
 </html>

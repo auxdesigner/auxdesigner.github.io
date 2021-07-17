@@ -8,6 +8,17 @@ body {
     font-family: 'VT323';
 }
 
+img {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+br {
+    content: "";
+    display: block;
+    height: 0;
+}
+
 .slide {
     width: 100%;
     height: 100%;
@@ -19,17 +30,34 @@ h1 {
     font-weight: normal;
 }
 
-.success {
+p {
+    margin: 0 auto;
+    width: 560px;
+}
+
+img {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.msg {
     color: #0BCAB5;
     display: none;
     font-size: 24px;
 }
 
-.fulfill {
-    margin-top: 20px;
+.btn {
+    margin: 30px auto;
+    padding: 5px 15px;
+    cursor: pointer;
 }
 
-#clear {
-    position: absolute;
-    top: 50px;
+a {
+    color: #fff;
+    font-size: 9px;
+    margin-top: 40px;
+}
+
+a:hover {
+    color: #eee;
 }

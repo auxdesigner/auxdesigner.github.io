@@ -8,59 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            text-align: center;
-            font-family: 'VT323';
-        }
-        br {
-            content: "";
-            display: block;
-            height: 0;
-        }
-        .slide {
-            width: 100%;
-            height: 100%;
-            color: #000;
-            text-align: center;
-        }
-        
-        h1 {
-            font-size: 32px;
-            font-weight: normal;
-        }
-        
-        img {
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-        
-        .msg {
-            color: #0BCAB5;
-            display: none;
-            font-size: 24px;
-        }
-        
-        .btn {
-            margin: 30px auto;
-            padding: 5px 15px;
-            cursor: pointer;
-        }
-        
-        .btn1, .btn2, .btn3, .btn4, .btn5 {
-            display: none;
-        }
-        
-        a {
-            color: #fff;
-            font-size: 9px;
-        }
-    </style>
+    <link href="style.css" rel="stylesheet">
+
+
 
 </head>
 
@@ -68,20 +18,15 @@
 
     <div class="slide" id="slide1">
         <h1>Workstation</h1><br>
-        <img src="img/windows.png"><br>
-
-        <button class="btn1 btn">Capture record of concetration</button><br>
-        <button class="btn2 btn">Skip to 4 days later</button><br>
+        <img src="img/workstation0.png"><br>
+        <div>
+        <button class="btn1 btn">Capture record of concetration</button>
+        <button class="btn2 btn skip">Skip to 4 days later</button>
         <button class="btn3 btn">Capture OD results</button><br>
-        <button class="btn4 btn">Wrote notes</button><br>
+        <button class="btn4 btn">Wrote notes</button>
         <button class="btn5 btn">Capture final results</button>
-
-        <p class="msg1 msg">Records captured. Way to go! Skip to 4 days later</p>
-        <p class="msg2 msg">Welcome back! Time to check OD</p>
-        <p class="msg3 msg">OD captured. Take a break</p>
-        <p class="msg4 msg">Notes captured. Nicely done!</p>
-        <p class="msg5 msg">Final results captured. Woohoo!</p>
-
+        </div>
+        <p class="msg"></p>
 
 
         <a href="#">Clear progress</a>
@@ -91,128 +36,16 @@
 
 </body>
 
+<script src="script.js"></script>
 <script>
-    (function() {
-        console.log(localStorage.getItem("viewed1"));
-        console.log(localStorage.getItem("viewed2"));
-        console.log(localStorage.getItem("viewed3"));
-        console.log(localStorage.getItem("viewed4"));
-        console.log(localStorage.getItem("viewed5"));
-
-        if (localStorage.getItem("viewed4") === "yes"){
-            document.querySelector('.btn4').style.display = 'none';
-            document.querySelector('img').src = 'img/workstation3.png';
-        }
-        else if (localStorage.getItem("viewed3") === "yes"){
-            document.querySelector('.btn3').style.display = 'none';
-            document.querySelector('.btn4').style.display = 'block';
-            document.querySelector('img').src = 'img/workstation3.png';
-        } 
-        else if (localStorage.getItem("viewed2") === "yes"){
-            document.querySelector('.btn2').style.display = 'none';
-            document.querySelector('.btn3').style.display = 'block';
-            document.querySelector('img').src = 'img/workstation2.png';
-        } 
-        else if (localStorage.getItem("viewed1") === "yes") {
-            document.querySelector('.btn1').style.display = 'none';
-            document.querySelector('.btn2').style.display = 'block';
-            document.querySelector('img').src = 'img/workstation1.png';
-        } 
-        else {
-            document.querySelector('.btn1').style.display = 'block';
-        }
-    })();
-
-
-    // events
-    // capture result
-    document.querySelector('.btn1').addEventListener('click', function() {
-        document.querySelector('.msg1').style.display = 'block';
-        document.querySelector('img').src = 'img/workstation1.png';
-        document.querySelector('.btn1').style.display = 'none';
-        document.querySelector('.btn2').style.display = 'block';
-        localStorage.setItem('viewed1', 'yes');
-    });
-
-    // skip 4 days. 
-    document.querySelector('.btn2').addEventListener('click', function() {
-        document.querySelector('.msg1').style.display = 'none';
-        // document.querySelector('.msg2').style.display = 'block';
-        fadeOut(document.querySelector('.msg1'));
-        
-        document.querySelector('img').src = 'img/workstation2.png';
-        //document.querySelector('.btn2').style.display = 'none';
-        // document.querySelector('.btn3').style.display = 'block';
-        fadeOut(document.querySelector('.btn2'));
-
-        setTimeout(function(){ 
-            fadeIn(document.querySelector('.msg2'));
-            fadeIn(document.querySelector('.btn3'));
-        },1000);
-
-        
-        localStorage.setItem('viewed2', 'yes');
-    });
-
-    // capture od result. need a fade
-    document.querySelector('.btn3').addEventListener('click', function() {
-        document.querySelector('.msg2').style.display = 'none';
-        document.querySelector('.msg3').style.display = 'block';
-        document.querySelector('img').src = 'img/workstation3.png';
-        document.querySelector('.btn3').style.display = 'none';
-        document.querySelector('.btn4').style.display = 'block';
-        localStorage.setItem('viewed3', 'yes');
-    });
-
-    // capture notes
-    document.querySelector('.btn4').addEventListener('click', function() {
-        document.querySelector('.msg3').style.display = 'none';
-        document.querySelector('.msg4').style.display = 'block';
-        document.querySelector('img').src = 'img/workstation4.png';
-        document.querySelector('.btn4').style.display = 'none';
-        document.querySelector('.btn5').style.display = 'block';
-        localStorage.setItem('viewed4', 'yes');
-    });
-
-    // capture final results
-    document.querySelector('.btn5').addEventListener('click', function() {
-        document.querySelector('.msg4').style.display = 'none';
-        document.querySelector('.msg5').style.display = 'block';
-        document.querySelector('img').src = 'img/workstation5.png';
-        localStorage.setItem('viewed5', 'yes');
-    });
-
-
-    // clear
-    document.querySelector('a').addEventListener("click", function() {
-        localStorage.clear();
-    });
-
-    //fade
-    // ** FADE OUT FUNCTION **
-    function fadeOut(el) {
-        el.style.opacity = 1;
-        (function fade() {
-            if ((el.style.opacity -= .1) < 0) {
-                el.style.display = "none";
-            } else {
-                requestAnimationFrame(fade);
-            }
-        })();
-    };
-
-    // ** FADE IN FUNCTION **
-    function fadeIn(el, display) {
-        el.style.opacity = 0;
-        el.style.display = display || "block";
-        (function fade() {
-            var val = parseFloat(el.style.opacity);
-            if (!((val += .01) >= 1)) {
-                el.style.opacity = val;
-                requestAnimationFrame(fade);
-            }
-        })();
-    };
+    var msgArray = [
+        "Records captured. Way to go! Skip to 4 days later",
+        "Welcome back! Time to check OD",
+        "OD captured. Take a break",
+        "Notes captured. Nicely done!",
+        "Final results captured. Woohoo!"
+    ]
+    addLogic();
 </script>
 
 </html>

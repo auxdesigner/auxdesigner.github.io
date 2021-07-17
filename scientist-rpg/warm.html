@@ -8,49 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            text-align: center;
-            font-family: 'VT323';
-        }
-        
-        .slide {
-            width: 100%;
-            height: 100%;
-            color: #000;
-        }
-        
-        h1 {
-            font-size: 32px;
-            font-weight: normal;
-        }
-        
-        img {
-            border-radius: 8px;
-        }
-        
-        .success {
-            color: #0BCAB5;
-            display: none;
-            font-size: 24px;
-        }
-        
-        .fulfill {
-            margin-top: 30px;
-            padding: 5px 15px;
-            cursor: pointer;
-        }
-        
-        #clear {
-            position: absolute;
-            top: 50px;
-        }
-    </style>
+    <link href="style.css" rel="stylesheet">
 
 </head>
 
@@ -58,60 +16,19 @@
 
     <div class="slide" id="slide1">
         <h1>Warm up media in 37°C liquid water bath</h1><br>
-        <img src="img/warm.jpg"><br>
-        <button class="fulfill">Start</button>
-        <p class="success">Done! Now get some ice from the fridge to thaw cells!</p>
-        <!-- <a href="#slide2" class="levelButton" id="button1">Next</a><br> -->
+        <img src="img/warm0.png"><br>
+        <button class="btn btn1">Start</button>
+        <p class="msg"></p>
 
     </div>
 
 
 </body>
 
+<script src="script.js"></script>
 <script>
-    // always check on load
-    (function() {
-        console.log(localStorage.getItem("progress"));
-        if (localStorage.getItem("progress") !== null) {
-            window.location.hash = '#slide' + localStorage.getItem("progress");
-        }
-
-
-        /* switch (localStorage.getItem("progress")) {
-            case "1":
-                window.location.hash = '#slide2';
-                break;
-            case "2":
-                window.location.hash = '#slide3';
-                break;
-            case "3":
-                window.location.hash = '#slide4';
-                break;
-            case "4":
-                window.location.hash = '#slide4';
-                break;
-        } */
-    })();
-
-
-    // click events
-    this.fulfillButtons = document.querySelectorAll('.fulfill');
-    this.fulfillButtonItems = [].slice.call(this.fulfillButtons);
-    this.fulfillButtonItems.forEach(function(item) {
-        item.addEventListener('click', function() {
-            document.querySelector('.success').style.display = 'block';
-            document.querySelector('.fulfill').style.display = 'none';
-            document.querySelector('img').src = 'img/warming.png';
-        });
-    });
-
-
-    // clear storage
-    /*
-    document.getElementById("clear").addEventListener("click", function() {
-        localStorage.clear();
-    });
-    */
+    var msgArray = ["Done! Now get some ice from the fridge to thaw cells!"]
+    addLogic();
 </script>
 
 </html>

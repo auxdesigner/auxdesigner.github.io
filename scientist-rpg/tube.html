@@ -8,78 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            text-align: center;
-            font-family: 'VT323';
-        }
-        
-        br {
-            height: 0;
-            margin: 0;
-            padding: 0;
-            display: block;
-            content: "";
-        }
-        
-        p {
-            margin: 0 auto;
-        }
-        
-        .slide {
-            width: 100%;
-            height: 100%;
-            color: #000;
-        }
-        
-        h1 {
-            font-size: 32px;
-            font-weight: normal;
-        }
-        
-        img {
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-        
-        .inventory-success,
-        .culture-success,
-        .incubate-success {
-            color: #0BCAB5;
-            display: none;
-            font-size: 24px;
-        }
-        
-        .inventory {
-            margin: 30px auto;
-            padding: 5px 15px;
-            cursor: pointer;
-        }
-        
-        .culture {
-            margin: 30px auto;
-            padding: 5px 15px;
-            cursor: pointer;
-            display: none;
-        }
-        
-        .incubate {
-            margin: 30px auto;
-            padding: 5px 15px;
-            cursor: pointer;
-            display: none;
-        }
-        
-        #clear {
-            position: absolute;
-            top: 50px;
-        }
-    </style>
+    <link href="style.css" rel="stylesheet">
 
 </head>
 
@@ -87,46 +16,22 @@
 
     <div class="slide" id="slide1">
         <h1>Incubate cell cultures</h1><br>
-        <img src="img/tube1.png"><br>
-        <button class="inventory">Add cells and use centrifuge</button><br>
-        <button class="culture">Seed cells into microplates</button><br>
-        <button class="incubate">Put in incubator</button>
+        <img src="img/tube0.png"><br>
+        <button class="btn btn1">Add cells and use centrifuge</button>
+        <button class="btn btn2">Seed cells into microplates</button>
+        <button class="btn btn3">Put in incubator</button>
 
-        <p class="inventory-success">You added cells in the tube and spinned them down in centrifuge to pellet cells. <br>Looking like a pro! Now let's seed cells into microplates</p>
-        <p class="culture-success">Nicely done! Now let's incubate the cell cultures for 4 days.</p>
-        <p class="incubate-success">Perfect! You should capture the concentrations in Benchling!</p>
+        <p class="msg"></p>
     </div>
 
 
 
 </body>
 
+<script src="script.js"></script>
 <script>
-    // show email
-    document.querySelector('.inventory').addEventListener('click', function() {
-        document.querySelector('.inventory-success').style.display = 'block';
-        document.querySelector('img').src = 'img/tube2.png';
-
-        document.querySelector('.inventory').style.display = 'none';
-        document.querySelector('.culture').style.display = 'block';
-    });
-
-    document.querySelector('.culture').addEventListener('click', function() {
-        document.querySelector('.inventory-success').style.display = 'none';
-        document.querySelector('.culture-success').style.display = 'block';
-        document.querySelector('img').src = 'img/tube3.png';
-
-        document.querySelector('.culture').style.display = 'none';
-        document.querySelector('.incubate').style.display = 'block';
-    });
-
-    document.querySelector('.incubate').addEventListener('click', function() {
-        document.querySelector('.culture-success').style.display = 'none';
-        document.querySelector('.incubate-success').style.display = 'block';
-        document.querySelector('img').src = 'img/tube4.png';
-
-
-    });
+    var msgArray = ["You added cells in the tube and spinned them down in centrifuge to pellet cells.\n\Looking like a pro! Now let's seed cells into microplates","Nicely done! Now let's incubate the cell cultures for 4 days.","Perfect! You should capture the concentrations in Benchling!"]
+    addLogic();
 </script>
 
 </html>
