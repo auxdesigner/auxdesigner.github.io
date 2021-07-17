@@ -16,11 +16,15 @@
 <body id="body">
 
     <div class="slide" id="slide1">
-        <h1>Laptop</h1><br>
+        <h1>💻 Laptop</h1><br>
         <img src="img/laptop0.png"><br>
         <div>
-        <button class="btn btn1">Search for cells in Benchling</button>
-        <button class="btn btn2">Capture results in Benchling</button>
+            <button class="btn btn1">🔎 Look for cells in Benchling</button>
+            <button class="btn btn2">📝 Record concentrations in Benchling</button>
+            <button class="btn btn3 skip">✨ Skip to 4 days later</button><br>
+            <button class="btn btn4">📝 Record OD in Benchling</button>
+            <button class="btn btn5">📝 Capture observations in Benchling</button>
+            <button class="btn btn5">📝 Record final results in Benchling</button>
         </div>
         <p class="msg"></p>
 
@@ -32,7 +36,14 @@
 
 <script src="script.js"></script>
 <script>
-    var msgArray = ["You used Benchling to locate the cells in the inventory.","You captured assay results in Benchling. Woohoo!"]
+    var msgArray = [
+        "You used Benchling to locate the cells in the inventory.<br>Grab them from the liquid nitrogen tank!",
+        "You captured cell concentration, IL-6 concentration, and plate size in Benchling. Woohoo! Check back in 4 days!",
+        "Welcome back! Let's check the OD of the cells in the incubator!",
+        "Looking good! Check the cells under microscope to see how they're doing. And add MTT labeling reagent.",
+        "You swiftly typed up some notes. Time to measure colorimetric absorbance with an ELISA reader!",
+        "Yay! You did it! Congrats!"
+    ]
     addLogic();
 </script>
 
