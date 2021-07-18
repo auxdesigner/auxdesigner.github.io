@@ -56,9 +56,15 @@
         "Day 5 - 9:40 am",
     ];
     addLogic();
+    
 
     click('.final', function() {
-        startConfetti();
+        if(event.target.classList.contains('disabled')) {
+            console.log("Oops. Looks like you're not ready yet!");
+        }
+        else {
+            startConfetti();
+        }
     });
 </script>
 
