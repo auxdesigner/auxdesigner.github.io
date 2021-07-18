@@ -76,47 +76,60 @@ function addLogic() {
     getTime();
 
     document.querySelectorAll('.btn').forEach((btn, index) => {
-        // for each button, add a click event
-        btn.addEventListener('click', event => {
-            // fade effect if skip
-            if(event.target.classList.contains('skip')) {
-                // message
-                fadeOut(DOM('.slide'));
-                setTimeout(function(){ 
-                    fadeIn(DOM('.slide'));
-                    fadeIn(DOM('.msg'));
-                    DOM('.msg').innerHTML = msgArray[index]; // get msg string
-                    updateTime();
-                    // image 
-                    changeImgBasedOnIndex();
-                }, 1000);            
-            }
-            // no fade effet if not skip
-            else {
-                // message
-                show('.msg'); // show msg div
-                DOM('.msg').innerHTML = msgArray[index]; // get msg string
-                updateTime();
-                // image
-                changeImgBasedOnIndex();
-            }
-            
-            // gray out clicked button
-            markedAsClicked(event.target);
-
-            // add event to local storage
-            addToLocalStorage();
-
-            // enable button on the same page if dependency is met
-            document.querySelectorAll('.btn').forEach((btn) => {
-                if (btn.hasAttribute("data-depend") && localStorage.getItem(btn.getAttribute('data-depend')) === 'yes') {
-                    btn.classList.remove('disabled');
-                }
-            });            
-        });
-
         var adjIndex = index + 1; // by default, index is 0, make it 1
         var itemName = fileName() + '-btn' + adjIndex;
+
+        // check clicked or disabled buttons on load
+        checkIfGrayOut(btn);
+
+        // for each button, add a click event
+        btn.addEventListener('click', event => {
+            // if button is disbaled, don't add logic
+            if(event.target.classList.contains('disabled')) {
+                console.log("Oops. Looks like you're not ready yet!");
+            }
+            else {
+                clickableButtonLogic();
+            }
+
+            function clickableButtonLogic() {
+                // fade effect if skip
+                if(event.target.classList.contains('skip')) {
+                    // message
+                    fadeOut(DOM('.slide'));
+                    setTimeout(function(){ 
+                        fadeIn(DOM('.slide'));
+                        fadeIn(DOM('.msg'));
+                        DOM('.msg').innerHTML = msgArray[index]; // get msg string
+                        updateTime();
+                        // image 
+                        changeImgBasedOnIndex();
+                    }, 1000);            
+                }
+                // no fade effet if not skip
+                else {
+                    // message
+                    show('.msg'); // show msg div
+                    DOM('.msg').innerHTML = msgArray[index]; // get msg string
+                    updateTime();
+                    // image
+                    changeImgBasedOnIndex();
+                }
+                
+                // gray out clicked button
+                markedAsClicked(event.target);
+
+                // add event to local storage
+                addToLocalStorage();
+
+                // enable button on the same page if dependency is met
+                document.querySelectorAll('.btn').forEach((btn) => {
+                    if (btn.hasAttribute("data-depend") && localStorage.getItem(btn.getAttribute('data-depend')) === 'yes') {
+                        btn.classList.remove('disabled');
+                    }
+                });    
+            }        
+        });
 
         // if item is clicked or dependency is not met, gray it out
         function checkIfGrayOut(btn) {
@@ -129,8 +142,6 @@ function addLogic() {
                 markasDisabled(btn);
             }
         }
-        // check clicked buttons on load
-        checkIfGrayOut(btn);
         
         // add to local storage 
         function addToLocalStorage() {
@@ -148,8 +159,6 @@ function addLogic() {
             localStorage.setItem('time', timeArray[index]);
             DOM('.time').innerHTML = localStorage.getItem('time');
         }
-
-
     })
 }
 
