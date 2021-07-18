@@ -76,10 +76,15 @@ img {
 	top: 3px;
 }
 
-.clicked {
+.disabled, .clicked {
     opacity: .3;
     cursor: not-allowed;
 }
+
+.disabled:hover, .clicked:hover {
+    opacity: .3;
+}
+
 
 a {
     color: #fff;

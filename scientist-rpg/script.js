@@ -49,8 +49,13 @@ function fadeIn(el, display) {
 };
 
 // gray out btn
-function grayOut(elm) {
+function markedAsClicked(elm) {
     elm.classList.add("clicked");
+}
+
+// gray out btn
+function markasDisabled(elm) {
+    elm.classList.add("disabled");
 }
 
 // file name
@@ -95,12 +100,19 @@ function addLogic() {
                 // image
                 changeImgBasedOnIndex();
             }
+            
             // gray out clicked button
-            grayOut(event.target);
+            markedAsClicked(event.target);
 
             // add event to local storage
             addToLocalStorage();
-            
+
+            // enable button on the same page if dependency is met
+            document.querySelectorAll('.btn').forEach((btn) => {
+                if (btn.hasAttribute("data-depend") && localStorage.getItem(btn.getAttribute('data-depend')) === 'yes') {
+                    btn.classList.remove('disabled');
+                }
+            });            
         });
 
         var adjIndex = index + 1; // by default, index is 0, make it 1
@@ -110,11 +122,11 @@ function addLogic() {
         function checkIfGrayOut(btn) {
             // if item is clicked
             if (localStorage.getItem(itemName) === 'yes') {
-                grayOut(btn);
+                markedAsClicked(btn);
             }
             // if item has data-depend and it's not met
             if (btn.hasAttribute("data-depend") && localStorage.getItem(btn.getAttribute('data-depend')) != 'yes') {
-                grayOut(btn);
+                markasDisabled(btn);
             }
         }
         // check clicked buttons on load
@@ -163,3 +175,31 @@ function returnAllStorage() {
 }
 
 returnAllStorage();
+
+// sequence
+var quest = [
+    'desktop-btn1',
+    'desktop-btn2',
+    'warm-btn1',
+    'fridge-btn1',
+    'laptop-btn1',
+    'cells-btn1',
+    'tube-btn1',
+    'tube-btn2',
+    'tube-btn3',
+    'laptop-btn2',
+    'laptop-btn3',
+    'incubation-btn1',
+    'laptop-btn4',
+    'microscope-btn1',
+    'microscope-btn2',
+    'microscope-btn3',
+    'incubation-btn2',
+    'incubation-btn3',
+    'incubation-btn4',
+    'laptop-btn5',
+    'elisa-btn1',
+    'laptop-6'
+]
+
+// TODO: for each btn, add data-depend attr. find the item, add the next item name as data-depend

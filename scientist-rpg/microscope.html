@@ -18,9 +18,9 @@
         <h1>🔬 Check cells under microscope</h1><br>
         <h2 class="time"></h2>
         <img src="img/microscope0.png"><br>
-        <button class="btn btn1">🧪 Add MTT labeling reagent</button>
-        <button class="btn btn2">🧫 Put back into incubator</button>
-        <button class="btn btn2">☕ Take a break</button>
+        <button class="btn btn1" data-depend="laptop-btn4">🧪 Add MTT labeling reagent</button>
+        <button class="btn btn2" data-depend="microscope-btn1">🧫 Put back into incubator</button>
+        <button class="btn btn2" data-depend="microscope-btn2">☕ Take a break</button>
 
         <p class="msg"></p>
     </div>
@@ -34,8 +34,8 @@
 <script>
     var msgArray = [
         "Looking good! Let's put them back into the <b>incubator</b>.",
-        "Nice! Come back in 4 hours and add solubilization solutions!",
-        "Take it easy!"
+        "Nice! You can take a break and add solubilization solutions later!",
+        "Take it easy! Come back to the <b>incubator</b> in 4 hours."
     ];
     var timeArray = [
         "Day 4 - 9:15 am",
