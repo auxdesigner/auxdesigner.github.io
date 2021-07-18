@@ -88,13 +88,17 @@ img {
 }
 
 a {
-    color: #fff;
-    font-size: 9px;
-    margin-top: 40px;
+    color: #aaa;
+    font-size: 13px;
+    display: inline-block;
+    text-decoration: none;
+    position: absolute;
+    right: 40px;
+    top: 40px;
 }
 
 a:hover {
-    color: #eee;
+    color: #555;
 }
 
 b {

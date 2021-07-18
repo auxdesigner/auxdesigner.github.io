@@ -18,9 +18,12 @@
         <h1>🖥️ Desktop PC</h1><br>
         <h2 class="time"></h2>
         <img src="img/desktop0.png"><br>
-        <button class="btn btn1">📧 Check email</button>
-        <button class="btn btn2">📅 Check Benchling Calendar</button>
+        <div>
+            <button class="btn btn1">📧 Check email</button>
+            <button class="btn btn2">📅 Check Benchling Calendar</button>
+        </div>
         <p class="msg"></p>
+        <a href="#">Reset progress</a>
     </div>
 
 
@@ -30,16 +33,20 @@
 <script src="script.js"></script>
 <script>
     var msgArray = [
-        "You don't have any new emails. Woohoo!", 
+        "You don't have any new emails. Woohoo!",
         "Todo: MTT assay for cell growth. <br> Head over to the lab and <b>warm up some media</b>! You got this!"
     ];
 
     var timeArray = [
-        "8:45 am", 
+        "8:45 am",
         "9:00 am"
     ];
 
     addLogic();
+
+    click('a', function() {
+        localStorage.clear();
+    });
 </script>
 
 </html>
