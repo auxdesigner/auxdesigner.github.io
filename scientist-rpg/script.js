@@ -85,26 +85,25 @@ function addLogic() {
         // for each button, add a click event
         btn.addEventListener('click', event => {
             // if button is disbaled, don't add logic
-            if(event.target.classList.contains('disabled')) {
+            if (event.target.classList.contains('disabled')) {
                 console.log("Oops. Looks like you're not ready yet!");
-            }
-            else {
+            } else {
                 clickableButtonLogic();
             }
 
             function clickableButtonLogic() {
                 // fade effect if skip
-                if(event.target.classList.contains('skip')) {
+                if (event.target.classList.contains('skip')) {
                     // message
                     fadeOut(DOM('.slide'));
-                    setTimeout(function(){ 
+                    setTimeout(function() {
                         fadeIn(DOM('.slide'));
                         fadeIn(DOM('.msg'));
                         DOM('.msg').innerHTML = msgArray[index]; // get msg string
                         updateTime();
                         // image 
                         changeImgBasedOnIndex();
-                    }, 1000);            
+                    }, 1000);
                 }
                 // no fade effet if not skip
                 else {
@@ -115,7 +114,7 @@ function addLogic() {
                     // image
                     changeImgBasedOnIndex();
                 }
-                
+
                 // gray out clicked button
                 markedAsClicked(event.target);
 
@@ -127,8 +126,8 @@ function addLogic() {
                     if (btn.hasAttribute("data-depend") && localStorage.getItem(btn.getAttribute('data-depend')) === 'yes') {
                         btn.classList.remove('disabled');
                     }
-                });    
-            }        
+                });
+            }
         });
 
         // if item is clicked or dependency is not met, gray it out
@@ -142,7 +141,7 @@ function addLogic() {
                 markasDisabled(btn);
             }
         }
-        
+
         // add to local storage 
         function addToLocalStorage() {
             localStorage.setItem(itemName, 'yes');
@@ -163,21 +162,22 @@ function addLogic() {
 }
 
 // keyboard shortcut to clear storage
-function doc_keyUp(e) {
-    if (e.ctrlKey && e.key === 'ArrowDown') {
-        localStorage.clear();
-    }
-}
-document.addEventListener('keyup', doc_keyUp, false);
+// function doc_keyUp(e) {
+//     if (e.ctrlKey && e.key === 'ArrowDown') {
+//         localStorage.clear();
+//     }
+// }
+// document.addEventListener('keyup', doc_keyUp, false);
 
 // return all localStorage
 function returnAllStorage() {
     var archive = [],
         keys = Object.keys(localStorage),
-        i = 0, key;
+        i = 0,
+        key;
 
     for (; key = keys[i]; i++) {
-        archive.push( key + '=' + localStorage.getItem(key));
+        archive.push(key + '=' + localStorage.getItem(key));
     }
 
     console.log(archive);
