@@ -57,7 +57,7 @@ class App extends React.Component {
           type="time"
           color="primary"
           variant="outlined"
-          autoFocus="true"
+          autoFocus={true}
           defaultValue={this.state.defaultTime}
           inputProps={{
             step: 900, // 15 min

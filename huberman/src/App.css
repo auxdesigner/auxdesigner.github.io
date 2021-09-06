@@ -4,6 +4,10 @@
   margin: 0;
   padding: 0;
 }
+body {
+  background: #fff;
+  color: #333;
+}
 .App {
   text-align: center;
   font-family: "IBM Plex Sans", sans-serif;
@@ -41,7 +45,7 @@ p {
 
 h4 {
   font-weight: normal;
-  margin-top: 100px;
+  margin-top: 80px;
   font-size: 12px;
 }
 
@@ -51,4 +55,20 @@ h4 {
 
 a {
   color: #4285f4;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #333;
+    color: #fff;
+  }
+  img {
+    border: none;
+  }
+  a {
+    color: #ffffff;
+  }
+  .MuiTextField-root {
+    filter: invert();
+  }
 }
