@@ -1,0 +1,20 @@
+.App {
+  width: 140px;
+  margin: 100px;
+}
+.block {
+  width: 30px;
+  height: 10px;
+  display: inline-block;
+  border: 1px solid #fff;
+  background: blue;
+}
+.blue {
+  background: blue;
+}
+.red {
+  background: red;
+}
+.green {
+  background: green;
+}
