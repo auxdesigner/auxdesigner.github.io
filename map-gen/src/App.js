@@ -2,12 +2,10 @@ import React from "react";
 //import logo from "./logo.svg";
 import "./App.css";
 
-var blocks = [],
-  rows = [],
-  cells = [],
-  //asset = ["house", "grass", "cow"],
-  cellTotal = 3,
-  rowTotal = 3,
+var rows = [],
+  asset = ["grass", "cow", "dog"],
+  cellTotal = 3, //4
+  rowTotal = 3, //4
   houseWidth = 3,
   houseHeight = 2;
 
@@ -15,31 +13,21 @@ var blocks = [],
 for (var row = 0; row <= rowTotal; row++) {
   rows.push([]);
   for (var cell = 0; cell <= cellTotal; cell++) {
-    rows[row].push([row + "-" + cell]);
+    var eligibleRow = rowTotal + 1 - row >= houseHeight,
+      eligibleCell = cellTotal + 1 - cell >= houseWidth;
+    if (eligibleRow && eligibleCell) {
+      rows[row].push("YES");
+      //todo: add eligble cells to an array, and append image logic to set the adjacent arrays
+    } else {
+      rows[row].push(randomItem(asset));
+    }
   }
 }
 console.log(rows);
-// for (var row = 1; row <= rowTotal; row++) {
-//   if (rowTotal - row + 1 >= houseHeight) {
-//     for (var cell = 1; cell <= cellTotal; cell++) {
-//       if (cellTotal - cell + 1 >= houseWidth) {
-//         blocks.push("+" + row + "-" + cell);
-//       } else {
-//         blocks.push(row + "-" + cell);
-//       }
-//     }
-//   } else {
-//     for (cell = 1; cell <= cellTotal; cell++) {
-//       blocks.push(row + "-" + cell);
-//     }
-//   }
-// }
 
-//find eligible blocks
-
-// function randomItem(i) {
-//   return Math.floor(Math.random() * i.length);
-// }
+function randomItem(i) {
+  return i[Math.floor(Math.random() * i.length)];
+}
 
 class App extends React.Component {
   // constructor(props) {
@@ -49,17 +37,17 @@ class App extends React.Component {
   // }
 
   render() {
-    var rowsDiv = rows.map((row_item, row_index) => (
+    var blocks = rows.map((row_item, row_index) => (
       <div className={"row " + row_index} key={row_index}>
         {row_item.map((cell_item, cell_index) => (
-          <div className={"cell " + cell_index} key={cell_index}>
+          <div className={"cell " + cell_item} key={cell_index}>
             {cell_item}
           </div>
         ))}
       </div>
     ));
 
-    return <div className="App">{rowsDiv}</div>;
+    return <div className="App">{blocks}</div>;
   }
 }
 
