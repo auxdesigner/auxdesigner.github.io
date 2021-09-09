@@ -69,6 +69,6 @@ a {
     color: #ffffff;
   }
   .MuiTextField-root {
-    filter: invert();
+    filter: invert() hue-rotate(180deg);
   }
 }
