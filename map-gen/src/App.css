@@ -1,13 +1,16 @@
 .App {
-  width: 140px;
   margin: 100px;
 }
-.block {
-  width: 30px;
-  height: 10px;
+.App .row {
+  width: 200px;
+  height: 50px;
+}
+.cell {
+  width: 25%;
   display: inline-block;
   border: 1px solid #fff;
-  background: blue;
+  background: #eee;
+  box-sizing: border-box;
 }
 .blue {
   background: blue;
