@@ -1,23 +1,67 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .App {
-  margin: 100px;
+  margin: 0 auto;
+  text-align: center;
 }
 .App .row {
-  width: 200px;
-  height: 50px;
+  /* width: 200px; */
+  height: 48px;
 }
 .cell {
-  width: 25%;
+  width: 48px;
+  height: 48px;
   display: inline-block;
-  border: 1px solid #fff;
-  background: #eee;
   box-sizing: border-box;
+  background-image: url(img/land.png);
 }
-.blue {
-  background: blue;
+.img-land {
+  background-image: url(img/land.png);
 }
-.red {
-  background: red;
+
+.img-0-0 {
+  background-image: url(img/0-0.png), url(img/land.png);
 }
-.green {
-  background: green;
+.img-0-1 {
+  background-image: url(img/0-1.png), url(img/land.png);
+}
+.img-0-2 {
+  background-image: url(img/0-2.png), url(img/land.png);
+}
+
+.img-1-0 {
+  background-image: url(img/1-0.png), url(img/land.png);
+}
+.img-1-1 {
+  background-image: url(img/1-1.png), url(img/land.png);
+}
+.img-1-2 {
+  background-image: url(img/1-2.png), url(img/land.png);
+}
+
+.img-2-0 {
+  background-image: url(img/2-0.png), url(img/land.png);
+}
+.img-2-1 {
+  background-image: url(img/2-1.png), url(img/land.png);
+}
+.img-2-2 {
+  background-image: url(img/2-2.png), url(img/land.png);
+}
+
+.img-3-0 {
+  background-image: url(img/3-0.png), url(img/land.png);
+}
+.img-3-1 {
+  background-image: url(img/3-1.png), url(img/land.png);
+}
+.img-3-2 {
+  background-image: url(img/3-2.png), url(img/land.png);
 }
