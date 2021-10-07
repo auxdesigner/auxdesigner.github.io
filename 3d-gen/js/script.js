@@ -40,11 +40,12 @@ const camera = new THREE.OrthographicCamera(
   width / 2,
   height / 2,
   height / -2,
-  1,
-  1000
+  0.1,
+  2000
 );
 scene.add(camera);
-camera.position.set(320, 240, 240);
+camera.position.set(320, 320, 320);
+// camera.rotation.set(-0.05, 1, 0);
 
 // Lights
 function createLight() {
@@ -119,13 +120,13 @@ function addShape(id, shape, extrudeSettings, color, x, y, z, rx, ry, rz, s) {
   scene.add(mesh);
 }
 
-// type of shapes
+// type of shapes (ctx, x, y, width, height, radius)
 const smallCard = new THREE.Shape();
 const baseCard = new THREE.Shape();
 roundedRect(smallCard, 0, 0, 100, 100, 16);
 roundedRect(baseCard, 0, 0, 300, 300, 16);
 
-// addShape( shape, color, x, y, z, rx, ry,rz, s );
+// addShape( id,shape,extrudeSettings, color, x, y, z, rx, ry,rz, s );
 // pink
 addShape(
   "smallCard1",
@@ -164,7 +165,7 @@ addShape(
   Colors.white,
   0,
   0,
-  0,
+  75,
   0,
   0,
   0,
@@ -172,32 +173,55 @@ addShape(
 );
 
 var button = document.getElementById("button");
-button.addEventListener("mouseup", animateCube);
+button.addEventListener("mouseup", animation);
 
-function animateCube() {
+function animation() {
   var baseCard = scene.getObjectByName("baseCard", true);
   var smallCard1 = scene.getObjectByName("smallCard1", true);
   var smallCard2 = scene.getObjectByName("smallCard2", true);
 
-  const rotation = {
-    rx: baseCard.rotation.x,
-    ry: baseCard.rotation.y,
-    rz: baseCard.rotation.z,
-  };
-
   const position = {
-    px: baseCard.position.x,
-    py: baseCard.position.y,
-    pz: baseCard.position.z,
+    base_x: baseCard.position.x,
+    base_y: baseCard.position.y,
+    base_z: baseCard.position.z,
+    s1_x: smallCard1.position.x,
+    s1_y: smallCard1.position.y,
+    s1_z: smallCard1.position.z,
+    s2_x: smallCard2.position.x,
+    s2_y: smallCard2.position.y,
+    s2_z: smallCard2.position.z,
   };
 
-  const tween = new TWEEN.Tween(position)
-    .to({ px: 0.1, py: 0.1, pz: 0.1 }, 300)
-    .onUpdate(() =>
-      baseCard.position.set(position.px, position.py, position.pz)
-    );
+  const tweenPosition = new TWEEN.Tween(position)
+    .to(
+      {
+        base_x: randomIntFromInterval(0, 10),
+        base_y: randomIntFromInterval(0, 10),
+        base_z: 0,
+        s1_x: randomIntFromInterval(0, 10),
+        s1_y: randomIntFromInterval(0, 10),
+        s1_z: randomIntFromInterval(0, 10),
+        s2_x: randomIntFromInterval(0, 10),
+        s2_y: randomIntFromInterval(0, 10),
+        s2_z: randomIntFromInterval(0, 10),
+      },
+      300
+    )
+    .onUpdate(function () {
+      baseCard.position.set(position.base_x, 0, 0);
+      smallCard1.position.set(position.s1_x, position.s1_y, position.s1_z);
+      smallCard2.position.set(position.s2_x, position.s2_y, position.s2_z);
+    });
+  //console.log(position.base_x, position.s1_x, position.s2_x);
+  tweenPosition.start();
+}
 
-  tween.start();
+// Util
+function randomIntFromInterval(min, max) {
+  var result =
+    20 * Math.round(Math.floor(Math.random() * (max - min + 1) + min));
+  console.log(result);
+  return result;
 }
 
 // run
@@ -205,8 +229,6 @@ function init() {
   createLight();
   createDOM();
   createControl();
-  var object = scene.getObjectByName("baseCard", true);
-  console.log(object);
 }
 
 function animate() {
@@ -215,6 +237,9 @@ function animate() {
   //interactionManager.update();
   renderer.render(scene, camera);
 }
+
+var baseCard0 = scene.getObjectByName("baseCard", true);
+console.log(baseCard0.position.z);
 
 animate();
 init();
