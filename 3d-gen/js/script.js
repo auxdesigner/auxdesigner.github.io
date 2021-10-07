@@ -1,9 +1,6 @@
 import * as THREE from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/optimized/three.js";
 import { OrbitControls } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/unoptimized/examples/jsm/controls/OrbitControls.js";
 import { TWEEN } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/unoptimized/examples/jsm/libs/tween.module.min.js";
-import { InteractionManager } from "./three.interactive.module.js";
-import { GLTFLoader } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/unoptimized/examples/jsm/loaders/GLTFLoader.js";
-import { DRACOLoader } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/unoptimized/examples/jsm/loaders/DRACOLoader.js";
 
 var Colors = {
   red: 0xf25346,
@@ -14,24 +11,7 @@ var Colors = {
   blue: 0x68c3c0,
 };
 
-var scene, camera, renderer, container;
-
-var SCREEN_WIDTH = window.innerWidth,
-  SCREEN_HEIGHT = window.innerHeight,
-  aspect = SCREEN_WIDTH / SCREEN_HEIGHT,
-  frustumSize = 600;
-
-// Camera
-camera = camera = new THREE.OrthographicCamera(
-  (0.5 * frustumSize * aspect) / -2,
-  (0.5 * frustumSize * aspect) / 2,
-  frustumSize / 2,
-  frustumSize / -2,
-  150,
-  1000
-);
-
-camera.position.set(300, 300, 300);
+var scene, renderer, container;
 
 // Scene
 scene = new THREE.Scene();
@@ -50,12 +30,21 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-// Interaction
-const interactionManager = new InteractionManager(
-  renderer,
-  camera,
-  renderer.domElement
+var width = window.innerWidth,
+  height = window.innerHeight,
+  aspect = width / height;
+
+//const camera = new THREE.PerspectiveCamera(80, aspect, 0.1, 2000);
+const camera = new THREE.OrthographicCamera(
+  width / -2,
+  width / 2,
+  height / 2,
+  height / -2,
+  1,
+  1000
 );
+scene.add(camera);
+camera.position.set(320, 240, 240);
 
 // Lights
 function createLight() {
@@ -93,29 +82,7 @@ function createControl() {
   // controls.maxDistance = 100;
 }
 
-// Model
-// const dracoLoader = new DRACOLoader();
-// dracoLoader.setDecoderPath("js/libs/draco/gltf/");
-
-// const loader = new GLTFLoader();
-// loader.setDRACOLoader(dracoLoader);
-// loader.load(
-//   "cube.gltf",
-//   function (gltf) {
-//     const model = gltf.scene;
-//     model.position.set(-80, 30, 50);
-//     model.scale.set(0.5, 0.8, 0.05);
-//     scene.add(model);
-//   },
-//   undefined,
-//   function (e) {
-//     console.error(e);
-//   }
-// );
-
 // Rounded
-const roundedRectShape = new THREE.Shape();
-
 function roundedRect(ctx, x, y, width, height, radius) {
   ctx.moveTo(x, y + radius);
   ctx.lineTo(x, y + height - radius);
@@ -127,10 +94,9 @@ function roundedRect(ctx, x, y, width, height, radius) {
   ctx.lineTo(x + radius, y);
   ctx.quadraticCurveTo(x, y, x, y + radius);
 }
-roundedRect(roundedRectShape, 0, 0, 100, 200, 16);
 
-const extrudeSettings = {
-  depth: 8,
+var extrudeSettings = {
+  depth: 4,
   bevelEnabled: true,
   bevelSegments: 2,
   steps: 2,
@@ -138,9 +104,32 @@ const extrudeSettings = {
   bevelThickness: 1,
 };
 
+// add shape func
+
+function addShape(id, shape, extrudeSettings, color, x, y, z, rx, ry, rz, s) {
+  var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+  var mesh = new THREE.Mesh(
+    geometry,
+    new THREE.MeshPhongMaterial({ color: color })
+  );
+  mesh.position.set(x, y, z - 75);
+  mesh.rotation.set(rx, ry, rz);
+  mesh.scale.set(s, s, s);
+  mesh.name = id;
+  scene.add(mesh);
+}
+
+// type of shapes
+const smallCard = new THREE.Shape();
+const baseCard = new THREE.Shape();
+roundedRect(smallCard, 0, 0, 100, 100, 16);
+roundedRect(baseCard, 0, 0, 300, 300, 16);
+
 // addShape( shape, color, x, y, z, rx, ry,rz, s );
+// pink
 addShape(
-  roundedRectShape,
+  "smallCard1",
+  smallCard,
   extrudeSettings,
   Colors.pink,
   40,
@@ -152,64 +141,61 @@ addShape(
   1
 );
 
-function addShape(shape, extrudeSettings, color, x, y, z, rx, ry, rz, s) {
-  // extruded shape
-
-  var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-
-  var mesh = new THREE.Mesh(
-    geometry,
-    new THREE.MeshPhongMaterial({ color: color })
-  );
-  mesh.position.set(x, y, z - 75);
-  mesh.rotation.set(rx, ry, rz);
-  mesh.scale.set(s, s, s);
-  scene.add(mesh);
-}
-
-// Cube
-const cube = new THREE.Mesh(
-  new THREE.BoxGeometry(300, 400, 10),
-  new THREE.MeshPhongMaterial({
-    color: Colors.white,
-  })
+// blue
+addShape(
+  "smallCard2",
+  smallCard,
+  extrudeSettings,
+  Colors.blue,
+  -70,
+  70,
+  200,
+  0,
+  0,
+  0,
+  1
 );
 
-//cube.scale.set(0.2, 0.2, 0.2);
-cube.position.x = 0;
-cube.position.y = 0;
-cube.position.z = 0;
-scene.add(cube);
-
-cube.addEventListener("click", (event) => {
-  console.log("click");
-});
-interactionManager.add(cube);
+// base
+addShape(
+  "baseCard",
+  baseCard,
+  extrudeSettings,
+  Colors.white,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1
+);
 
 var button = document.getElementById("button");
 button.addEventListener("mouseup", animateCube);
 
 function animateCube() {
-  const animation = {
-    x: cube.rotation.x,
-    y: cube.rotation.y,
-    z: cube.rotation.z,
+  var baseCard = scene.getObjectByName("baseCard", true);
+  var smallCard1 = scene.getObjectByName("smallCard1", true);
+  var smallCard2 = scene.getObjectByName("smallCard2", true);
+
+  const rotation = {
+    rx: baseCard.rotation.x,
+    ry: baseCard.rotation.y,
+    rz: baseCard.rotation.z,
   };
 
-  const tween = new TWEEN.Tween(animation)
-    .to({ x: 1, y: 1 }, 800)
-    .onUpdate(() =>
-      cube.rotation.set(animation.x, animation.y, cube.rotation.z)
-    );
+  const position = {
+    px: baseCard.position.x,
+    py: baseCard.position.y,
+    pz: baseCard.position.z,
+  };
 
-  const tweenBack = new TWEEN.Tween(animation)
-    .to({ x: 0, y: 0 }, 800)
-    .delay(500)
+  const tween = new TWEEN.Tween(position)
+    .to({ px: 0.1, py: 0.1, pz: 0.1 }, 300)
     .onUpdate(() =>
-      cube.rotation.set(animation.x, animation.y, cube.rotation.z)
+      baseCard.position.set(position.px, position.py, position.pz)
     );
-
-  tween.chain(tweenBack);
 
   tween.start();
 }
@@ -219,12 +205,14 @@ function init() {
   createLight();
   createDOM();
   createControl();
+  var object = scene.getObjectByName("baseCard", true);
+  console.log(object);
 }
 
 function animate() {
   requestAnimationFrame(animate);
   TWEEN.update();
-  interactionManager.update();
+  //interactionManager.update();
   renderer.render(scene, camera);
 }
 
