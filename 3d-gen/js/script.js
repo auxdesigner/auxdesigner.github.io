@@ -1,6 +1,7 @@
 import * as THREE from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/optimized/three.js";
 import { OrbitControls } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/unoptimized/examples/jsm/controls/OrbitControls.js";
 import { TWEEN } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/unoptimized/examples/jsm/libs/tween.module.min.js";
+import anime from "/js/anime.es.js";
 
 var Colors = {
   red: 0xf25346,
@@ -143,9 +144,11 @@ roundedRect(smallCard, 0, 0, 100, 100, 16);
 
 // addShape(id, shape, extrudeSettings, color, z);
 var cards = [
-  ["smallCard1", smallCard, Colors.pink, 100],
-  ["smallCard2", smallCard, Colors.blue, 120],
-  ["smallCard3", smallCard, Colors.white, 140],
+  ["smallCard0", smallCard, Colors.pink, 100],
+  ["smallCard1", smallCard, Colors.blue, 120],
+  ["smallCard2", smallCard, Colors.white, 140],
+  ["smallCard3", smallCard, Colors.brown, 160],
+  ["smallCard4", smallCard, Colors.red, 180],
 ];
 
 for (var i = 0; i < cards.length; i++) {
@@ -156,71 +159,33 @@ var button = document.getElementById("button");
 button.addEventListener("mouseup", animation);
 
 function animation() {
-  var variableNamePrefix = "smallCard";
-  for (var i = 1; i < cards.length + 1; i++) {
-    var objName = variableNamePrefix + i;
-    window["smallCard" + i] = scene.getObjectByName(objName);
-  }
+  for (var i = 0; i < cards.length; i++) {
+    var objName = cards[i][0];
+    window[objName] = scene.getObjectByName(objName);
 
-  const positionX = {
-    s1_x: smallCard1.position.x,
-    s1_y: smallCard1.position.y,
-    s1_z: smallCard1.position.z,
-    s2_x: smallCard2.position.x,
-    s2_y: smallCard2.position.y,
-    s2_z: smallCard2.position.z,
-    s3_x: smallCard3.position.x,
-    s3_y: smallCard3.position.y,
-    s3_z: smallCard3.position.z,
-  };
-
-  const tweenPositionX = new TWEEN.Tween(positionX)
-    .to(
-      {
-        s1_x: randomIntFromInterval(-2, 2) * 2,
-        s2_x: randomIntFromInterval(-2, 2) * 2,
-        s3_x: randomIntFromInterval(-2, 2) * 2,
-      },
-      300
-    )
-    .onUpdate(function () {
-      smallCard1.position.set(positionX.s1_x, positionX.s1_y, positionX.s1_z);
-      smallCard2.position.set(positionX.s2_x, positionX.s2_y, positionX.s2_z);
-      smallCard3.position.set(positionX.s3_x, positionX.s3_y, positionX.s3_z);
+    anime({
+      targets: window[objName].position,
+      x: randomIntFromInterval(-2, 2) * 2,
+      easing: "easeInOutQuart",
+      duration: 300,
+      update: function () {},
     });
 
-  //console.log(position.base_x, position.s1_x, position.s2_x);
-  tweenPositionX.start();
+    setTimeout(() => {
+      for (var i = 0; i < cards.length; i++) {
+        var objName = cards[i][0];
+        window[objName] = scene.getObjectByName(objName);
 
-  setTimeout(() => {
-    const positionY = {
-      s1_x: smallCard1.position.x,
-      s1_y: smallCard1.position.y,
-      s1_z: smallCard1.position.z,
-      s2_x: smallCard2.position.x,
-      s2_y: smallCard2.position.y,
-      s2_z: smallCard2.position.z,
-      s3_x: smallCard3.position.x,
-      s3_y: smallCard3.position.y,
-      s3_z: smallCard3.position.z,
-    };
-
-    const tweenPositionY = new TWEEN.Tween(positionY)
-      .to(
-        {
-          s1_y: randomIntFromInterval(-2, 2) * 2,
-          s2_y: randomIntFromInterval(-2, 2) * 2,
-          s3_y: randomIntFromInterval(-2, 2) * 2,
-        },
-        300
-      )
-      .onUpdate(function () {
-        smallCard1.position.set(positionY.s1_x, positionY.s1_y, positionY.s1_z);
-        smallCard2.position.set(positionY.s2_x, positionY.s2_y, positionY.s2_z);
-        smallCard3.position.set(positionY.s3_x, positionY.s3_y, positionY.s3_z);
-      });
-    tweenPositionY.start();
-  }, 300);
+        anime({
+          targets: window[objName].position,
+          y: randomIntFromInterval(-2, 2) * 2,
+          easing: "easeInOutQuart",
+          duration: 300,
+          update: function () {},
+        });
+      }
+    }, 300);
+  }
 }
 
 // Util
