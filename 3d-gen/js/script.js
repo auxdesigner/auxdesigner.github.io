@@ -96,19 +96,32 @@ function roundedRect(ctx, x, y, width, height, radius) {
   ctx.quadraticCurveTo(x, y, x, y + radius);
 }
 
-var extrudeSettings = {
-  depth: 4,
-  bevelEnabled: true,
-  bevelSegments: 2,
-  steps: 2,
-  bevelSize: 1,
-  bevelThickness: 1,
-};
-
 // add shape func
+function addShape(id, shape, color, z) {
+  var x = 0,
+    y = 0,
+    rx = 0,
+    ry = 0,
+    rz = 0,
+    s = 1;
 
-function addShape(id, shape, extrudeSettings, color, x, y, z, rx, ry, rz, s) {
+  var depth = 4,
+    bevelEnabled = true,
+    bevelSegment = 2,
+    steps = 2,
+    bevelSize = 1,
+    bevelThickness = 1,
+    extrudeSettings = {
+      depth,
+      bevelEnabled,
+      bevelSegment,
+      steps,
+      bevelSize,
+      bevelThickness,
+    };
+
   var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+
   var mesh = new THREE.Mesh(
     geometry,
     new THREE.MeshPhongMaterial({
@@ -126,67 +139,28 @@ function addShape(id, shape, extrudeSettings, color, x, y, z, rx, ry, rz, s) {
 
 // type of shapes (ctx, x, y, width, height, radius)
 const smallCard = new THREE.Shape();
-const baseCard = new THREE.Shape();
 roundedRect(smallCard, 0, 0, 100, 100, 16);
-roundedRect(baseCard, 0, 0, 300, 300, 16);
 
-// addShape( id,shape,extrudeSettings, color, x, y, z, rx, ry,rz, s );
+// addShape(id, shape, extrudeSettings, color, z);
 var cards = [
-  [
-    "smallCard1",
-    smallCard,
-    extrudeSettings,
-    Colors.pink,
-    40,
-    40,
-    100,
-    0,
-    0,
-    0,
-    1,
-  ],
-  [
-    "smallCard2",
-    smallCard,
-    extrudeSettings,
-    Colors.blue,
-    40,
-    40,
-    120,
-    0,
-    0,
-    0,
-    1,
-  ],
-  [
-    "smallCard3",
-    smallCard,
-    extrudeSettings,
-    Colors.white,
-    40,
-    40,
-    140,
-    0,
-    0,
-    0,
-    1,
-  ],
+  ["smallCard1", smallCard, Colors.pink, 100],
+  ["smallCard2", smallCard, Colors.blue, 120],
+  ["smallCard3", smallCard, Colors.white, 140],
 ];
 
 for (var i = 0; i < cards.length; i++) {
-  console.log(cards[i]);
   addShape(...cards[i]);
 }
 
 var button = document.getElementById("button");
 button.addEventListener("mouseup", animation);
 
-function moveCard() {}
-
 function animation() {
-  var smallCard1 = scene.getObjectByName("smallCard1", true);
-  var smallCard2 = scene.getObjectByName("smallCard2", true);
-  var smallCard3 = scene.getObjectByName("smallCard3", true);
+  var variableNamePrefix = "smallCard";
+  for (var i = 1; i < cards.length + 1; i++) {
+    var objName = variableNamePrefix + i;
+    window["smallCard" + i] = scene.getObjectByName(objName);
+  }
 
   const positionX = {
     s1_x: smallCard1.position.x,
@@ -253,7 +227,7 @@ function animation() {
 function randomIntFromInterval(min, max) {
   var result =
     20 * Math.round(Math.floor(Math.random() * (max - min + 1) + min));
-  console.log(result);
+  //console.log(result);
   return result;
 }
 
