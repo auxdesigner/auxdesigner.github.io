@@ -41,7 +41,7 @@ const camera = new THREE.OrthographicCamera(
   height / 2,
   height / -2,
   0.1,
-  2000
+  1000
 );
 scene.add(camera);
 camera.position.set(320, 320, 320);
@@ -111,7 +111,11 @@ function addShape(id, shape, extrudeSettings, color, x, y, z, rx, ry, rz, s) {
   var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
   var mesh = new THREE.Mesh(
     geometry,
-    new THREE.MeshPhongMaterial({ color: color })
+    new THREE.MeshPhongMaterial({
+      color: color,
+      depthWrite: false,
+      polygonOffset: true,
+    })
   );
   mesh.position.set(x, y, z - 75);
   mesh.rotation.set(rx, ry, rz);
@@ -127,93 +131,122 @@ roundedRect(smallCard, 0, 0, 100, 100, 16);
 roundedRect(baseCard, 0, 0, 300, 300, 16);
 
 // addShape( id,shape,extrudeSettings, color, x, y, z, rx, ry,rz, s );
-// pink
-addShape(
-  "smallCard1",
-  smallCard,
-  extrudeSettings,
-  Colors.pink,
-  40,
-  40,
-  100,
-  0,
-  0,
-  0,
-  1
-);
+var cards = [
+  [
+    "smallCard1",
+    smallCard,
+    extrudeSettings,
+    Colors.pink,
+    40,
+    40,
+    100,
+    0,
+    0,
+    0,
+    1,
+  ],
+  [
+    "smallCard2",
+    smallCard,
+    extrudeSettings,
+    Colors.blue,
+    40,
+    40,
+    120,
+    0,
+    0,
+    0,
+    1,
+  ],
+  [
+    "smallCard3",
+    smallCard,
+    extrudeSettings,
+    Colors.white,
+    40,
+    40,
+    140,
+    0,
+    0,
+    0,
+    1,
+  ],
+];
 
-// blue
-addShape(
-  "smallCard2",
-  smallCard,
-  extrudeSettings,
-  Colors.blue,
-  -70,
-  70,
-  200,
-  0,
-  0,
-  0,
-  1
-);
-
-// base
-addShape(
-  "baseCard",
-  baseCard,
-  extrudeSettings,
-  Colors.white,
-  0,
-  0,
-  75,
-  0,
-  0,
-  0,
-  1
-);
+for (var i = 0; i < cards.length; i++) {
+  console.log(cards[i]);
+  addShape(...cards[i]);
+}
 
 var button = document.getElementById("button");
 button.addEventListener("mouseup", animation);
 
+function moveCard() {}
+
 function animation() {
-  var baseCard = scene.getObjectByName("baseCard", true);
   var smallCard1 = scene.getObjectByName("smallCard1", true);
   var smallCard2 = scene.getObjectByName("smallCard2", true);
+  var smallCard3 = scene.getObjectByName("smallCard3", true);
 
-  const position = {
-    base_x: baseCard.position.x,
-    base_y: baseCard.position.y,
-    base_z: baseCard.position.z,
+  const positionX = {
     s1_x: smallCard1.position.x,
     s1_y: smallCard1.position.y,
     s1_z: smallCard1.position.z,
     s2_x: smallCard2.position.x,
     s2_y: smallCard2.position.y,
     s2_z: smallCard2.position.z,
+    s3_x: smallCard3.position.x,
+    s3_y: smallCard3.position.y,
+    s3_z: smallCard3.position.z,
   };
 
-  const tweenPosition = new TWEEN.Tween(position)
+  const tweenPositionX = new TWEEN.Tween(positionX)
     .to(
       {
-        base_x: randomIntFromInterval(0, 10),
-        base_y: randomIntFromInterval(0, 10),
-        base_z: 0,
-        s1_x: randomIntFromInterval(0, 10),
-        s1_y: randomIntFromInterval(0, 10),
-        s1_z: randomIntFromInterval(0, 10),
-        s2_x: randomIntFromInterval(0, 10),
-        s2_y: randomIntFromInterval(0, 10),
-        s2_z: randomIntFromInterval(0, 10),
+        s1_x: randomIntFromInterval(-2, 2) * 2,
+        s2_x: randomIntFromInterval(-2, 2) * 2,
+        s3_x: randomIntFromInterval(-2, 2) * 2,
       },
       300
     )
     .onUpdate(function () {
-      baseCard.position.set(position.base_x, 0, 0);
-      smallCard1.position.set(position.s1_x, position.s1_y, position.s1_z);
-      smallCard2.position.set(position.s2_x, position.s2_y, position.s2_z);
+      smallCard1.position.set(positionX.s1_x, positionX.s1_y, positionX.s1_z);
+      smallCard2.position.set(positionX.s2_x, positionX.s2_y, positionX.s2_z);
+      smallCard3.position.set(positionX.s3_x, positionX.s3_y, positionX.s3_z);
     });
+
   //console.log(position.base_x, position.s1_x, position.s2_x);
-  tweenPosition.start();
+  tweenPositionX.start();
+
+  setTimeout(() => {
+    const positionY = {
+      s1_x: smallCard1.position.x,
+      s1_y: smallCard1.position.y,
+      s1_z: smallCard1.position.z,
+      s2_x: smallCard2.position.x,
+      s2_y: smallCard2.position.y,
+      s2_z: smallCard2.position.z,
+      s3_x: smallCard3.position.x,
+      s3_y: smallCard3.position.y,
+      s3_z: smallCard3.position.z,
+    };
+
+    const tweenPositionY = new TWEEN.Tween(positionY)
+      .to(
+        {
+          s1_y: randomIntFromInterval(-2, 2) * 2,
+          s2_y: randomIntFromInterval(-2, 2) * 2,
+          s3_y: randomIntFromInterval(-2, 2) * 2,
+        },
+        300
+      )
+      .onUpdate(function () {
+        smallCard1.position.set(positionY.s1_x, positionY.s1_y, positionY.s1_z);
+        smallCard2.position.set(positionY.s2_x, positionY.s2_y, positionY.s2_z);
+        smallCard3.position.set(positionY.s3_x, positionY.s3_y, positionY.s3_z);
+      });
+    tweenPositionY.start();
+  }, 300);
 }
 
 // Util
@@ -238,8 +271,8 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-var baseCard0 = scene.getObjectByName("baseCard", true);
-console.log(baseCard0.position.z);
+//var baseCard0 = scene.getObjectByName("baseCard", true);
+//console.log(baseCard0.position.z);
 
 animate();
 init();
