@@ -3,16 +3,19 @@ import { OrbitControls } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8
 import { TWEEN } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/unoptimized/examples/jsm/libs/tween.module.min.js";
 import anime from "/js/anime.es.js";
 
-var Colors = {
-  red: 0xf25346,
-  white: 0xd8d0d1,
-  brown: 0x59332e,
-  pink: 0xf5986e,
-  brownDark: 0x23190f,
-  blue: 0x68c3c0,
-};
-
 var scene, renderer, container;
+
+var Colors = {
+  red: 0xfc5c65,
+  orange: 0xfd9644,
+  yellow: 0xfed330,
+  green: 0x26de81,
+  blue: 0x45aaf2,
+  indigo: 0x4b7bec,
+  purple: 0xa55eea,
+  white: 0xd1d8e0,
+  gray: 0x778ca3,
+};
 
 // Scene
 scene = new THREE.Scene();
@@ -144,11 +147,15 @@ roundedRect(smallCard, 0, 0, 100, 100, 16);
 
 // addShape(id, shape, extrudeSettings, color, z);
 var cards = [
-  ["smallCard0", smallCard, Colors.pink, 100],
-  ["smallCard1", smallCard, Colors.blue, 120],
-  ["smallCard2", smallCard, Colors.white, 140],
-  ["smallCard3", smallCard, Colors.brown, 160],
-  ["smallCard4", smallCard, Colors.red, 180],
+  ["smallCard0", smallCard, Colors.red, 0],
+  ["smallCard1", smallCard, Colors.orange, 40],
+  ["smallCard2", smallCard, Colors.yellow, 80],
+  ["smallCard3", smallCard, Colors.green, 120],
+  ["smallCard4", smallCard, Colors.blue, 160],
+  ["smallCard5", smallCard, Colors.indigo, 200],
+  ["smallCard6", smallCard, Colors.purple, 240],
+  ["smallCard7", smallCard, Colors.white, 280],
+  ["smallCard8", smallCard, Colors.gray, 320],
 ];
 
 for (var i = 0; i < cards.length; i++) {
@@ -162,11 +169,11 @@ function animation() {
   for (var i = 0; i < cards.length; i++) {
     var objName = cards[i][0];
     window[objName] = scene.getObjectByName(objName);
-
+    console.log(window[objName]);
     anime({
       targets: window[objName].position,
-      x: randomIntFromInterval(-2, 2) * 2,
-      easing: "easeInOutQuart",
+      x: randomIntFromInterval(-2, 2) * 3,
+      easing: "easeOutExpo",
       duration: 300,
       update: function () {},
     });
@@ -178,8 +185,8 @@ function animation() {
 
         anime({
           targets: window[objName].position,
-          y: randomIntFromInterval(-2, 2) * 2,
-          easing: "easeInOutQuart",
+          y: randomIntFromInterval(-2, 2) * 3,
+          easing: "easeOutExpo",
           duration: 300,
           update: function () {},
         });
