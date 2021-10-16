@@ -1,7 +1,7 @@
-import * as THREE from "/js/three.js";
-import { OrbitControls } from "/js/OrbitControls.js";
-import { TWEEN } from "/js/tween.module.min.js";
-import anime from "/js/anime.es.js";
+import * as THREE from "https://auxdesigner.github.io/3d-card/js/three.js";
+import { OrbitControls } from "https://auxdesigner.github.io/3d-card/js/OrbitControls.js";
+import { TWEEN } from "https://auxdesigner.github.io/3d-card/js/tween.module.min.js";
+import anime from "https://auxdesigner.github.io/3d-card/js/anime.es.js";
 
 var scene, renderer, container;
 

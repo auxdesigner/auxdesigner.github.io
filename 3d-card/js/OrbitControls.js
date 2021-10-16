@@ -6,7 +6,7 @@ import {
   TOUCH as f,
   Vector2 as u,
   Vector3 as b,
-} from "/js/three.js";
+} from "https://auxdesigner.github.io/3d-card/js/three.js";
 const he = { type: "change" },
   Z = { type: "start" },
   v = { type: "end" };
