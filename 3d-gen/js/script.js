@@ -19,13 +19,14 @@ var Colors = {
 
 // Scene
 scene = new THREE.Scene();
-scene.fog = new THREE.Fog(Colors.white, 100, 950);
+scene.fog = new THREE.Fog(Colors.white, 100, 1000);
 renderer = new THREE.WebGLRenderer({
   alpha: true,
   antialias: true,
 });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
+
 window.addEventListener("resize", onWindowResize);
 
 function onWindowResize() {
@@ -35,10 +36,8 @@ function onWindowResize() {
 }
 
 var width = window.innerWidth,
-  height = window.innerHeight,
-  aspect = width / height;
+  height = window.innerHeight;
 
-//const camera = new THREE.PerspectiveCamera(80, aspect, 0.1, 2000);
 const camera = new THREE.OrthographicCamera(
   width / -2,
   width / 2,
@@ -49,28 +48,25 @@ const camera = new THREE.OrthographicCamera(
 );
 scene.add(camera);
 camera.position.set(320, 320, 320);
-// camera.rotation.set(-0.05, 1, 0);
 
 // Lights
 function createLight() {
   var hemisphereLight, shadowLight;
 
-  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 0.9);
-  shadowLight = new THREE.DirectionalLight(0xffffff, 0.9);
+  hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.5);
+  scene.add(hemisphereLight);
 
+  shadowLight = new THREE.DirectionalLight(0xffffff, 0.9);
   shadowLight.position.set(150, 350, 350);
   shadowLight.castShadow = true;
-  shadowLight.shadow.camera.left = -400;
-  shadowLight.shadow.camera.right = 400;
-  shadowLight.shadow.camera.top = 400;
-  shadowLight.shadow.camera.bottom = -400;
-  shadowLight.shadow.camera.near = 1;
-  shadowLight.shadow.camera.far = 1000;
-
-  shadowLight.shadow.mapSize.width = 2048;
-  shadowLight.shadow.mapSize.height = 2048;
-
-  scene.add(hemisphereLight);
+  shadowLight.shadow.camera.left = -40;
+  shadowLight.shadow.camera.right = 40;
+  shadowLight.shadow.camera.top = 40;
+  shadowLight.shadow.camera.bottom = -40;
+  shadowLight.shadow.camera.near = 0.1;
+  shadowLight.shadow.camera.far = 10;
+  shadowLight.shadow.mapSize.width = 100;
+  shadowLight.shadow.mapSize.height = 100;
   scene.add(shadowLight);
 }
 
@@ -83,8 +79,7 @@ function createDOM() {
 // Control
 function createControl() {
   const controls = new OrbitControls(camera, renderer.domElement);
-  // controls.minDistance = 5;
-  // controls.maxDistance = 100;
+  controls.enableZoom = false;
 }
 
 // Rounded
@@ -128,7 +123,7 @@ function addShape(id, shape, color, z) {
 
   var mesh = new THREE.Mesh(
     geometry,
-    new THREE.MeshPhongMaterial({
+    new THREE.MeshStandardMaterial({
       color: color,
       depthWrite: false,
       polygonOffset: true,
@@ -154,8 +149,8 @@ var cards = [
   ["smallCard4", smallCard, Colors.blue, 160],
   ["smallCard5", smallCard, Colors.indigo, 200],
   ["smallCard6", smallCard, Colors.purple, 240],
-  ["smallCard7", smallCard, Colors.white, 280],
-  ["smallCard8", smallCard, Colors.gray, 320],
+  ["smallCard7", smallCard, Colors.gray, 280],
+  ["smallCard8", smallCard, Colors.white, 320],
 ];
 
 for (var i = 0; i < cards.length; i++) {
@@ -163,13 +158,13 @@ for (var i = 0; i < cards.length; i++) {
 }
 
 var button = document.getElementById("button");
-button.addEventListener("mouseup", animation);
+button.addEventListener("click", animation);
 
 function animation() {
   for (var i = 0; i < cards.length; i++) {
     var objName = cards[i][0];
     window[objName] = scene.getObjectByName(objName);
-    console.log(window[objName]);
+
     anime({
       targets: window[objName].position,
       x: randomIntFromInterval(-2, 2) * 3,
@@ -199,7 +194,6 @@ function animation() {
 function randomIntFromInterval(min, max) {
   var result =
     20 * Math.round(Math.floor(Math.random() * (max - min + 1) + min));
-  //console.log(result);
   return result;
 }
 
@@ -217,8 +211,13 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-//var baseCard0 = scene.getObjectByName("baseCard", true);
-//console.log(baseCard0.position.z);
-
 animate();
 init();
+
+document.body.onkeyup = function (e) {
+  button.click();
+};
+
+setTimeout(() => {
+  button.click();
+}, 300);
