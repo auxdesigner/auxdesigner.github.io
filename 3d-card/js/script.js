@@ -1,6 +1,6 @@
-import * as THREE from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/optimized/three.js";
-import { OrbitControls } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/unoptimized/examples/jsm/controls/OrbitControls.js";
-import { TWEEN } from "https://cdn.skypack.dev/pin/three@v0.133.1-nP52U8LARkTRhxRcba9x/mode=imports,min/unoptimized/examples/jsm/libs/tween.module.min.js";
+import * as THREE from "/js/three.js";
+import { OrbitControls } from "/js/OrbitControls.js";
+import { TWEEN } from "/js/tween.module.min.js";
 import anime from "/js/anime.es.js";
 
 var scene, renderer, container;
@@ -215,9 +215,11 @@ animate();
 init();
 
 document.body.onkeyup = function (e) {
-  button.click();
+  if (e.keyCode == 32) {
+    button.click();
+  }
 };
 
-setTimeout(() => {
-  button.click();
-}, 300);
+// setTimeout(() => {
+//   button.click();
+// }, 300);
