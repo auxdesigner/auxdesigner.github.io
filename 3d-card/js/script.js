@@ -220,6 +220,6 @@ document.body.onkeyup = function (e) {
   }
 };
 
-// setTimeout(() => {
-//   button.click();
-// }, 300);
+setTimeout(() => {
+  button.click();
+}, 300);
