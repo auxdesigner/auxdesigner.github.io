@@ -1,7 +1,7 @@
-import * as THREE from "/js/three.js";
-import { OrbitControls } from "/js/OrbitControls.js";
-import { GLTFLoader } from "/js/GLTFLoader.js";
-import { OutlineEffect } from "/js/OutlineEffect.js";
+import * as THREE from "https://auxdesigner.github.io/isometric/js/three.js";
+import { OrbitControls } from "https://auxdesigner.github.io/isometric/js/OrbitControls.js";
+import { GLTFLoader } from "https://auxdesigner.github.io/isometric/js/GLTFLoader.js";
+import { OutlineEffect } from "https://auxdesigner.github.io/isometric/js/OutlineEffect.js";
 
 // *********************************** Assets ***********************************
 // Material
