@@ -4,7 +4,7 @@ import {
   ShaderMaterial as E,
   UniformsLib as p,
   UniformsUtils as U,
-} from "/js/three.js";
+} from "https://auxdesigner.github.io/isometric/js/three.js";
 class z {
   constructor(i, s = {}) {
     this.enabled = !0;

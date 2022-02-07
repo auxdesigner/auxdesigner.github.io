@@ -62,7 +62,7 @@ import {
   Vector3 as j,
   VectorKeyframeTrack as ut,
   sRGBEncoding as W,
-} from "/js/three.js";
+} from "https://auxdesigner.github.io/isometric/js/three.js";
 class ft extends ke {
   constructor(t) {
     super(t);

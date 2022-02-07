@@ -6,7 +6,7 @@ import {
   TOUCH as f,
   Vector2 as u,
   Vector3 as b,
-} from "/js/three.js";
+} from "https://auxdesigner.github.io/isometric/js/three.js";
 const pe = { type: "change" },
   v = { type: "start" },
   he = { type: "end" };
