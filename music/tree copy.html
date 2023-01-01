@@ -102,11 +102,9 @@
               ctx.stroke();
             } else {
               // draw leaf
-              var colors = ["#ff003b", "#ff4400", "#ffc300"];
 
               ctx.lineWidth = 10;
-              ctx.strokeStyle =
-                colors[Math.floor(Math.random() * colors.length)];
+              ctx.strokeStyle = "#f40";
               ctx.moveTo(this.p0.x, this.p0.y);
               ctx.lineTo(this.p1.x, this.p1.y);
               ctx.stroke();
@@ -177,14 +175,42 @@
             ctx.globalCompositeOperation = "source-over";
           }
 
-          if (++frame % 2) {
+          if (++frame % 3) {
             clear();
           }
 
           // follow the pointer
 
-          current.p1.x = canvas.width * 0.5;
-          current.p1.y = canvas.height * 0.5;
+          function generateX() {
+            return Math.floor(Math.random() * (canvas.width - 0 + 1)) + 0;
+          }
+
+          function generateY() {
+            return Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
+          }
+
+          var oldX = current.p1.x;
+          var oldY = current.p1.y;
+
+          var newX = generateX();
+          var newY = generateY();
+
+          var dx = newX - oldX;
+          var dy = newY - oldY;
+
+          var moveDistance = Math.sqrt(dx * dx + dy * dy);
+
+          // speed limit
+
+          if (moveDistance > 40) {
+            newX = oldX + dx * 0.1;
+            newY = oldY + dy * 0.1;
+          }
+
+          if (Math.random() > 0.95 && moveDistance > 30) {
+            current.p1.x = newX;
+            current.p1.y = newY;
+          }
 
           // grow tree
 
@@ -192,7 +218,7 @@
 
           // create trunk branches
 
-          if (autorun && Math.random() > 0.8) {
+          if (Math.random() > 0.9) {
             var branch = new Branch(
               current,
               current.level,
@@ -201,7 +227,7 @@
             );
             current.branches.push(branch);
 
-            if (Math.random() > 0.8) current.branches.push(newBranch(current));
+            if (Math.random() > 0.2) current.branches.push(newBranch(current));
 
             current = branch;
             nBranches++;
@@ -228,16 +254,21 @@
         };
 
         var ctx = canvas.elem.getContext("2d");
-
+        canvas.elem.onselectstart = function () {
+          return false;
+        };
+        canvas.elem.ondragstart = function () {
+          return false;
+        };
         window.addEventListener("resize", canvas.resize.bind(canvas), false);
         canvas.resize();
 
         // variables
 
-        var maxLevels = 7;
+        var maxLevels = 6;
         var nBranches = 0;
         var maxBranches = 200;
-        var autorun = true;
+        var autorun = false;
         var frame = 0;
         var root = new Branch(
           false,
