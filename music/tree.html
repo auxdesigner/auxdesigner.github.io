@@ -23,33 +23,77 @@
         background: #fff;
         position: absolute;
       }
-      #text {
-        position: absolute;
-        left: 0;
-        bottom: 10px;
-        width: 100%;
-        pointer-events: none;
-      }
-
-      #text div {
-        position: absolute;
-        color: #888;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        top: -32px;
-        font-family: "Poiret One", cursive;
-        font-size: 32px;
+      audio {
+        position: fixed;
+        right: 0px;
+        z-index: 2;
       }
     </style>
   </head>
 
   <body>
+    <audio id="audio" src="./demo.mp3" controls></audio>
+
     <canvas id="canvas" width="1263" height="796"></canvas>
 
     <script>
-      !(function () {
-        "use strict";
+      (function () {
+        audio.onplay = function (event) {
+          var audio = document.getElementById("audio");
+          var controller = audio.controller;
+          var context = new AudioContext();
+          var src = context.createMediaElementSource(audio);
+          var analyser = context.createAnalyser();
+          src.connect(analyser);
+          analyser.connect(context.destination);
+
+          analyser.fftSize = 512;
+          var bufferLength = analyser.frequencyBinCount;
+          var dataArray = new Uint8Array(bufferLength);
+          console.log(dataArray);
+
+          function parse() {
+            analyser.getByteFrequencyData(dataArray);
+
+            var lowerHalfArray = dataArray.slice(0, dataArray.length / 2 - 1);
+            var upperHalfArray = dataArray.slice(
+              dataArray.length / 2 - 1,
+              dataArray.length - 1
+            );
+
+            var overallAvg = avg(dataArray);
+            var lowerMax = max(lowerHalfArray);
+            var lowerAvg = avg(lowerHalfArray);
+            var upperMax = max(upperHalfArray);
+            var upperAvg = avg(upperHalfArray);
+
+            var lowerMaxFr = lowerMax / lowerHalfArray.length;
+            var lowerAvgFr = lowerAvg / lowerHalfArray.length;
+            var upperMaxFr = upperMax / upperHalfArray.length;
+            var upperAvgFr = upperAvg / upperHalfArray.length;
+
+            console.log(overallAvg);
+
+            requestAnimationFrame(parse);
+          }
+
+          parse();
+        };
+
+        audio.onpause = function () {};
+
+        function avg(arr) {
+          var total = arr.reduce(function (sum, b) {
+            return sum + b;
+          });
+          return total / arr.length;
+        }
+
+        function max(arr) {
+          return arr.reduce(function (a, b) {
+            return Math.max(a, b);
+          });
+        }
 
         // branch constructor
 
