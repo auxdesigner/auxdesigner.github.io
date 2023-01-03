@@ -32,9 +32,9 @@
   </head>
 
   <body>
-    <audio id="audio" src="./demo.mp3" controls></audio>
+    <audio id="audio" src="./RUDE-Eternal-Youth.mp3" controls></audio>
 
-    <canvas id="canvas" width="1263" height="796"></canvas>
+    <canvas id="canvas"></canvas>
 
     <script>
       (function () {
@@ -72,15 +72,21 @@
             var upperMaxFr = upperMax / upperHalfArray.length;
             var upperAvgFr = upperAvg / upperHalfArray.length;
 
-            console.log(overallAvg);
-
             requestAnimationFrame(parse);
+
+            console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
+            if (lowerMaxFr > 1.6) {
+              run("#ff4400");
+            }
+            if (upperMaxFr > 0.2) {
+              run("#4285f4");
+            }
           }
 
           parse();
         };
 
-        audio.onpause = function () {};
+        // audio.onpause = function () {};
 
         function avg(arr) {
           var total = arr.reduce(function (sum, b) {
@@ -97,16 +103,17 @@
 
         // branch constructor
 
-        function Branch(parent, level, x, y) {
+        function Branch(parent, level, x, y, leafColor) {
           this.parent = parent;
           this.branches = [];
           this.p0 = parent ? parent.p1 : new Point(x, y);
           this.p1 = new Point(x, y);
           this.level = level;
-          this.life = 20;
+          this.life = 10;
           this.angle = 0;
           this.vx = 0;
           this.vy = 0;
+          this.leafColor = leafColor;
         }
 
         // grow branch
@@ -146,11 +153,13 @@
               ctx.stroke();
             } else {
               // draw leaf
-              var colors = ["#ff003b", "#ff4400", "#ffc300"];
+              //   var colors = ["#ff003b", "#ff4400", "#ffc300"];
 
               ctx.lineWidth = 10;
-              ctx.strokeStyle =
-                colors[Math.floor(Math.random() * colors.length)];
+              //   ctx.strokeStyle =
+              //     colors[Math.floor(Math.random() * colors.length)];
+              ctx.strokeStyle = this.leafColor;
+              // console.log(leafColor);
               ctx.moveTo(this.p0.x, this.p0.y);
               ctx.lineTo(this.p1.x, this.p1.y);
               ctx.stroke();
@@ -183,11 +192,12 @@
             parent,
             parent.level - 1,
             parent.p1.x,
-            parent.p1.y
+            parent.p1.y,
+            parent.leafColor
           );
 
           branch.angle =
-            autorun && parent.level === maxLevels
+            parent.level === maxLevels
               ? Math.random() * 2 * Math.PI
               : Math.atan2(
                   parent.p1.y - parent.p0.y,
@@ -200,7 +210,7 @@
 
           branch.life =
             branch.level === 1
-              ? 5
+              ? 2
               : Math.round(Math.random() * (branch.level * 2)) + 2;
 
           return branch;
@@ -208,10 +218,10 @@
 
         // main animation loop
 
-        function run() {
+        function run(leafColor) {
           // request next frame
 
-          requestAnimationFrame(run);
+          //   requestAnimationFrame(run);
 
           // clear screen (with a bit of magic)
           function clear() {
@@ -221,7 +231,7 @@
             ctx.globalCompositeOperation = "source-over";
           }
 
-          if (++frame % 2) {
+          if (++frame % 4000) {
             clear();
           }
 
@@ -235,28 +245,29 @@
           root.grow();
 
           // create trunk branches
-
-          if (autorun && Math.random() > 0.8) {
+          // && Math.random() > 0.8
+          if (Math.random() > 0.95) {
             var branch = new Branch(
               current,
               current.level,
               current.p1.x,
-              current.p1.y
+              current.p1.y,
+              leafColor
             );
             current.branches.push(branch);
 
-            if (Math.random() > 0.8) current.branches.push(newBranch(current));
+            current.branches.push(newBranch(current));
 
             current = branch;
             nBranches++;
           }
+        }
 
-          // cut the tree
+        // cut the tree
 
-          if (nBranches > maxBranches) {
-            root = root.branches[0];
-            nBranches--;
-          }
+        if (nBranches > maxBranches) {
+          root = root.branches[0];
+          nBranches--;
         }
 
         // prepare the canvas
@@ -278,22 +289,22 @@
 
         // variables
 
-        var maxLevels = 7;
+        var maxLevels = 6;
         var nBranches = 0;
         var maxBranches = 200;
-        var autorun = true;
         var frame = 0;
         var root = new Branch(
           false,
           maxLevels,
           canvas.width * 0.5,
-          canvas.height * 0.5
+          canvas.height * 0.5,
+          "#ff4400" // only used once
         );
         var current = root;
 
         // start
 
-        run();
+        // run();
       })();
     </script>
   </body>
