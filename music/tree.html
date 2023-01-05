@@ -75,11 +75,17 @@
             requestAnimationFrame(parse);
 
             console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
-            if (lowerMaxFr > 1.6) {
-              run("#ff4400");
+            if (1 < lowerMaxFr < 2) {
+              run("#f4b400", 4); // yellow
+            }
+            if (lowerMaxFr > 2) {
+              run("#db4437", 4); // red
             }
             if (upperMaxFr > 0.2) {
-              run("#4285f4");
+              run("#0f9d58", 10); // green
+            }
+            if (upperMaxFr > 0.3) {
+              run("#4285f4", 10); // blue
             }
           }
 
@@ -103,7 +109,7 @@
 
         // branch constructor
 
-        function Branch(parent, level, x, y, leafColor) {
+        function Branch(parent, level, x, y, leafColor, width) {
           this.parent = parent;
           this.branches = [];
           this.p0 = parent ? parent.p1 : new Point(x, y);
@@ -114,6 +120,7 @@
           this.vx = 0;
           this.vy = 0;
           this.leafColor = leafColor;
+          this.width = width;
         }
 
         // grow branch
@@ -138,7 +145,7 @@
               // draw branch
 
               ctx.lineWidth = this.level * 6 - 5;
-              ctx.strokeStyle = "#000";
+              ctx.strokeStyle = "#111";
 
               if (this.parent) {
                 ctx.moveTo(this.parent.p0.x, this.parent.p0.y);
@@ -155,11 +162,11 @@
               // draw leaf
               //   var colors = ["#ff003b", "#ff4400", "#ffc300"];
 
-              ctx.lineWidth = 10;
+              ctx.lineWidth = this.width;
               //   ctx.strokeStyle =
               //     colors[Math.floor(Math.random() * colors.length)];
               ctx.strokeStyle = this.leafColor;
-              // console.log(leafColor);
+
               ctx.moveTo(this.p0.x, this.p0.y);
               ctx.lineTo(this.p1.x, this.p1.y);
               ctx.stroke();
@@ -193,7 +200,8 @@
             parent.level - 1,
             parent.p1.x,
             parent.p1.y,
-            parent.leafColor
+            parent.leafColor,
+            parent.width
           );
 
           branch.angle =
@@ -218,7 +226,7 @@
 
         // main animation loop
 
-        function run(leafColor) {
+        function run(leafColor, width) {
           // request next frame
 
           //   requestAnimationFrame(run);
@@ -252,7 +260,8 @@
               current.level,
               current.p1.x,
               current.p1.y,
-              leafColor
+              leafColor,
+              width
             );
             current.branches.push(branch);
 
@@ -298,7 +307,8 @@
           maxLevels,
           canvas.width * 0.5,
           canvas.height * 0.5,
-          "#ff4400" // only used once
+          "#ff4400", // only used once
+          10
         );
         var current = root;
 
