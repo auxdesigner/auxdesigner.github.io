@@ -50,7 +50,6 @@
           analyser.fftSize = 512;
           var bufferLength = analyser.frequencyBinCount;
           var dataArray = new Uint8Array(bufferLength);
-          console.log(dataArray);
 
           function parse() {
             analyser.getByteFrequencyData(dataArray);
@@ -72,23 +71,53 @@
             var upperMaxFr = upperMax / upperHalfArray.length;
             var upperAvgFr = upperAvg / upperHalfArray.length;
 
-            requestAnimationFrame(parse);
+            setTimeout(() => {
+              requestAnimationFrame(parse);
+            }, 50);
 
             if (lowerMaxFr < 2 && lowerMaxFr > 1) {
-              run("#f4b400", 4); // yellow
-              console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
+              setTimeout(() => {
+                run("#f4b400", 4); // yellow
+              }, 10);
+              console.log(
+                "yellow: " + lowerMaxFr,
+                lowerAvgFr,
+                upperMaxFr,
+                upperAvgFr
+              );
             }
             if (lowerMaxFr >= 2) {
-              run("#db4437", 4); // red
-              console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
+              setTimeout(() => {
+                run("#db4437", 4); // red
+              }, 10);
+              console.log(
+                "red: " + lowerMaxFr,
+                lowerAvgFr,
+                upperMaxFr,
+                upperAvgFr
+              );
             }
             if (upperMaxFr > 0.2) {
-              run("#0f9d58", 10); // green
-              console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
+              setTimeout(() => {
+                run("#0f9d58", 10); // green
+              }, 10);
+              console.log(
+                "green: " + lowerMaxFr,
+                lowerAvgFr,
+                upperMaxFr,
+                upperAvgFr
+              );
             }
             if (upperMaxFr > 0.3) {
-              run("#4285f4", 10); // blue
-              console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
+              setTimeout(() => {
+                run("#4285f4", 10); // blue
+              }, 10);
+              console.log(
+                "blue: " + lowerMaxFr,
+                lowerAvgFr,
+                upperMaxFr,
+                upperAvgFr
+              );
             }
           }
 
@@ -112,7 +141,7 @@
 
         // branch constructor
 
-        function Branch(parent, level, x, y, leafColor, width) {
+        function Branch(parent, level, x, y, leafColor, width, vx = 0, vy = 0) {
           this.parent = parent;
           this.branches = [];
           this.p0 = parent ? parent.p1 : new Point(x, y);
@@ -120,8 +149,8 @@
           this.level = level;
           this.life = 10;
           this.angle = 0;
-          this.vx = 0;
-          this.vy = 0;
+          this.vx = vx;
+          this.vy = vy;
           this.leafColor = leafColor;
           this.width = width;
         }
@@ -265,6 +294,8 @@
               current.p1.y,
               leafColor,
               width
+              // (Math.random() * canvas.width) / 2,
+              // (Math.random() * canvas.height) / 2
             );
             current.branches.push(branch);
 
