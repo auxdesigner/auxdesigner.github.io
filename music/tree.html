@@ -74,18 +74,21 @@
 
             requestAnimationFrame(parse);
 
-            console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
-            if (1 < lowerMaxFr < 2) {
+            if (lowerMaxFr < 2 && lowerMaxFr > 1) {
               run("#f4b400", 4); // yellow
+              console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
             }
-            if (lowerMaxFr > 2) {
+            if (lowerMaxFr >= 2) {
               run("#db4437", 4); // red
+              console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
             }
             if (upperMaxFr > 0.2) {
               run("#0f9d58", 10); // green
+              console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
             }
             if (upperMaxFr > 0.3) {
               run("#4285f4", 10); // blue
+              console.log(lowerMaxFr, lowerAvgFr, upperMaxFr, upperAvgFr);
             }
           }
 
