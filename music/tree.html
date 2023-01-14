@@ -13,7 +13,7 @@
         position: absolute;
         margin: 0;
         padding: 0;
-        background: #111;
+        background: #fff;
         width: 100%;
         height: 100%;
       }
@@ -25,14 +25,37 @@
       }
       audio {
         position: fixed;
-        right: 0px;
+        margin: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 60px;
         z-index: 2;
+      }
+      .credit {
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        font-size: 14px;
+        padding: 20px;
+        color: #333;
       }
     </style>
   </head>
 
   <body>
-    <audio id="audio" src="./RUDE-Eternal-Youth.mp3" controls></audio>
+    <div class="credit">
+      Play audio to see what happens. Music:
+      <a href="https://www.youtube.com/watch?v=Tx9SZshzGbk" target="_blank"
+        >Eternal Youth - RŮDE</a
+      >. Base code from
+      <a
+        href="https://blog.csdn.net/qq_46291038/article/details/120091888"
+        target="_blank"
+        >雪蛋不是蛋(^_−)☆</a
+      >.
+    </div>
+    <audio id="audio" src="./EternalYouthRUDE.mp3" controls></audio>
 
     <canvas id="canvas"></canvas>
 
@@ -71,14 +94,14 @@
             var upperMaxFr = upperMax / upperHalfArray.length;
             var upperAvgFr = upperAvg / upperHalfArray.length;
 
-            setTimeout(() => {
-              requestAnimationFrame(parse);
-            }, 50);
+            // setTimeout(() => {
+
+            // }, 50);
+
+            requestAnimationFrame(parse);
 
             if (lowerMaxFr < 2 && lowerMaxFr > 1) {
-              setTimeout(() => {
-                run("#f4b400", 4); // yellow
-              }, 10);
+              run("#f4b400", 4); // yellow
               console.log(
                 "yellow: " + lowerMaxFr,
                 lowerAvgFr,
@@ -87,9 +110,7 @@
               );
             }
             if (lowerMaxFr >= 2) {
-              setTimeout(() => {
-                run("#db4437", 4); // red
-              }, 10);
+              run("#db4437", 4); // red
               console.log(
                 "red: " + lowerMaxFr,
                 lowerAvgFr,
@@ -98,9 +119,7 @@
               );
             }
             if (upperMaxFr > 0.2) {
-              setTimeout(() => {
-                run("#0f9d58", 10); // green
-              }, 10);
+              run("#0f9d58", 10); // green
               console.log(
                 "green: " + lowerMaxFr,
                 lowerAvgFr,
@@ -109,9 +128,7 @@
               );
             }
             if (upperMaxFr > 0.3) {
-              setTimeout(() => {
-                run("#4285f4", 10); // blue
-              }, 10);
+              run("#4285f4", 10); // blue
               console.log(
                 "blue: " + lowerMaxFr,
                 lowerAvgFr,
@@ -191,9 +208,6 @@
 
               ctx.stroke();
             } else {
-              // draw leaf
-              //   var colors = ["#ff003b", "#ff4400", "#ffc300"];
-
               ctx.lineWidth = this.width;
               //   ctx.strokeStyle =
               //     colors[Math.floor(Math.random() * colors.length)];
@@ -245,8 +259,8 @@
                 ) +
                 (Math.random() * 1.4 - 0.7);
 
-          branch.vx = Math.cos(branch.angle) * 12;
-          branch.vy = Math.sin(branch.angle) * 12;
+          branch.vx = Math.cos(branch.angle) * 10;
+          branch.vy = Math.sin(branch.angle) * 10;
 
           branch.life =
             branch.level === 1
@@ -294,8 +308,6 @@
               current.p1.y,
               leafColor,
               width
-              // (Math.random() * canvas.width) / 2,
-              // (Math.random() * canvas.height) / 2
             );
             current.branches.push(branch);
 
