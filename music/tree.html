@@ -61,6 +61,11 @@
 
     <script>
       (function () {
+        var color1 = "#5A6EB8",
+          color2 = "#B85AB4",
+          color3 = "#C78C3E",
+          color4 = "#962030";
+
         audio.onplay = function (event) {
           var audio = document.getElementById("audio");
           var controller = audio.controller;
@@ -101,47 +106,21 @@
             requestAnimationFrame(parse);
 
             if (lowerMaxFr < 2 && lowerMaxFr > 1) {
-              run("#f4b400", 4); // yellow
-              console.log(
-                "yellow: " + lowerMaxFr,
-                lowerAvgFr,
-                upperMaxFr,
-                upperAvgFr
-              );
+              run(color1, 4);
             }
             if (lowerMaxFr >= 2) {
-              run("#db4437", 4); // red
-              console.log(
-                "red: " + lowerMaxFr,
-                lowerAvgFr,
-                upperMaxFr,
-                upperAvgFr
-              );
+              run(color2, 4);
             }
             if (upperMaxFr > 0.2) {
-              run("#0f9d58", 10); // green
-              console.log(
-                "green: " + lowerMaxFr,
-                lowerAvgFr,
-                upperMaxFr,
-                upperAvgFr
-              );
+              run(color3, 10);
             }
             if (upperMaxFr > 0.3) {
-              run("#4285f4", 10); // blue
-              console.log(
-                "blue: " + lowerMaxFr,
-                lowerAvgFr,
-                upperMaxFr,
-                upperAvgFr
-              );
+              run(color4, 10);
             }
           }
 
           parse();
         };
-
-        // audio.onpause = function () {};
 
         function avg(arr) {
           var total = arr.reduce(function (sum, b) {
@@ -193,8 +172,8 @@
             if (this.level) {
               // draw branch
 
-              ctx.lineWidth = this.level * 6 - 5;
-              ctx.strokeStyle = "#111";
+              ctx.lineWidth = this.level * 6 - 5.25;
+              ctx.strokeStyle = "#333";
 
               if (this.parent) {
                 ctx.moveTo(this.parent.p0.x, this.parent.p0.y);
@@ -209,8 +188,6 @@
               ctx.stroke();
             } else {
               ctx.lineWidth = this.width;
-              //   ctx.strokeStyle =
-              //     colors[Math.floor(Math.random() * colors.length)];
               ctx.strokeStyle = this.leafColor;
 
               ctx.moveTo(this.p0.x, this.p0.y);
@@ -273,10 +250,6 @@
         // main animation loop
 
         function run(leafColor, width) {
-          // request next frame
-
-          //   requestAnimationFrame(run);
-
           // clear screen (with a bit of magic)
           function clear() {
             ctx.globalCompositeOperation = "lighter";
@@ -299,7 +272,7 @@
           root.grow();
 
           // create trunk branches
-          // && Math.random() > 0.8
+
           if (Math.random() > 0.95) {
             var branch = new Branch(
               current,
@@ -353,14 +326,10 @@
           maxLevels,
           canvas.width * 0.5,
           canvas.height * 0.5,
-          "#ff4400", // only used once
+          color1,
           10
         );
         var current = root;
-
-        // start
-
-        // run();
       })();
     </script>
   </body>
