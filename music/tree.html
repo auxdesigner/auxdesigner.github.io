@@ -25,6 +25,7 @@
         height: 100%;
         background: #fff;
         position: absolute;
+        margin-top: -80px;
       }
       audio {
         position: fixed;
@@ -39,15 +40,12 @@
         font-size: 14px;
         padding: 20px;
         color: #333;
-      }
-      .intro a {
-        display: inline-block;
-        margin: 10px;
+        z-index: 100;
+        position: relative;
       }
       .credit {
         text-align: center;
         font-size: 14px;
-        padding: 20px;
         color: #333;
         position: fixed;
         margin: auto;
@@ -65,22 +63,24 @@
 
   <body>
     <div class="intro">
-      Pick a song to play & see what happens.<br />
+      Pick a song to play & see what happens. Music from
+      <a
+        target="_blank"
+        href="https://www.youtube.com/playlist?list=PLTv4fMHo5BSjNpInuglzs1huPG5lWjA3_"
+        >Asia Lofi by Loudly Lofi</a
+      ><br />
 
       <select id="songs" onchange="selectSong()">
-        <option value="m1">Rude - Youth</option>
-        <option value="m2">song 2</option>
-        <option value="m3">song 3</option>
+        <option value="m3">Asia Lofi - Lotus Lantern</option>
+        <option value="m1">Asia Lofi - Chang Jiang</option>
+        <option value="m2">Asia Lofi - China Town</option>
       </select>
     </div>
 
     <br /><br />
-    <audio id="audio" src="./m1.mp3" controls></audio>
+    <audio id="audio" src="./m3.m4a" controls></audio>
     <div class="credit">
-      Music:
-      <a href="https://www.youtube.com/watch?v=Tx9SZshzGbk" target="_blank"
-        >Eternal Youth - RŮDE</a
-      >. Base code from
+      Drawing code from
       <a
         href="https://blog.csdn.net/qq_46291038/article/details/120091888"
         target="_blank"
@@ -95,14 +95,14 @@
       var songs = document.getElementById("songs");
 
       function selectSong() {
-        audio.src = songs.value + ".mp3";
+        audio.src = songs.value + ".m4a";
         console.log("music");
       }
 
-      var color1 = "#5A6EB8",
-        color2 = "#B85AB4",
-        color3 = "#C78C3E",
-        color4 = "#962030";
+      var color1 = "#5A6EB8", // blue
+        color2 = "#B85AB4", // purple
+        color3 = "#C78C3E", // yellow
+        color4 = "#962030"; // red
 
       audio.onplay = function (event) {
         var context = new AudioContext();
