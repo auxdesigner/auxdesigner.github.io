@@ -56,16 +56,25 @@
         bottom: 20px;
         z-index: 99;
       }
+      select {
+        display: inline-block;
+        margin-top: 10px;
+      }
     </style>
   </head>
 
   <body>
     <div class="intro">
-      Play audio to see what happens.<br />
-      <a href="#" onclick="visualize('m1')">Music 1</a>
-      <a href="#" onclick="visualize('m2')">Music 2</a>
-      <a href="#" onclick="visualize('m3')">Music 3</a>
+      Pick a song to play & see what happens.<br />
+
+      <select id="songs" onchange="selectSong()">
+        <option value="m1">Rude - Youth</option>
+        <option value="m2">song 2</option>
+        <option value="m3">song 3</option>
+      </select>
     </div>
+
+    <br /><br />
     <audio id="audio" src="./m1.mp3" controls></audio>
     <div class="credit">
       Music:
@@ -81,13 +90,13 @@
     <canvas id="canvas"></canvas>
 
     <script>
-      var list = document.getElementsByClassName("intro");
       var audio = document.getElementById("audio");
       var controller = audio.controller;
+      var songs = document.getElementById("songs");
 
-      function visualize(music) {
-        audio.src = music + ".mp3";
-        audio.play();
+      function selectSong() {
+        audio.src = songs.value + ".mp3";
+        console.log("music");
       }
 
       var color1 = "#5A6EB8",
