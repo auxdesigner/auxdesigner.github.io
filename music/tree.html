@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Music visualizer</title>
+    <style>
+      html {
+        overflow: hidden;
+        touch-action: none;
+        content-zooming: none;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+      }
+      body {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        width: 100%;
+        height: 100%;
+      }
+      #canvas {
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        position: absolute;
+        margin-top: -80px;
+      }
+      audio {
+        position: fixed;
+        margin: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 80px;
+        z-index: 2;
+      }
+      .intro {
+        text-align: center;
+        font-size: 14px;
+        padding: 20px;
+        color: #333;
+        z-index: 100;
+        position: relative;
+      }
+      .credit {
+        text-align: center;
+        font-size: 14px;
+        color: #333;
+        position: fixed;
+        margin: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 20px;
+        z-index: 99;
+      }
+      select {
+        display: inline-block;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="intro">
+      Pick a song to play & see what happens. Music from
+      <a
+        target="_blank"
+        href="https://www.youtube.com/playlist?list=PLTv4fMHo5BSjNpInuglzs1huPG5lWjA3_"
+        >Asia Lofi by Loudly Lofi</a
+      ><br />
+
+      <select id="songs" onchange="selectSong()">
+        <option value="m3">Asia Lofi - Lotus Lantern</option>
+        <option value="m1">Asia Lofi - Chang Jiang</option>
+        <option value="m2">Asia Lofi - China Town</option>
+      </select>
+    </div>
+
+    <br /><br />
+    <audio id="audio" src="./m3.m4a" controls></audio>
+    <div class="credit">
+      Drawing code from
+      <a
+        href="https://blog.csdn.net/qq_46291038/article/details/120091888"
+        target="_blank"
+        >雪蛋不是蛋(^_−)☆</a
+      >.
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+      var audio = document.getElementById("audio");
+      var controller = audio.controller;
+      var songs = document.getElementById("songs");
+
+      function selectSong() {
+        audio.src = songs.value + ".m4a";
+        console.log("music");
+      }
+
+      var color1 = "#5A6EB8", // blue
+        color2 = "#B85AB4", // purple
+        color3 = "#C78C3E", // yellow
+        color4 = "#962030"; // red
+
+      audio.onplay = function (event) {
+        var context = new AudioContext();
+        var src = context.createMediaElementSource(audio);
+        var analyser = context.createAnalyser();
+        src.connect(analyser);
+        analyser.connect(context.destination);
+
+        analyser.fftSize = 512;
+        var bufferLength = analyser.frequencyBinCount;
+        var dataArray = new Uint8Array(bufferLength);
+
+        function parse() {
+          analyser.getByteFrequencyData(dataArray);
+
+          var lowerHalfArray = dataArray.slice(0, dataArray.length / 2 - 1);
+          var upperHalfArray = dataArray.slice(
+            dataArray.length / 2 - 1,
+            dataArray.length - 1
+          );
+
+          var overallAvg = avg(dataArray);
+          var lowerMax = max(lowerHalfArray);
+          var lowerAvg = avg(lowerHalfArray);
+          var upperMax = max(upperHalfArray);
+          var upperAvg = avg(upperHalfArray);
+
+          var lowerMaxFr = lowerMax / lowerHalfArray.length;
+          var lowerAvgFr = lowerAvg / lowerHalfArray.length;
+          var upperMaxFr = upperMax / upperHalfArray.length;
+          var upperAvgFr = upperAvg / upperHalfArray.length;
+
+          // setTimeout(() => {
+
+          // }, 50);
+
+          requestAnimationFrame(parse);
+
+          if (lowerMaxFr < 2 && lowerMaxFr > 1) {
+            run(color1, 4);
+          }
+          if (lowerMaxFr >= 2) {
+            run(color2, 4);
+          }
+          if (upperMaxFr > 0.2) {
+            run(color3, 10);
+          }
+          if (upperMaxFr > 0.3) {
+            run(color4, 10);
+          }
+        }
+
+        parse();
+      };
+
+      function avg(arr) {
+        var total = arr.reduce(function (sum, b) {
+          return sum + b;
+        });
+        return total / arr.length;
+      }
+
+      function max(arr) {
+        return arr.reduce(function (a, b) {
+          return Math.max(a, b);
+        });
+      }
+
+      // branch constructor
+
+      function Branch(parent, level, x, y, leafColor, width, vx = 0, vy = 0) {
+        this.parent = parent;
+        this.branches = [];
+        this.p0 = parent ? parent.p1 : new Point(x, y);
+        this.p1 = new Point(x, y);
+        this.level = level;
+        this.life = 10;
+        this.angle = 0;
+        this.vx = vx;
+        this.vy = vy;
+        this.leafColor = leafColor;
+        this.width = width;
+      }
+
+      // grow branch
+
+      Branch.prototype.grow = function () {
+        // recursively grow children branches
+
+        for (var i = 0; i < this.branches.length; i++) {
+          this.branches[i].grow();
+        }
+
+        // grow branch
+
+        if (this.life > 1) {
+          this.p1.x += this.vx;
+          this.p1.y += this.vy;
+
+          ctx.beginPath();
+          ctx.lineCap = "round";
+
+          if (this.level) {
+            // draw branch
+
+            ctx.lineWidth = this.level * 6 - 5.25;
+            ctx.strokeStyle = "#333";
+
+            if (this.parent) {
+              ctx.moveTo(this.parent.p0.x, this.parent.p0.y);
+              ctx.quadraticCurveTo(this.p0.x, this.p0.y, this.p1.x, this.p1.y);
+            }
+
+            ctx.stroke();
+          } else {
+            ctx.lineWidth = this.width;
+            ctx.strokeStyle = this.leafColor;
+
+            ctx.moveTo(this.p0.x, this.p0.y);
+            ctx.lineTo(this.p1.x, this.p1.y);
+            ctx.stroke();
+          }
+        }
+
+        // create sub branches
+
+        if (this.life === 1 && this.level > 0 && this.level < maxLevels) {
+          this.branches.push(newBranch(this));
+          this.branches.push(newBranch(this));
+        }
+
+        // decrement branch life
+
+        this.life--;
+      };
+
+      // point 2D constructor
+
+      function Point(x, y) {
+        this.x = x;
+        this.y = y;
+      }
+
+      // new branch factory
+
+      function newBranch(parent) {
+        var branch = new Branch(
+          parent,
+          parent.level - 1,
+          parent.p1.x,
+          parent.p1.y,
+          parent.leafColor,
+          parent.width
+        );
+
+        branch.angle =
+          parent.level === maxLevels
+            ? Math.random() * 2 * Math.PI
+            : Math.atan2(parent.p1.y - parent.p0.y, parent.p1.x - parent.p0.x) +
+              (Math.random() * 1.4 - 0.7);
+
+        branch.vx = Math.cos(branch.angle) * 10;
+        branch.vy = Math.sin(branch.angle) * 10;
+
+        branch.life =
+          branch.level === 1
+            ? 2
+            : Math.round(Math.random() * (branch.level * 2)) + 2;
+
+        return branch;
+      }
+
+      // main animation loop
+
+      function run(leafColor, width) {
+        // clear screen (with a bit of magic)
+        function clear() {
+          ctx.globalCompositeOperation = "lighter";
+          ctx.fillStyle = "rgba(255,255,255,0.01)";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.globalCompositeOperation = "source-over";
+        }
+
+        if (++frame % 4000) {
+          clear();
+        }
+
+        // follow the pointer
+
+        current.p1.x = canvas.width * 0.5;
+        current.p1.y = canvas.height * 0.5;
+
+        // grow tree
+
+        root.grow();
+
+        // create trunk branches
+
+        if (Math.random() > 0.95) {
+          var branch = new Branch(
+            current,
+            current.level,
+            current.p1.x,
+            current.p1.y,
+            leafColor,
+            width
+          );
+          current.branches.push(branch);
+
+          current.branches.push(newBranch(current));
+
+          current = branch;
+          nBranches++;
+        }
+      }
+
+      // cut the tree
+
+      if (nBranches > maxBranches) {
+        root = root.branches[0];
+        nBranches--;
+      }
+
+      // prepare the canvas
+
+      var canvas = {
+        elem: document.getElementById("canvas"),
+        width: 0,
+        height: 0,
+        resize: function () {
+          this.width = this.elem.width = this.elem.offsetWidth;
+          this.height = this.elem.height = this.elem.offsetHeight;
+        },
+      };
+
+      var ctx = canvas.elem.getContext("2d");
+
+      window.addEventListener("resize", canvas.resize.bind(canvas), false);
+      canvas.resize();
+
+      // variables
+
+      var maxLevels = 6;
+      var nBranches = 0;
+      var maxBranches = 200;
+      var frame = 0;
+      var root = new Branch(
+        false,
+        maxLevels,
+        canvas.width * 0.5,
+        canvas.height * 0.5,
+        color1,
+        10
+      );
+      var current = root;
+    </script>
+  </body>
+</html>
