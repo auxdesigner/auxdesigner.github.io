@@ -34,12 +34,29 @@ scene.add(light);
 // axes
 scene.add(new THREE.AxesHelper(10));
 
+// grid
+const size = 10;
+const divisions = 10;
+const gridHelper = new THREE.GridHelper(size, divisions);
+scene.add(gridHelper);
+
 // object
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({
-  color: 0x4285f4,
-});
-const cube = new THREE.Mesh(geometry, material);
+
+const newCube = ([x, y, z], color) => {
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const material = new THREE.MeshBasicMaterial({ color });
+  const cube = new THREE.Mesh(geometry, material);
+  cube.position.x = x;
+  cube.position.y = y;
+  cube.position.z = z;
+  return cube;
+};
+
+const cube1 = newCube([1, 1, 1], 0xff0000);
+const cube2 = newCube([3, 1, 1], 0x00ff00);
+
+scene.add(cube1);
+scene.add(cube2);
 
 // interaction
 const interactionManager = new InteractionManager(
@@ -47,42 +64,42 @@ const interactionManager = new InteractionManager(
   camera,
   renderer.domElement
 );
-cube.addEventListener("mouseover", (event) => {
-  event.target.material.color.set(0xff0000);
+cube1.addEventListener("mouseover", (event) => {
   document.body.style.cursor = "pointer";
 });
-cube.addEventListener("mouseout", (event) => {
-  event.target.material.color.set(0x4285f4);
-  document.body.style.cursor = "default";
+cube2.addEventListener("mouseover", (event) => {
+  document.body.style.cursor = "pointer";
 });
-cube.addEventListener("mousedown", (event) => {
-  event.target.scale.set(1.1, 1.1, 1.1);
+cube1.addEventListener("click", (event) => {
+  transformControls.setMode("translate");
+  // https://github.com/mrdoob/three.js/blob/master/examples/misc_controls_transform.html
+  transformControls.attach(cube1);
 });
-cube.addEventListener("click", (event) => {
-  event.target.scale.set(1.0, 1.0, 1.0);
+cube2.addEventListener("click", (event) => {
+  transformControls.setMode("rotate");
+  transformControls.attach(cube2);
 });
 
-scene.add(cube);
-interactionManager.add(cube);
+interactionManager.add(cube1);
+interactionManager.add(cube2);
 
 // orbital control
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.update();
+const orbitalControls = new OrbitControls(camera, renderer.domElement);
+orbitalControls.update();
 
 // transform control
 const transformControls = new TransformControls(camera, renderer.domElement);
 
 transformControls.addEventListener("dragging-changed", function (event) {
-  controls.enabled = !event.value;
+  orbitalControls.enabled = !event.value;
 });
 
 scene.add(transformControls);
-transformControls.attach(cube);
 
 const animate = (time) => {
   requestAnimationFrame(animate);
   interactionManager.update();
-  controls.update();
+  orbitalControls.update();
   renderer.render(scene, camera);
 };
 
