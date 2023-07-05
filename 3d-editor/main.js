@@ -99,10 +99,7 @@ function newCube([x, y, z], color) {
     mesh.material.emissive.setHex(0);
   });
   mesh.addEventListener("click", (event) => {
-    const position = event.target.position;
     event.stopPropagation();
-
-    // if eraser is selected in toolbar
     if (selectedTool === "eraser") {
       scene.remove(mesh);
     }
@@ -125,6 +122,12 @@ function newTree([x, y, z], color) {
   });
   mesh.addEventListener("mouseout", (event) => {
     mesh.material.emissive.setHex(0);
+  });
+  mesh.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (selectedTool === "eraser") {
+      scene.remove(mesh);
+    }
   });
   interactionManager.add(mesh);
 }
