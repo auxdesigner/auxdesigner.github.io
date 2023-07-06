@@ -67,8 +67,8 @@ function initialize(size) {
 }
 initialize(8);
 
-// items
-const items = [];
+// tree
+const trees = [];
 const loader = new GLTFLoader();
 function newTree([x, y, z]) {
   loader.load(
@@ -78,8 +78,8 @@ function newTree([x, y, z]) {
       glb.scene.position.y = y;
       glb.scene.position.z = z;
       scene.add(glb.scene);
-      items.push(glb.scene.children[0]);
-      console.log(items);
+      trees.push(glb.scene.children[0]);
+      console.log(trees);
     },
     function (xhr) {
       // console.log(xhr);
@@ -100,11 +100,38 @@ function onMouseHover(event) {
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(scene.children);
 
+  // highlight ground
   if (intersects.length > 0 && cubes.includes(intersects[0].object)) {
     for (var i = 0; i < cubes.length; i++) {
       cubes[i].material.emissive.setHex(0);
     }
     intersects[0].object.material.emissive.setHex(0x555555);
+  }
+  // highlight tree
+  else if (
+    intersects.length > 0 &&
+    intersects[0].object.parent.name === "Tree"
+  ) {
+    for (var i = 0; i < trees.length; i++) {
+      console.log(trees[i].children[1]);
+      trees[i].children[1].material.emissive.setHex(0);
+    }
+    intersects[0].object.parent.children[0].material.emissive.setHex(0x555555);
+    intersects[0].object.parent.children[1].material.emissive.setHex(0x555555);
+    // intersects[0].object.material.emissive.setHex(0x555555);
+  }
+  // reset highlight
+  else {
+    // reset ground
+    for (var i = 0; i < cubes.length; i++) {
+      cubes[i].material.emissive.setHex(0);
+    }
+    // reset tree
+    for (var i = 0; i < trees.length; i++) {
+      // 2 parts of the model
+      trees[i].children[0].material.emissive.setHex(0);
+      trees[i].children[1].material.emissive.setHex(0);
+    }
   }
 }
 
