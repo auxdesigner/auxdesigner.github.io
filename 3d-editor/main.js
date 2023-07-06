@@ -32,7 +32,7 @@ const camera = new THREE.PerspectiveCamera(
   45,
   window.innerWidth / window.innerHeight,
   1,
-  10000
+  1000
 );
 camera.position.set(10, 10, 10);
 
@@ -51,78 +51,26 @@ sun.shadow.camera.far = 50;
 scene.add(sun);
 scene.add(new THREE.AmbientLight(0xffffff, 0.3));
 
-// interaction
-const interactionManager = new InteractionManager(
-  renderer,
-  camera,
-  renderer.domElement
-);
-
-// create environment
+// ground
+const cubes = [];
 function initialize(size) {
   for (let x = 0; x < size; x++) {
     for (let y = 0; y < size; y++) {
       const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshLambertMaterial({ color: 0xff00ff });
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.set(x, 0, y);
-      scene.add(mesh);
-      mesh.addEventListener("mouseover", (event) => {
-        mesh.material.emissive.setHex(0x555555);
-      });
-      mesh.addEventListener("mouseout", (event) => {
-        mesh.material.emissive.setHex(0);
-      });
-      mesh.addEventListener("click", (event) => {
-        const position = event.target.position;
-        event.stopPropagation();
-
-        // if cube is selected in toolbar
-        if (selectedTool === "cube") {
-          newCube([position.x, position.y, position.z], 0xffff00);
-        }
-
-        // if tree is selected in toolbar
-        if (selectedTool === "tree") {
-          newTree([position.x, position.y, position.z], 0x00ff00);
-        }
-      });
-      interactionManager.add(mesh);
+      const material = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+      const cube = new THREE.Mesh(geometry, material);
+      cube.position.set(x, 0, y);
+      scene.add(cube);
+      cubes.push(cube);
     }
   }
 }
-initialize(2);
+initialize(8);
 
-// create cube
-function newCube([x, y, z], color) {
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshLambertMaterial({ color });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.x = x;
-  mesh.position.y = y + 1;
-  mesh.position.z = z;
-  scene.add(mesh);
-
-  mesh.addEventListener("mouseover", (event) => {
-    mesh.material.emissive.setHex(0x555555);
-  });
-  mesh.addEventListener("mouseout", (event) => {
-    mesh.material.emissive.setHex(0);
-  });
-  mesh.addEventListener("click", (event) => {
-    event.stopPropagation();
-    if (selectedTool === "eraser") {
-      scene.remove(mesh);
-    }
-  });
-  interactionManager.add(mesh);
-}
-
-// create tree
-// glb
+// items
+const items = [];
 const loader = new GLTFLoader();
-
-function newTree([x, y, z], color) {
+function newTree([x, y, z]) {
   loader.load(
     "model/tree.glb",
     function (glb) {
@@ -130,21 +78,11 @@ function newTree([x, y, z], color) {
       glb.scene.position.y = y;
       glb.scene.position.z = z;
       scene.add(glb.scene);
-      glb.scene.addEventListener("mouseover", (event) => {
-        // console.log(glb.scene);
-      });
-
-      glb.scene.addEventListener("click", (event) => {
-        event.stopPropagation();
-        if (selectedTool === "eraser") {
-          scene.remove(glb.scene);
-          scene.children.forEach((child) => console.log(child));
-        }
-      });
-      interactionManager.add(glb.scene);
+      items.push(glb.scene.children[0]);
+      console.log(items);
     },
     function (xhr) {
-      console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+      // console.log(xhr);
     },
     function (error) {
       console.error(error);
@@ -152,15 +90,68 @@ function newTree([x, y, z], color) {
   );
 }
 
+// handle mouse hover
+function onMouseHover(event) {
+  const mouse = new THREE.Vector2();
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  const raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(scene.children);
+
+  if (intersects.length > 0 && cubes.includes(intersects[0].object)) {
+    for (var i = 0; i < cubes.length; i++) {
+      cubes[i].material.emissive.setHex(0);
+    }
+    intersects[0].object.material.emissive.setHex(0x555555);
+  }
+}
+
+// handle mouse click
+function onMouseClick(event) {
+  const mouse = new THREE.Vector2();
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  const raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(scene.children);
+
+  if (selectedTool === "eraser") {
+    // tree
+    if (intersects.length > 0 && intersects[0].object.parent.name === "Tree") {
+      console.log("found tree");
+      scene.remove(intersects[0].object.parent.parent);
+    }
+    // ground
+    if (intersects.length > 0 && cubes.includes(intersects[0].object)) {
+      console.log("found ground");
+    }
+  } else if (selectedTool === "tree") {
+    if (intersects.length > 0 && cubes.includes(intersects[0].object)) {
+      let positionX = intersects[0].object.position.x;
+      let positionY = intersects[0].object.position.y;
+      let positionZ = intersects[0].object.position.z;
+      newTree([positionX, positionY, positionZ]);
+    }
+  }
+}
+
+// event listener for mouse hover
+renderer.domElement.addEventListener("mousemove", onMouseHover, false);
+
+// event listener for mouse click
+renderer.domElement.addEventListener("click", onMouseClick, false);
+
 // orbital control
 const orbitalControls = new OrbitControls(camera, renderer.domElement);
 orbitalControls.update();
 
-const animate = (time) => {
-  requestAnimationFrame(animate);
-  interactionManager.update();
+// render the scene
+function animate() {
   orbitalControls.update();
+  requestAnimationFrame(animate);
   renderer.render(scene, camera);
-};
-
+}
 animate();
