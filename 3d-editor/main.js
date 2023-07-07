@@ -170,12 +170,13 @@ container.addEventListener("mouseover", function () {
 function onMouseHover(event) {
   const mouse = new THREE.Vector2();
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1.01;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.04;
+  mouse.y = -((event.clientY + 100) / window.innerHeight) * 2 + 1.02;
 
+  // move fake cursor image
   const mouseX = event.clientX;
   const mouseY = event.clientY;
-  cursorImg.style.transform = `translate3d(${mouseX - 8}px, ${
-    mouseY - 8
+  cursorImg.style.transform = `translate3d(${mouseX - 16}px, ${
+    mouseY + 8
   }px, 0)`;
 
   const raycaster = new THREE.Raycaster();
@@ -247,7 +248,7 @@ function onMouseHover(event) {
 function onMouseClick(event) {
   const mouse = new THREE.Vector2();
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1.01;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.04;
+  mouse.y = -((event.clientY + 100) / window.innerHeight) * 2 + 1.02;
 
   const raycaster = new THREE.Raycaster();
   raycaster.setFromCamera(mouse, camera);
