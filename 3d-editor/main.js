@@ -33,7 +33,7 @@ container.appendChild(renderer.domElement);
 
 // scene
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xfefefe);
+scene.background = new THREE.Color(0xedf8ff);
 
 // camera
 const camera = new THREE.PerspectiveCamera(
