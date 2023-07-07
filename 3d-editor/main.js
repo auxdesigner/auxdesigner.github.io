@@ -5,8 +5,11 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 // sidebar
 const buttons = document.querySelectorAll("#sidebar button");
 let selectedTool = "tree";
+cursor.className = "tree";
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
+    cursor.className = "";
+    cursor.className = button.id;
     buttons.forEach((btn) => {
       btn.classList.remove("selected");
     });
@@ -15,6 +18,7 @@ buttons.forEach((button) => {
     selectedTool = button.id;
   });
 });
+const cursorDiv = document.querySelector("#cursor");
 
 // renderer
 const renderer = new THREE.WebGLRenderer();
@@ -151,11 +155,25 @@ function newRock([x, y, z]) {
   );
 }
 
+// hide cursor if hovering on toolbar
+sidebar.addEventListener("mouseover", function () {
+  cursor.style.display = "none";
+});
+container.addEventListener("mouseover", function () {
+  cursor.style.display = "block";
+});
+
 // handle mouse hover
 function onMouseHover(event) {
   const mouse = new THREE.Vector2();
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1.01;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.04;
+
+  const mouseX = event.clientX;
+  const mouseY = event.clientY;
+  cursorDiv.style.transform = `translate3d(${mouseX - 8}px, ${
+    mouseY - 8
+  }px, 0)`;
 
   const raycaster = new THREE.Raycaster();
   raycaster.setFromCamera(mouse, camera);

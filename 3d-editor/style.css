@@ -7,3 +7,22 @@ body {
 .selected {
   background-color: pink;
 }
+canvas {
+  cursor: none;
+}
+#cursor {
+  width: 72px;
+  height: 72px;
+  background-size: 72px;
+  position: absolute;
+  display: none;
+}
+.tree {
+  background: url(img/tree.png);
+}
+.mushroom {
+  background: url(img/mushroom.png);
+}
+.rock {
+  background: url(img/rock.png);
+}
