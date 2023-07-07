@@ -20,6 +20,8 @@ buttons.forEach((button) => {
 const renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 container.appendChild(renderer.domElement);
 
 // scene
@@ -122,6 +124,7 @@ function newRock([x, y, z]) {
       glb.scene.position.z = z;
       scene.add(glb.scene);
       rocks.push(glb.scene.children[0]);
+      console.log(rocks);
     },
     function (xhr) {
       // console.log(xhr);
@@ -141,7 +144,7 @@ function onMouseHover(event) {
   const raycaster = new THREE.Raycaster();
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(scene.children);
-
+  // console.log(intersects[0]);
   // highlight ground
   if (intersects.length > 0 && cubes.includes(intersects[0].object)) {
     for (var i = 0; i < cubes.length; i++) {
@@ -155,11 +158,28 @@ function onMouseHover(event) {
     intersects[0].object.parent.name === "Tree"
   ) {
     for (var i = 0; i < trees.length; i++) {
-      console.log(trees[i].children[1]);
       trees[i].children[1].material.emissive.setHex(0);
     }
     intersects[0].object.parent.children[0].material.emissive.setHex(0x555555);
     intersects[0].object.parent.children[1].material.emissive.setHex(0x555555);
+  }
+  // highlight tree
+  else if (
+    intersects.length > 0 &&
+    intersects[0].object.parent.name === "Mushroom"
+  ) {
+    for (var i = 0; i < mushrooms.length; i++) {
+      mushrooms[i].children[1].material.emissive.setHex(0);
+    }
+    intersects[0].object.parent.children[0].material.emissive.setHex(0x555555);
+    intersects[0].object.parent.children[1].material.emissive.setHex(0x555555);
+  }
+  // highlight rock
+  else if (intersects.length > 0 && intersects[0].object.name === "Stone") {
+    for (var i = 0; i < rocks.length; i++) {
+      rocks[i].material.emissive.setHex(0);
+    }
+    intersects[0].object.parent.children[0].material.emissive.setHex(0x555555);
   }
   // reset highlight
   else {
@@ -172,6 +192,16 @@ function onMouseHover(event) {
       // 2 parts of the model
       trees[i].children[0].material.emissive.setHex(0);
       trees[i].children[1].material.emissive.setHex(0);
+    }
+    // reset mushroom
+    for (var i = 0; i < mushrooms.length; i++) {
+      // 2 parts of the model
+      mushrooms[i].children[0].material.emissive.setHex(0);
+      mushrooms[i].children[1].material.emissive.setHex(0);
+    }
+    // reset rock
+    for (var i = 0; i < rocks.length; i++) {
+      rocks[i].material.emissive.setHex(0);
     }
   }
 }
@@ -190,6 +220,19 @@ function onMouseClick(event) {
     // tree
     if (intersects.length > 0 && intersects[0].object.parent.name === "Tree") {
       console.log("found tree");
+      scene.remove(intersects[0].object.parent.parent);
+    }
+    // rock
+    if (intersects.length > 0 && intersects[0].object.name === "Stone") {
+      console.log("found stone");
+      scene.remove(intersects[0].object.parent);
+    }
+    // mushroom
+    if (
+      intersects.length > 0 &&
+      intersects[0].object.parent.name === "Mushroom"
+    ) {
+      console.log("found mushroom");
       scene.remove(intersects[0].object.parent.parent);
     }
     // ground
