@@ -35,18 +35,18 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(10, 10, 10);
+camera.position.set(20, 20, 20);
 
-// light
+// sun
 const sun = new THREE.DirectionalLight(0xffffff, 1);
-sun.position.set(20, 20, 20);
+sun.position.set(0, 20, 10);
 sun.castShadow = true;
 sun.shadow.camera.left = -10;
 sun.shadow.camera.right = 10;
-sun.shadow.camera.top = 0;
+sun.shadow.camera.top = 10;
 sun.shadow.camera.bottom = -10;
-sun.shadow.mapSize.width = 1024;
-sun.shadow.mapSize.height = 1024;
+sun.shadow.mapSize.width = 2048;
+sun.shadow.mapSize.height = 2048;
 sun.shadow.camera.near = 0.5;
 sun.shadow.camera.far = 50;
 scene.add(sun);
@@ -61,6 +61,7 @@ function initialize(size) {
       const material = new THREE.MeshLambertMaterial({ color: 0x40bf15 });
       const cube = new THREE.Mesh(geometry, material);
       cube.position.set(x, 0, y);
+      cube.receiveShadow = true;
       scene.add(cube);
       cubes.push(cube);
     }
@@ -78,6 +79,11 @@ function newTree([x, y, z]) {
       glb.scene.position.x = x;
       glb.scene.position.y = y + 0.5;
       glb.scene.position.z = z;
+      glb.scene.traverse(function (node) {
+        if (node.isMesh) {
+          node.castShadow = true;
+        }
+      });
       scene.add(glb.scene);
       trees.push(glb.scene.children[0]);
     },
@@ -100,6 +106,11 @@ function newMushroom([x, y, z]) {
       glb.scene.position.x = x;
       glb.scene.position.y = y + 0.5;
       glb.scene.position.z = z;
+      glb.scene.traverse(function (node) {
+        if (node.isMesh) {
+          node.castShadow = true;
+        }
+      });
       scene.add(glb.scene);
       mushrooms.push(glb.scene.children[0]);
     },
@@ -122,6 +133,11 @@ function newRock([x, y, z]) {
       glb.scene.position.x = x;
       glb.scene.position.y = y + 0.5;
       glb.scene.position.z = z;
+      glb.scene.traverse(function (node) {
+        if (node.isMesh) {
+          node.castShadow = true;
+        }
+      });
       scene.add(glb.scene);
       rocks.push(glb.scene.children[0]);
       console.log(rocks);
@@ -138,8 +154,8 @@ function newRock([x, y, z]) {
 // handle mouse hover
 function onMouseHover(event) {
   const mouse = new THREE.Vector2();
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1.01;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.04;
 
   const raycaster = new THREE.Raycaster();
   raycaster.setFromCamera(mouse, camera);
@@ -209,8 +225,8 @@ function onMouseHover(event) {
 // handle mouse click
 function onMouseClick(event) {
   const mouse = new THREE.Vector2();
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1.01;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.04;
 
   const raycaster = new THREE.Raycaster();
   raycaster.setFromCamera(mouse, camera);
