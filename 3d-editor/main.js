@@ -2,14 +2,18 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-// sidebar
-const buttons = document.querySelectorAll("#sidebar button");
+// toolbar
+const buttons = document.querySelectorAll("#toolbar button");
+const cursorImg = document.querySelector("#cursorImg");
+const container = document.querySelector("#container");
+const toolbar = document.querySelector("#toolbar");
+
 let selectedTool = "tree";
-cursor.className = "tree";
+cursorImg.className = "tree";
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
-    cursor.className = "";
-    cursor.className = button.id;
+    cursorImg.className = "";
+    cursorImg.className = button.id;
     buttons.forEach((btn) => {
       btn.classList.remove("selected");
     });
@@ -18,7 +22,6 @@ buttons.forEach((button) => {
     selectedTool = button.id;
   });
 });
-const cursorDiv = document.querySelector("#cursor");
 
 // renderer
 const renderer = new THREE.WebGLRenderer();
@@ -156,11 +159,11 @@ function newRock([x, y, z]) {
 }
 
 // hide cursor if hovering on toolbar
-sidebar.addEventListener("mouseover", function () {
-  cursor.style.display = "none";
+toolbar.addEventListener("mouseover", function () {
+  cursorImg.style.display = "none";
 });
 container.addEventListener("mouseover", function () {
-  cursor.style.display = "block";
+  cursorImg.style.display = "block";
 });
 
 // handle mouse hover
@@ -171,7 +174,7 @@ function onMouseHover(event) {
 
   const mouseX = event.clientX;
   const mouseY = event.clientY;
-  cursorDiv.style.transform = `translate3d(${mouseX - 8}px, ${
+  cursorImg.style.transform = `translate3d(${mouseX - 8}px, ${
     mouseY - 8
   }px, 0)`;
 

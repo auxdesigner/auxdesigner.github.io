@@ -1,28 +1,30 @@
 body {
   margin: 0;
 }
-#sidebar {
+#toolbar {
   background-color: #fff;
 }
 .selected {
   background-color: pink;
 }
 canvas {
-  cursor: none;
+  cursor: pointer;
 }
-#cursor {
+#cursorImg {
   width: 72px;
   height: 72px;
-  background-size: 72px;
   position: absolute;
   display: none;
 }
-.tree {
-  background: url(img/tree.png);
+#cursorImg.tree {
+  background: url(img/cursor_tree.png);
+  background-size: 72px;
 }
-.mushroom {
-  background: url(img/mushroom.png);
+#cursorImg.mushroom {
+  background: url(img/cursor_mushroom.png);
+  background-size: 72px;
 }
-.rock {
-  background: url(img/rock.png);
+#cursorImg.rock {
+  background: url(img/cursor_rock.png);
+  background-size: 72px;
 }
