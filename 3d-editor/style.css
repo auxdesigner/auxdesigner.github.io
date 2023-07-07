@@ -22,7 +22,7 @@ body {
   width: 1px;
   background-color: #ddd;
   display: inline-block;
-  height: 96px;
+  height: 88px;
   position: absolute;
   margin-left: -3px;
 }
@@ -88,4 +88,12 @@ canvas {
 #cursorImg.rock {
   background: url(img/cursor_rock.png);
   background-size: 72px;
+}
+#footer {
+  position: fixed;
+  width: 100%;
+  bottom: 14px;
+  text-align: center;
+  font-size: 11px;
+  font-family: system-ui, sans-serif;
 }
