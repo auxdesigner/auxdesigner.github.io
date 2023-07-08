@@ -2,6 +2,12 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
+<<<<<<< Updated upstream
+=======
+// build path
+const basePath = import.meta.env.BASE_URL + "/model/";
+
+>>>>>>> Stashed changes
 // UI
 const buttons = document.querySelectorAll("#toolbar button");
 const cursorImg = document.querySelector("#cursorImg");
