@@ -2,26 +2,11 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-// toolbar
+// UI
 const buttons = document.querySelectorAll("#toolbar button");
 const cursorImg = document.querySelector("#cursorImg");
 const container = document.querySelector("#container");
 const toolbar = document.querySelector("#toolbar");
-
-let selectedTool = "tree";
-cursorImg.className = "tree";
-buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    cursorImg.className = "";
-    cursorImg.className = button.id;
-    buttons.forEach((btn) => {
-      btn.classList.remove("selected");
-    });
-
-    button.classList.add("selected");
-    selectedTool = button.id;
-  });
-});
 
 // renderer
 const renderer = new THREE.WebGLRenderer();
@@ -147,7 +132,6 @@ function newRock([x, y, z]) {
       });
       scene.add(glb.scene);
       rocks.push(glb.scene.children[0]);
-      console.log(rocks);
     },
     function (xhr) {
       // console.log(xhr);
@@ -201,7 +185,7 @@ function onMouseHover(event) {
     intersects[0].object.parent.children[0].material.emissive.setHex(0x555555);
     intersects[0].object.parent.children[1].material.emissive.setHex(0x555555);
   }
-  // highlight tree
+  // highlight mushroom
   else if (
     intersects.length > 0 &&
     intersects[0].object.parent.name === "Mushroom"
@@ -282,27 +266,27 @@ function onMouseClick(event) {
   else if (selectedTool === "tree") {
     if (intersects.length > 0 && cubes.includes(intersects[0].object)) {
       let positionX = intersects[0].object.position.x;
-      let positionY = intersects[0].object.position.y;
       let positionZ = intersects[0].object.position.z;
-      newTree([positionX, positionY, positionZ]);
+      newTree([positionX, 0, positionZ]);
     }
   }
   // mushroom tool
   else if (selectedTool === "mushroom") {
     if (intersects.length > 0 && cubes.includes(intersects[0].object)) {
       let positionX = intersects[0].object.position.x;
-      let positionY = intersects[0].object.position.y;
+
       let positionZ = intersects[0].object.position.z;
-      newMushroom([positionX, positionY, positionZ]);
+      newMushroom([positionX, 0, positionZ]);
+      console.log(positionX, positionZ);
     }
   }
   // rock tool
   else if (selectedTool === "rock") {
     if (intersects.length > 0 && cubes.includes(intersects[0].object)) {
       let positionX = intersects[0].object.position.x;
-      let positionY = intersects[0].object.position.y;
+
       let positionZ = intersects[0].object.position.z;
-      newRock([positionX, positionY, positionZ]);
+      newRock([positionX, 0, positionZ]);
     }
   }
 }
@@ -312,6 +296,57 @@ renderer.domElement.addEventListener("mousemove", onMouseHover, false);
 
 // event listener for mouse click
 renderer.domElement.addEventListener("click", onMouseClick, false);
+
+// toolbar
+
+let selectedTool = "tree";
+cursorImg.className = "tree";
+buttons.forEach((button) => {
+  if (button.id !== "random") {
+    button.addEventListener("click", () => {
+      cursorImg.className = "";
+      cursorImg.className = button.id;
+      buttons.forEach((btn) => {
+        btn.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+      selectedTool = button.id;
+    });
+  }
+  // if (button.id === "random") {
+  //   // button.addEventListener("click", () => {
+  //   //   randomize();
+  //   // });
+  // }
+});
+
+// randomize
+function generateRandomInteger(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function randomize() {
+  const maxCoordinate = 7;
+  let randomIntegers = [];
+
+  // Generate unique random integers
+  while (randomIntegers.length < 3) {
+    const randomInteger = generateRandomInteger(maxCoordinate);
+    if (!randomIntegers.includes(randomInteger)) {
+      randomIntegers.push(randomInteger);
+    }
+  }
+
+  newRock([randomIntegers[0], 0, randomIntegers[1]]);
+  newTree([randomIntegers[1], 0, randomIntegers[2]]);
+  newMushroom([randomIntegers[2], 0, randomIntegers[0]]);
+}
+
+randomize();
+
+// Generate a random integer and print it to the console.
+let randomInteger = generateRandomInteger();
 
 // orbital control
 const orbitalControls = new OrbitControls(camera, renderer.domElement);
