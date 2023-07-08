@@ -2,6 +2,9 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
+// path
+const basePath = import.meta.env.BASE_URL + "/model/";
+
 // UI
 const buttons = document.querySelectorAll("#toolbar button");
 const cursorImg = document.querySelector("#cursorImg");
@@ -66,7 +69,7 @@ const trees = [];
 const treeLoader = new GLTFLoader();
 function newTree([x, y, z]) {
   treeLoader.load(
-    "model/tree.glb",
+    `${basePath}tree.glb`,
     function (glb) {
       glb.scene.position.x = x;
       glb.scene.position.y = y + 0.5;
@@ -93,7 +96,7 @@ const mushrooms = [];
 const mushroomLoader = new GLTFLoader();
 function newMushroom([x, y, z]) {
   mushroomLoader.load(
-    "model/mushroom.glb",
+    `${basePath}mushroom.glb`,
     function (glb) {
       glb.scene.position.x = x;
       glb.scene.position.y = y + 0.5;
@@ -120,7 +123,7 @@ const rocks = [];
 const rockLoader = new GLTFLoader();
 function newRock([x, y, z]) {
   rockLoader.load(
-    "model/rock.glb",
+    `${basePath}rock.glb`,
     function (glb) {
       glb.scene.position.x = x;
       glb.scene.position.y = y + 0.5;
