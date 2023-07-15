@@ -242,6 +242,13 @@ function onMouseClick(event) {
   const intersects = raycaster.intersectObjects(scene.children);
   // eraser tool
   if (selectedTool === "eraser") {
+    // knock effect
+    const originalMatrix = window.getComputedStyle(cursorImg).transform;
+    cursorImg.style.transform += "rotate(270deg)";
+    setTimeout(() => {
+      cursorImg.style.setProperty("transform", originalMatrix);
+    }, 100);
+
     // tree
     if (intersects.length > 0 && intersects[0].object.parent.name === "Tree") {
       console.log("found tree");
