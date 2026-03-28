@@ -33,6 +33,7 @@ img {
   border-style: none;
 }
 img,
+video,
 svg {
   max-width: 100%;
 }
@@ -112,7 +113,8 @@ section {
   display: inline-block;
   font-style: italic;
 }
-.image-wrapper img {
+.image-wrapper img,
+.image-wrapper video {
   box-shadow: 0px 2px 4px 1px rgb(0 0 0 / 12%);
   /* border-radius: 4px; */
 }
