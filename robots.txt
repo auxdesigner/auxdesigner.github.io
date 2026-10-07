@@ -1,0 +1,12 @@
+User-agent: archive.org_bot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+# Allow other crawlers to read the pages' noindex meta tags.
+User-agent: *
+Allow: /
